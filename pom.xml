@@ -6,12 +6,20 @@
 
     <groupId>org.fabiankrohn</groupId>
     <artifactId>MangoPlayer</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <name>MangoPlayer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
+        <javapackager.version>1.7.6</javapackager.version>
+        <package.mainClass>io.github.redstonemango.mangoplayer.graphic.MangoPlayer</package.mainClass>
+        <package.application.name>MangoPlayer</package.application.name>
+        <!-- allow override from command-line or environment -->
+        <!-- if not set, plugin may default or error (you may define a default) -->
+        <package.jdk.path/>
+        <package.platform/>
+        <javafx.module.path/>
     </properties>
 
     <repositories>
@@ -193,101 +201,35 @@
                 </executions>
             </plugin>
             <plugin>
-                <?ignore
-                        This plugin (-configuration) allows you to build (os-dependent) application executeables out of your project.
-                        ---------------
-                        All predefined paramaters, you could edit are described using a comment above them.
-                        "mainClass" parameter has to be set  in order for the plugin to work.
-                        Whole documentation on possible parameters: https://github.com/fvarrui/JavaPackager/tree/master?tab=readme-ov-file#plugin-configuration-properties
-                        ---------------
-                        To use a custom application icon, paste the image file to "./assets/linux/APPLICATION_NAME.png", "./assets/windows/APPLICATION_NAME.ico", "./assets/mac/APPLICATION_NAME.icns"
-                        APPLICATION_NAME has to be the exact name defined in "name" tag below
-                        ---------------
-                        Execute "mvn package" to create the executeable based under "./target"
-                        Execute "mvn clean" to remove unnecessary built modules from "./" (including whole "./target")
-                        Execute "mvn clean package" to remove older builds and build new ones
-                        ?>
                 <groupId>io.github.fvarrui</groupId>
                 <artifactId>javapackager</artifactId>
-                <version>1.7.6</version>
+                <version>${javapackager.version}</version>
                 <configuration>
                     <bundleJre>true</bundleJre>
                     <copyDependencies>true</copyDependencies>
-                    <!-- Here the main class has to be specified -->
-                    <mainClass>io.github.redstonemango.mangoplayer.graphic.MangoPlayer</mainClass>
-                    <!-- Here the application's name has to be specified -->
-                    <name>MangoPlayer</name>
-                    <!-- Here has to be specified if installers (eg *.deb) should generate in addition to the executable file -->
-                    <generateInstaller>true</generateInstaller>
-                    <!-- Here the application's description has to be specified -->
+                    <mainClass>${package.mainClass}</mainClass>
+                    <name>${package.application.name}</name>
                     <description>Play music easily using this lightweight music player. MangoPlayer includes all the classic audio playback features you expect, plus optional integration with tools like yt-dlp for downloading audio directly from YouTube.</description>
-                    <!-- Here the application's dev organization (vendor) has to be specified -->
                     <organizationName>RedStoneMango</organizationName>
-                    <!-- Here the application's license file has to be specified -->
                     <licenseFile>LICENSE.txt</licenseFile>
-                    <!-- Here the used JavaFX modules have to be specified (eg 'javafx.base'). Remove if no JFX is used -->
+                    <platform>${package.platform}</platform>
+                    <additionalModulePaths>
+                        <modulePath>${javafx.module.path}</modulePath>
+                    </additionalModulePaths>
                     <additionalModules>
                         <additionalModule>javafx.controls</additionalModule>
                         <additionalModule>javafx.fxml</additionalModule>
                         <additionalModule>javafx.media</additionalModule>
                         <additionalModule>javafx.web</additionalModule>
                     </additionalModules>
-
                 </configuration>
                 <executions>
-                    <?ignore
-                            Below there are lines commented out because they run the packageing process for the other OSs (like windows).
-                            Therefore they need the JDK (and probably also JavaFX jMods) for the curresponding OS to be definied, what would be to annoying if
-                            it has to be donwloaded just for personal testing purposes
-
-                            Uncommend below lines using "Cmd+Shift+/" (/ on numpad)
-                            ?>
                     <execution>
-                        <id>bundling-for-linux</id>
                         <phase>package</phase>
                         <goals>
                             <goal>package</goal>
                         </goals>
-                        <configuration>
-                            <platform>linux</platform>
-                            <jdkPath>~/.jdks/openjdk-23.0.2</jdkPath>
-                            <!-- Here the path to the linux JavaFX-jMods has to be specified. Remove if no JFX is used -->
-                            <additionalModulePaths>
-                                <modulePath>~/.jmods/javafx-jmods-23.0.2</modulePath>
-                            </additionalModulePaths>
-                        </configuration>
                     </execution>
-                    <!--<execution>
-                        <id>bundling-for-windows</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                        <configuration>
-                            <platform>windows</platform>
-                            <jdkPath>[...]</jdkPath>
-                            &lt;!&ndash; Here the path to the Windows JavaFX-jMods has to be specified. Remove if no JFX is used &ndash;&gt;
-                            <additionalModulePaths>
-                                <modulePath>[...]</modulePath>
-                            </additionalModulePaths>
-                        </configuration>
-                    </execution>-->
-                    <!--<execution>
-                        <id>bundling-for-macos</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package</goal>
-                        </goals>
-                        <configuration>
-                            <platform>mac</platform>
-                            &lt;!&ndash; Here the path to the macOS JDK has to be specified &ndash;&gt;
-                            <jdkPath>[...]</jdkPath>
-                            &lt;!&ndash; Here the path to the macOS JavaFX-jMods has to be specified. Remove if no JFX is used &ndash;&gt;
-                            <additionalModulePaths>
-                                <modulePath>[...]</modulePath>
-                            </additionalModulePaths>
-                        </configuration>
-                    </execution>-->
                 </executions>
             </plugin>
         </plugins>
