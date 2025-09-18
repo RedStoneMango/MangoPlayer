@@ -54,42 +54,6 @@ MangoPlayer is a lightweight, feature-rich music playlist manager that enables y
 
 ---
 
-## 📚 Usage Overview
-
-### 🔧 Creating & Managing Playlists
-- Use the **Add Playlist** button on the home screen.
-- Rename and set thumbnails via right-click context menu.
-- Export a playlist (with songs) to a `.zip` file for external use.
-
-### 🎧 Managing Songs
-- Open **Song Manager** using the note icon.
-- Import `.mp3` files or download via YouTube.
-- Edit song details, including:
-    - Title
-    - Thumbnail (manual, YouTube, or removal)
-    - Volume adjustment
-- Export songs to disk with metadata.
-- View song stats and source.
-
-### 🎼 Editing Playlists
-- Add/remove songs via the **Add / Remove Songs** button.
-- Reorder songs via drag-and-drop (`=` icon).
-- Remove individual songs (bin icon).
-- Songs must be imported before they can be added to playlists.
-
-### 🔊 Playing Music
-- Play full playlists or individual tracks.
-- Use player controls to:
-    - Pause/Resume (`Ctrl + Space`)
-    - Stop (`Escape`)
-    - Seek, skip, adjust volume
-    - Enable shuffle/loop/"end after song"
-- Collapse controls for a cleaner view.
-- Detach the control window for background playback.
-- Assign a **native pause key combination** for global shortcuts.
-
----
-
 ## 🧩 External Tools (Optional)
 
 ### Tools Supported:
