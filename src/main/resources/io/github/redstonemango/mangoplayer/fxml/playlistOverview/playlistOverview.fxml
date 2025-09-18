@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.playlistOverview.PlaylistOverviewController">
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
+               <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onPlaylistCreate" prefHeight="41.0" prefWidth="139.0" text="Add playlist" />
+               </children>
+            </HBox>
+         </center>
+         <left>
+            <AnchorPane prefHeight="62.0" prefWidth="62.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button focusTraversable="false" layoutX="11.0" layoutY="12.0" mnemonicParsing="false" onAction="#onSongManagerOpened" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/song_manager.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip fx:id="songManagerTooltip" text="Open song manager" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </left>
+         <right>
+            <AnchorPane prefHeight="62.0" prefWidth="62.0" BorderPane.alignment="CENTER" />
+         </right>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </BorderPane>
+   </bottom>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <MenuBar>
+               <menus>
+                  <Menu mnemonicParsing="false" text="MangoPlayer">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onOpenDirectoryMenu" text="Open directory" />
+                        <MenuItem mnemonicParsing="false" onAction="#onManualSaveManu" text="Trigger manual save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu mnemonicParsing="false" text="Yt-dlp">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onDownloadYtDlpMenu" text="Open download page" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onChangeYtDlpMenu" text="Set executeable directory" />
+                              <MenuItem mnemonicParsing="false" onAction="#onDefaultYtDlpMenu" text="Resolve from PATH" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ffmpeg">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onDownloadFfmpegMenu" text="Open download page" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onChangeFfmpegMenu" text="Set executeable directory" />
+                              <MenuItem mnemonicParsing="false" onAction="#onDefaultFfmpegMenu" text="Resolve from PATH" />
+                           </items>
+                        </Menu>
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <Menu mnemonicParsing="false" text="How to">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpPlaylistMenu" text="Manage playlists" />
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpSongMenu" text="Manage songs" />
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpPlaylistUseMenu" text="Use a playlist" />
+                           </items>
+                        </Menu>
+                      <MenuItem mnemonicParsing="false" onAction="#onHelpExternalGeneralMenu" text="External tools" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu mnemonicParsing="false" text="Links">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onHomepageMenu" text="Homepage" />
+                              <MenuItem mnemonicParsing="false" onAction="#onIssuesMenu" text="Issue tracker" />
+                          </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#onLicenseMenu" text="License" />
+                        <MenuItem mnemonicParsing="false" onAction="#onAboutMenu" text="About" />
+                    </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </center>
+         <bottom>
+            <TextField fx:id="songFilterField" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <tooltip>
+                  <Tooltip fx:id="songFilterTooltip" text="Filter playlists" />
+               </tooltip>
+            </TextField>
+         </bottom>
+      </BorderPane>
+   </top>
+   <center>
+      <ListView fx:id="playlistsView" fixedCellSize="60.0" prefHeight="22.0" prefWidth="214.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

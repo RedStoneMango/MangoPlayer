@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.songManager.SongListController">
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="600.0">
+               <children>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onSongImport" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/import.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip fx:id="songImportTooltip" text="Import song from disk" />
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="downloadButton" focusTraversable="false" layoutX="290.0" layoutY="22.0" mnemonicParsing="false" onAction="#onSongDownload" opacity="0.5" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/download.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip fx:id="songDownloadTooltip" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <graphic>
+                              <Text fx:id="songDownloadTooltipText" fill="ORANGE" strokeType="OUTSIDE" strokeWidth="0.0" text="Indexing external tools...">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font></Text>
+                           </graphic></Tooltip>
+                     </tooltip>
+                     <HBox.margin>
+                        <Insets left="66.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets right="60.0" />
+               </BorderPane.margin>
+            </HBox>
+         </center>
+         <left>
+            <AnchorPane prefHeight="60.0" prefWidth="60.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="analyserButton" focusTraversable="false" layoutX="11.0" layoutY="11.0" mnemonicParsing="false" onAction="#onOpenAnalyser" prefHeight="40.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/analyze.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip fx:id="songImportTooltip1" text="Open use analyser" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </left>
+      </BorderPane>
+   </bottom>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane fx:id="selectionModeHeader" prefHeight="37.0" prefWidth="600.0">
+               <center>
+                  <Label contentDisplay="RIGHT" text="Add song to " BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <graphic>
+                        <Text fx:id="addPlaylistNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;PLAYLIST_NAME&gt;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                     </graphic>
+                     <BorderPane.margin>
+                        <Insets left="43.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+               <right>
+                  <Button defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onSongsSelected" prefHeight="40.0" prefWidth="37.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="7.0" />
+                     </BorderPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/select.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </right>
+            </BorderPane>
+            <TextField fx:id="songFilterField">
+               <tooltip>
+                  <Tooltip fx:id="songFilterTooltip" text="Filter songs" />
+               </tooltip>
+            </TextField>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ListView fx:id="songsView" fixedCellSize="60.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

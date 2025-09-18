@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="578.0" style="-fx-border-color: gray;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="58.0" prefWidth="395.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="nameLabel" layoutX="7.0" layoutY="8.0" prefHeight="30.0" prefWidth="376.0" text="&lt;PLALIST NAME HERE&gt;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="songCountLabel" layoutX="10.0" layoutY="34.0" prefHeight="29.0" prefWidth="369.0" text="X songs">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="58.0" prefWidth="129.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button focusTraversable="false" layoutY="9.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="41.0" prefWidth="51.0">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button focusTraversable="false" layoutX="65.0" layoutY="9.0" mnemonicParsing="false" onAction="#onOpen" prefHeight="41.0" prefWidth="51.0">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/select.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </right>
+   <left>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="58.0" prefWidth="61.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="graphicView" fitHeight="41.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/no_song_playing.png" />
+               </image>
+            </ImageView>
+         </children>
+      </FlowPane>
+   </left>
+</BorderPane>

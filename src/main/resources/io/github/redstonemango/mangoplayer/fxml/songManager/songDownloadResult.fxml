@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.songManager.SongDownloadResultController">
+   <top>
+      <VBox alignment="CENTER" prefHeight="76.0" prefWidth="471.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="headerLabel" text="&lt;USR INPUT HERE&gt;" underline="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="loadingBar" prefHeight="27.0" prefWidth="431.0" />
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="resultsVBox" prefHeight="320.0" prefWidth="468.0" />
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
