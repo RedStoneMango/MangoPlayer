@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.songManager.SongDetailsController">
+   <top>
+      <BorderPane prefHeight="110.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <center>
+            <AnchorPane prefHeight="48.0" prefWidth="600.0">
+               <children>
+                  <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutX="7.0" layoutY="3.0" prefHeight="54.0" prefWidth="97.0">
+                     <children>
+                        <ImageView fx:id="songThumbnailView" fitHeight="54.0" fitWidth="96.0" onMouseClicked="#onThumbnailEdit" onMouseEntered="#onMouseThumbnailEnter" onMouseExited="#onMouseThumbnailExit" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/thumbnail_fallback.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </FlowPane>
+                  <TextField fx:id="songNameField" focusTraversable="false" layoutX="116.0" prefHeight="53.0" prefWidth="470.0" promptText="A song name has to be entered here" text="&lt;SONG NAME HERE&gt;">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </TextField>
+                  <ImageView fx:id="editThumbnailImage" fitHeight="54.0" fitWidth="96.0" layoutX="26.0" layoutY="2.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../../images/edit_thumbnail.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </center>
+         <top>
+            <BorderPane prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <left>
+                  <AnchorPane BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="backButton" focusTraversable="false" layoutX="7.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="40.0" prefWidth="40.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </left>
+               <right>
+                  <AnchorPane prefHeight="45.0" prefWidth="67.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button focusTraversable="false" layoutX="5.0" layoutY="3.0" mnemonicParsing="false" onAction="#onDeleteButton" prefHeight="40.0" prefWidth="40.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/delete.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </right>
+               <center>
+                  <HBox alignment="CENTER" prefHeight="46.0" prefWidth="488.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="Song editor">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </center>
+            </BorderPane>
+         </top>
+         <bottom>
+            <FlowPane alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Volume adjustment: ">
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                     <tooltip>
+                        <Tooltip text="Determines how to level the song's volume" />
+                     </tooltip>
+                  </Label>
+                  <Slider fx:id="volumeAdjustmentSlider" blockIncrement="0.01" focusTraversable="false" max="1.0" min="0.01" prefHeight="16.0" prefWidth="390.0" value="0.5">
+                     <FlowPane.margin>
+                        <Insets right="10.0" />
+                     </FlowPane.margin>
+                  </Slider>
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onTestListenButton">
+                     <graphic>
+                        <ImageView fx:id="testListenButtonIcon" fitHeight="28.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/play_this.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <FlowPane.margin>
+                        <Insets right="10.0" />
+                     </FlowPane.margin>
+                     <tooltip>
+                        <Tooltip text="Test-listen to the song with it's adjusted volume" />
+                     </tooltip>
+                  </Button>
+               </children>
+            </FlowPane>
+         </bottom>
+      </BorderPane>
+   </top>
+   <center>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="273.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="248.0" prefWidth="517.0" style="-fx-border-color: purple;">
+               <children>
+                  <Label layoutX="14.0" layoutY="13.0" text="Played:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="The amount of times, this song has been played completely" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="playStatLabel" layoutX="181.0" layoutY="14.0" prefHeight="24.0" prefWidth="330.0" text="0x">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="116.0" text="Source:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="Where this song was loaded from. (A youtube URL or the local disk)" wrapText="true" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="sourceStatLabel" layoutX="178.0" layoutY="123.0" prefHeight="24.0" prefWidth="330.0" text="-- Local disk --">
+                     <font>
+                        <Font name="System Italic" size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="187.0" text="Internal identifier:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="The internal (unique) ID of this song that is used to locate its assets" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="idStatLabel" layoutX="178.0" layoutY="188.0" prefHeight="18.0" prefWidth="330.0" text="&quot;aaaaaaaaaa&quot;" />
+                  <Label layoutX="14.0" layoutY="65.0" text="Uses:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip text="The amount of occurrences, this song has inside playlists" />
+                     </tooltip>
+                  </Label>
+                  <Label fx:id="useStatLabel" layoutX="181.0" layoutY="66.0" prefHeight="24.0" prefWidth="330.0" text="0x">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+               <FlowPane.margin>
+                  <Insets bottom="20.0" />
+               </FlowPane.margin>
+            </AnchorPane>
+         </children>
+      </FlowPane>
+   </center>
+</BorderPane>

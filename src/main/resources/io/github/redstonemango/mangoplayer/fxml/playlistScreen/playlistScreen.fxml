@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.playlistScreen.PlaylistScreenController">
+   <center>
+      <BorderPane prefHeight="442.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <top>
+            <TextField fx:id="songsFilterField" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ListView fx:id="songsView" fixedCellSize="60.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </center>
+   <top>
+      <VBox prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu mnemonicParsing="false" text="MangoPlayer">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onOpenDirectoryMenu" text="Open directory" />
+                        <MenuItem mnemonicParsing="false" onAction="#onManualSaveManu" text="Trigger manual save" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu mnemonicParsing="false" text="Yt-dlp">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onDownloadYtDlpMenu" text="Open download page" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onChangeYtDlpMenu" text="Set executeable directory" />
+                              <MenuItem mnemonicParsing="false" onAction="#onDefaultYtDlpMenu" text="Resolve from PATH" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Ffmpeg">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onDownloadFfmpegMenu" text="Open download page" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onChangeFfmpegMenu" text="Set executeable directory" />
+                              <MenuItem mnemonicParsing="false" onAction="#onDefaultFfmpegMenu" text="Resolve from PATH" />
+                           </items>
+                        </Menu>
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <Menu mnemonicParsing="false" text="How to">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpPlaylistMenu" text="Manage playlists" />
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpSongMenu" text="Manage songs" />
+                              <MenuItem mnemonicParsing="false" onAction="#onHelpPlaylistUseMenu" text="Use a playlist" />
+                           </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#onHelpExternalGeneralMenu" text="External tools" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu mnemonicParsing="false" text="Links">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onHomepageMenu" text="Homepage" />
+                              <MenuItem mnemonicParsing="false" onAction="#onIssuesMenu" text="Issue tracker" />
+                           </items>
+                        </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#onLicenseMenu" text="License" />
+                        <MenuItem mnemonicParsing="false" onAction="#onAboutMenu" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <HBox>
+               <children>
+                  <Button fx:id="smallBackButton" focusTraversable="false" mnemonicParsing="false" onAction="#onBackButton" prefHeight="33.0" prefWidth="2.0">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <TitledPane fx:id="controlsTitledPane" graphicTextGap="10.0" prefHeight="33.0" prefWidth="569.0" text="NO SONG PLAYING">
+                     <graphic>
+                        <ImageView fx:id="smallSongView" fitHeight="28.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/no_song_playing.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <content>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <left>
+                              <AnchorPane prefHeight="94.0" prefWidth="48.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button focusTraversable="false" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#onBackButton" prefHeight="85.0" prefWidth="50.0">
+                                       <graphic>
+                                          <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../images/back.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <BorderPane.margin>
+                                    <Insets left="-10.0" />
+                                 </BorderPane.margin>
+                              </AnchorPane>
+                           </left>
+                           <center>
+                              <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <left>
+                                    <AnchorPane prefHeight="94.0" prefWidth="98.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Label contentDisplay="GRAPHIC_ONLY" layoutX="6.0" layoutY="20.0">
+                                             <graphic>
+                                                <ImageView fx:id="bigSongView" fitHeight="56.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../images/no_song_playing.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip fx:id="songNameTooltip" text="NO SONG PLAYING" />
+                                             </tooltip>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                 </left>
+                                 <center>
+                                    <VBox alignment="CENTER" prefHeight="80.0" prefWidth="448.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <FlowPane alignment="CENTER_RIGHT" columnHalignment="RIGHT" prefHeight="6.0" prefWidth="400.0">
+                                             <children>
+                                                <Label fx:id="volumeContainer" contentDisplay="GRAPHIC_ONLY" onMouseClicked="#onVolumeMute">
+                                                   <graphic>
+                                                      <ImageView fx:id="volumeImage" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/volume_on.png" />
+                                                         </image>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                   <FlowPane.margin>
+                                                      <Insets right="10.0" />
+                                                   </FlowPane.margin>
+                                                </Label>
+                                                <Label fx:id="detachContainer" contentDisplay="GRAPHIC_ONLY" layoutX="393.0" layoutY="10.0" onMouseClicked="#onDetach">
+                                                   <graphic>
+                                                      <ImageView fx:id="detachImage" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/undetached.png" />
+                                                         </image>
+                                                         <cursor>
+                                                            <Cursor fx:constant="DEFAULT" />
+                                                         </cursor>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                   <tooltip>
+                                                      <Tooltip text="Un-/Detach play control" />
+                                                   </tooltip>
+                                                   <FlowPane.margin>
+                                                      <Insets />
+                                                   </FlowPane.margin>
+                                                </Label>
+                                             </children>
+                                          </FlowPane>
+                                          <HBox alignment="CENTER">
+                                             <children>
+                                                <Label fx:id="currentTimeLabel" text="--:-- / --:--">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <Slider fx:id="durationSlider" max="0.0" onMouseDragged="#onSeekSliderDrag" onMousePressed="#onSeekSliderPressed" onMouseReleased="#onSeekSliderReleased" prefHeight="16.0" prefWidth="391.0" />
+                                          <HBox alignment="CENTER" prefHeight="38.0" prefWidth="448.0" spacing="2.0">
+                                             <children>
+                                                <Button fx:id="backwardButton" disable="true" focusTraversable="false" mnemonicParsing="false" onAction="#onBackwardButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/backward.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Play previous song" />
+                                                   </tooltip>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="stopButton" disable="true" focusTraversable="false" mnemonicParsing="false" onAction="#onStopButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/stop.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Stop play" />
+                                                   </tooltip>
+                                                </Button>
+                                                <Button fx:id="forwardButton" disable="true" focusTraversable="false" layoutX="330.0" layoutY="12.0" mnemonicParsing="false" onAction="#onForwardButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/forward.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Play next song" />
+                                                   </tooltip>
+                                                </Button>
+                                                <Button fx:id="playButton" focusTraversable="false" mnemonicParsing="false" onAction="#onPlayButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/play.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" />
+                                                   </HBox.margin>
+                                                   <tooltip>
+                                                      <Tooltip text="Start playlist" />
+                                                   </tooltip>
+                                                </Button>
+                                                <Button fx:id="shuffleButton" focusTraversable="false" mnemonicParsing="false" onAction="#onShuffleButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <HBox.margin>
+                                                      <Insets left="40.0" />
+                                                   </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/shuffle_off.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Toggle &quot;shuffle&quot;" />
+                                                   </tooltip>
+                                                </Button>
+                                                <Button fx:id="loopButton" focusTraversable="false" mnemonicParsing="false" onAction="#onLoopButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/loop_none.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Set &quot;loop&quot; mode" />
+                                                   </tooltip>
+                                                </Button>
+                                                <ToggleButton fx:id="stopAfterSongButton" disable="true" focusTraversable="false" mnemonicParsing="false" onAction="#onStopAfterSongButton" prefHeight="35.0" prefWidth="35.0">
+                                                   <HBox.margin>
+                                                      <Insets right="5.0" />
+                                                   </HBox.margin>
+                                                   <graphic>
+                                                      <ImageView fitHeight="24.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../images/stop_after_song.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <tooltip>
+                                                      <Tooltip text="Toggle &quot;stop after song&quot;" />
+                                                   </tooltip>
+                                                </ToggleButton>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                              </BorderPane>
+                           </center>
+                        </BorderPane>
+                     </content>
+                  </TitledPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <Button id="long-sized-button" fx:id="addSongButton" focusTraversable="false" mnemonicParsing="false" onAction="#onSongAddButton" prefHeight="37.0" prefWidth="600.0" text="Add / Remove  songs" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
