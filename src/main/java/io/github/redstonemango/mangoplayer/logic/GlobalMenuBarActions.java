@@ -358,7 +358,7 @@ public class GlobalMenuBarActions {
         TextDisplay.showNewDisplay(MangoPlayer.primaryStage, "License Window", "Help -> License", """
                 # The MIT License (MIT)
                 
-                ## Copyright (c) 2025 Fabian Krohn
+                ## Copyright (c) 2025 RedStoneMango
 
                 Permission is hereby granted, free of charge, to any person obtaining a copy
                 of this software and associated documentation files (the "Software"), to deal
@@ -384,7 +384,8 @@ public class GlobalMenuBarActions {
                 # About
                 
                 MangoPlayer started as a personal project — a music player built for my own needs and preferences. Over time, it has evolved through multiple versions, continuously improving in performance, usability, and features.<br>
-                At its core, MangoPlayer focuses on three main principles:
+                
+                Any form of contribution is welcome! Contact me via GitHub, create an Issue or submit a PR - I'm happy about your feedback.
                 
                 """);
     }
