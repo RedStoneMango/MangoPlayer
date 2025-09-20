@@ -1,0 +1,178 @@
+name: Build and Release Native Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (Semantic version, e.g. 1.2.3)'
+        required: true
+        type: string
+      notes:
+        description: 'Release notes'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }} - ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # Changed ubuntu-22.04-arm64 to ubuntu-latest (arm64 runner not standard)
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        arch: [x64, arm64]
+    # Skip Windows arm64 builds since runner not available
+    if: "!(matrix.os == 'windows-latest' && matrix.arch == 'arm64')"
+
+    outputs:
+      release_notes: ${{ steps.set_release_notes.outputs.release_notes }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 23 with JavaFX
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '23'
+
+      - name: Download JavaFX SDK 23.0.2
+        run: |
+          OS="${{ matrix.os }}"
+          ARCH="${{ matrix.arch }}"
+
+          case "$OS" in
+            ubuntu-latest)
+              if [ "$ARCH" = "arm64" ]; then
+                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_linux-aarch64_bin-sdk.zip"
+              else
+                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_linux-x64_bin-sdk.zip"
+              fi
+              ;;
+            macos-latest)
+              if [ "$ARCH" = "arm64" ]; then
+                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_osx-aarch64_bin-sdk.zip"
+              else
+                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_osx-x64_bin-sdk.zip"
+              fi
+              ;;
+            windows-latest)
+              JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_windows-x64_bin-sdk.zip"
+              ;;
+            *)
+              echo "Unsupported OS: $OS"
+              exit 1
+              ;;
+          esac
+
+          echo "Downloading JavaFX SDK from $JFX_URL"
+          curl -L "$JFX_URL" -o javafx-sdk.zip
+          unzip javafx-sdk.zip -d javafx-sdk
+          SDK_DIR_NAME="javafx-sdk-23.0.2"
+          echo "JAVAFX_SDK_DIR=$(pwd)/javafx-sdk/$SDK_DIR_NAME" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Set release notes fallback
+        id: set_release_notes
+        run: |
+          if [ -z "${NOTES}" ]; then
+            echo "release_notes=Automatically published release" >> $GITHUB_OUTPUT
+          else
+            echo "release_notes=${NOTES}" >> $GITHUB_OUTPUT
+          fi
+        env:
+          NOTES: ${{ github.event.inputs.notes }}
+
+      - name: Determine platform name
+        run: |
+          OS="${{ matrix.os }}"
+          ARCH="${{ matrix.arch }}"
+          PLATFORM=""
+
+          case "$OS" in
+            ubuntu-latest)
+              PLATFORM="linux"
+              ;;
+            macos-latest)
+              PLATFORM="mac"
+              ;;
+            windows-latest)
+              PLATFORM="windows"
+              ;;
+          esac
+
+          echo "PACKAGE_PLATFORM=${PLATFORM}-${ARCH}" >> $GITHUB_ENV
+
+      - name: Package Native Executable
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          mvn clean package \
+            -Drevision="$VERSION" \
+            -Djdk.path="$JAVA_HOME" \
+            -Dpackage.platform="$PACKAGE_PLATFORM" \
+            -Djavafx.module.path="$JAVAFX_SDK_DIR/lib"
+        shell: bash
+
+      - name: Upload Linux Artifacts
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-linux-${{ matrix.arch }}
+          path: |
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.AppImage
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.deb
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.rpm
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-linux.zip
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-linux.tar.gz
+
+      - name: Upload macOS Artifacts
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-mac-${{ matrix.arch }}
+          path: |
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.dmg
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.pkg
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-mac.zip
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-mac.tar.gz
+
+      - name: Upload Windows Artifacts
+        if: matrix.os == 'windows-latest' && matrix.arch == 'x64'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-windows-x64
+          path: |
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.exe
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msi
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msm
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.zip
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.tar.gz
+
+  publish:
+    name: Create GitHub Release with Native Packages
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: all_artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: Release ${{ github.event.inputs.version }}
+          body: ${{ needs.build.outputs.release_notes }}
+          draft: false
+          prerelease: false
+          files: all_artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
