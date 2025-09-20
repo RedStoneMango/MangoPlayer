@@ -107,17 +107,51 @@ jobs:
             -Djavafx.module.path="$JAVAFX_JMODS_DIR"
         shell: bash
 
+      - name: Name build artifacts
+        run: |
+          ARCH="${{ matrix.arch }}"
+          VERSION="${{ github.event.inputs.version }}"
+          NAME="${{ github.event.repository.name }}"
+          PLATFORM="${PACKAGE_PLATFORM}"
+
+          # Linux
+          if [ "$PLATFORM" = "linux" ]; then
+            mv target/${NAME}_${VERSION}.AppImage target/${NAME}_${VERSION}_${ARCH}.AppImage || true
+            mv target/${NAME}_${VERSION}.deb target/${NAME}_${VERSION}_${ARCH}.deb || true
+            mv target/${NAME}_${VERSION}.rpm target/${NAME}_${VERSION}_${ARCH}.rpm || true
+            mv target/${NAME}-${VERSION}-linux.zip target/${NAME}-${VERSION}-linux-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-linux.tar.gz target/${NAME}-${VERSION}-linux-${ARCH}.tar.gz || true
+          fi
+
+          # macOS
+          if [ "$PLATFORM" = "mac" ]; then
+            mv target/${NAME}_${VERSION}.dmg target/${NAME}_${VERSION}_${ARCH}.dmg || true
+            mv target/${NAME}_${VERSION}.pkg target/${NAME}_${VERSION}_${ARCH}.pkg || true
+            mv target/${NAME}-${VERSION}-mac.zip target/${NAME}-${VERSION}-mac-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-mac.tar.gz target/${NAME}-${VERSION}-mac-${ARCH}.tar.gz || true
+          fi
+
+          # Windows
+          if [ "$PLATFORM" = "windows" ]; then
+            mv target/${NAME}_${VERSION}.exe target/${NAME}_${VERSION}_${ARCH}.exe || true
+            mv target/${NAME}_${VERSION}.msi target/${NAME}_${VERSION}_${ARCH}.msi || true
+            mv target/${NAME}_${VERSION}.msm target/${NAME}_${VERSION}_${ARCH}.msm || true
+            mv target/${NAME}-${VERSION}-windows.zip target/${NAME}-${VERSION}-windows-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-windows.tar.gz target/${NAME}-${VERSION}-windows-${ARCH}.tar.gz || true
+          fi
+        shell: bash
+
       - name: Upload Linux Artifacts
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: build-linux-${{ matrix.arch }}
           path: |
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.AppImage
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.deb
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.rpm
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-linux.zip
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-linux.tar.gz
+            target/${{ github.event.repository.name }}_*.AppImage
+            target/${{ github.event.repository.name }}_*.deb
+            target/${{ github.event.repository.name }}_*.rpm
+            target/${{ github.event.repository.name }}-*-linux-*.zip
+            target/${{ github.event.repository.name }}-*-linux-*.tar.gz
 
       - name: Upload macOS Artifacts
         if: matrix.os == 'macos-latest'
@@ -125,10 +159,10 @@ jobs:
         with:
           name: build-mac-${{ matrix.arch }}
           path: |
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.dmg
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.pkg
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-mac.zip
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-mac.tar.gz
+            target/${{ github.event.repository.name }}_*.dmg
+            target/${{ github.event.repository.name }}_*.pkg
+            target/${{ github.event.repository.name }}-*-mac-*.zip
+            target/${{ github.event.repository.name }}-*-mac-*.tar.gz
 
       - name: Upload Windows Artifacts
         if: matrix.os == 'windows-latest' && matrix.arch == 'x64'
@@ -136,11 +170,11 @@ jobs:
         with:
           name: build-windows-x64
           path: |
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.exe
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msi
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msm
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.zip
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.tar.gz
+            target/${{ github.event.repository.name }}_*.exe
+            target/${{ github.event.repository.name }}_*.msi
+            target/${{ github.event.repository.name }}_*.msm
+            target/${{ github.event.repository.name }}-*-windows-*.zip
+            target/${{ github.event.repository.name }}-*-windows-*.tar.gz
 
   publish:
     name: Create GitHub Release with Native Packages
