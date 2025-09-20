@@ -154,6 +154,8 @@
                     <organizationName>RedStoneMango</organizationName>
                     <licenseFile>LICENSE.txt</licenseFile>
                     <platform>${package.platform}</platform>
+                    <createZipball>true</createZipball>
+                    <createTarball>true</createTarball>
                     <additionalModulePaths>
                         <modulePath>${javafx.module.path}</modulePath>
                     </additionalModulePaths>
