@@ -73,7 +73,7 @@ jobs:
           curl -L "$JFX_URL" -o javafx-jmods.zip
           unzip javafx-jmods.zip -d javafx-jmods
           JMODS_DIR_NAME="javafx-jmods-24.0.1"
-          echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/JMODS_DIR_NAME" >> $GITHUB_ENV
+          echo "JAVAFX_JMODS_DIR=\"$(pwd)/javafx-jmods/$JMODS_DIR_NAME\"" >> $GITHUB_ENV
         shell: bash
 
       - name: Set release notes fallback
