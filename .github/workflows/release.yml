@@ -113,7 +113,6 @@ jobs:
         with:
           name: build-linux-${{ matrix.arch }}
           path: |
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.AppImage
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.deb
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.rpm
@@ -126,7 +125,6 @@ jobs:
         with:
           name: build-mac-${{ matrix.arch }}
           path: |
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.dmg
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.pkg
             target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-mac.zip
@@ -138,13 +136,11 @@ jobs:
         with:
           name: build-windows-x64
           path: |
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-runnable.jar
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.exe
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msi
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}.msm
             target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.zip
             target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-windows.tar.gz
-          shell: bash
 
   publish:
     name: Create GitHub Release with Native Packages
