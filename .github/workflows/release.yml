@@ -40,7 +40,7 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
-      - name: Download JavaFX SDK 23.0.2
+      - name: Download JavaFX JMods 24.0.1
         run: |
           OS="${{ matrix.os }}"
           ARCH="${{ matrix.arch }}"
@@ -48,20 +48,20 @@ jobs:
           case "$OS" in
             ubuntu-latest)
               if [ "$ARCH" = "arm64" ]; then
-                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_linux-aarch64_bin-sdk.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_linux-aarch64_bin-jmods.zip"
               else
-                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_linux-x64_bin-sdk.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_linux-x64_bin-jmods.zip"
               fi
               ;;
             macos-latest)
               if [ "$ARCH" = "arm64" ]; then
-                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_osx-aarch64_bin-sdk.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_osx-aarch64_bin-jmods.zip"
               else
-                JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_osx-x64_bin-sdk.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_osx-x64_bin-jmods.zip"
               fi
               ;;
             windows-latest)
-              JFX_URL="https://download2.gluonhq.com/openjfx/23.0.2/openjfx-23.0.2_windows-x64_bin-sdk.zip"
+              JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_windows-x64_bin-jmods.zip"
               ;;
             *)
               echo "Unsupported OS: $OS"
@@ -69,11 +69,11 @@ jobs:
               ;;
           esac
 
-          echo "Downloading JavaFX SDK from $JFX_URL"
-          curl -L "$JFX_URL" -o javafx-sdk.zip
-          unzip javafx-sdk.zip -d javafx-sdk
-          SDK_DIR_NAME="javafx-sdk-23.0.2"
-          echo "JAVAFX_SDK_DIR=$(pwd)/javafx-sdk/$SDK_DIR_NAME" >> $GITHUB_ENV
+          echo "Downloading JavaFX JMods from $JFX_URL"
+          curl -L "$JFX_URL" -o javafx-jmods.zip
+          unzip javafx-jmods.zip -d javafx-jmods
+          JMODS_DIR_NAME="javafx-jmods-24.0.1"
+          echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/JMODS_DIR_NAME" >> $GITHUB_ENV
         shell: bash
 
       - name: Set release notes fallback
@@ -114,7 +114,7 @@ jobs:
             -Drevision="$VERSION" \
             -Djdk.path="$JAVA_HOME" \
             -Dpackage.platform="$PACKAGE_PLATFORM" \
-            -Djavafx.module.path="$JAVAFX_SDK_DIR/lib"
+            -Djavafx.module.path="JAVAFX_JMODS_DIR"
         shell: bash
 
       - name: Upload Linux Artifacts
