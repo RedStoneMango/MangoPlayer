@@ -150,7 +150,7 @@
                     <copyDependencies>true</copyDependencies>
                     <mainClass>${package.mainClass}</mainClass>
                     <name>${package.application.name}</name>
-                    <description>Play music easily using this lightweight music player. MangoPlayer includes all the classic audio playback features you expect, plus optional integration with tools like yt-dlp for downloading audio directly from YouTube.</description>
+                    <description>Play music easily with MangoPlayer — a lightweight audio player with optional YouTube download support via yt-dlp.</description>
                     <organizationName>RedStoneMango</organizationName>
                     <licenseFile>LICENSE.txt</licenseFile>
                     <platform>${package.platform}</platform>
