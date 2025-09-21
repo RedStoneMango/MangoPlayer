@@ -151,7 +151,7 @@ jobs:
           prerelease: false
           files: |
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_${{ matrix.arch }}.*
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_*-${{ matrix.arch }}.zip
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_*_${{ matrix.arch }}.zip
           overwrite_files: true
 
         env:
