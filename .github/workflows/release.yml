@@ -77,6 +77,7 @@ jobs:
 
       - name: Set JAVAFX_JMODS_DIR env var
         run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-24.0.1" >> $GITHUB_ENV
+        shell: bash
 
       - name: Set release notes fallback
         id: set_release_notes
