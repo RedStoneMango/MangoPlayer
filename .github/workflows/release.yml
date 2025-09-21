@@ -34,13 +34,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 23 with JavaFX
-        uses: actions/setup-java@v4
+      - name: Cache JavaFX JMods
+        uses: actions/cache@v3
         with:
-          distribution: 'temurin'
-          java-version: '23'
+          path: javafx-jmods
+          key: javafx-jmods-${{ matrix.os }}-${{ matrix.arch }}-24.0.1
 
-      - name: Download JavaFX JMods 24.0.1
+      - name: Download JavaFX JMods 24.0.1 (if cache miss)
+        if: steps.cache-javafx-jmods.outputs.cache-hit != 'true'
         run: |
           OS="${{ matrix.os }}"
           ARCH="${{ matrix.arch }}"
@@ -72,9 +73,12 @@ jobs:
           echo "Downloading JavaFX JMods from $JFX_URL"
           curl -L "$JFX_URL" -o javafx-jmods.zip
           unzip javafx-jmods.zip -d javafx-jmods
-          JMODS_DIR_NAME="javafx-jmods-24.0.1"
-          echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/$JMODS_DIR_NAME" >> $GITHUB_ENV
+          rm javafx-jmods.zip
         shell: bash
+        id: cache-javafx-jmods
+
+      - name: Set JAVAFX_JMODS_DIR env var
+        run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-24.0.1" >> $GITHUB_ENV
 
       - name: Set release notes fallback
         id: set_release_notes
@@ -120,7 +124,6 @@ jobs:
             mv target/${NAME}_${VERSION}.deb target/${NAME}_${VERSION}_${ARCH}.deb || true
             mv target/${NAME}_${VERSION}.rpm target/${NAME}_${VERSION}_${ARCH}.rpm || true
             mv target/${NAME}-${VERSION}-linux.zip target/${NAME}-${VERSION}-linux-${ARCH}.zip || true
-            mv target/${NAME}-${VERSION}-linux.tar.gz target/${NAME}-${VERSION}-linux-${ARCH}.tar.gz || true
           fi
 
           # macOS
@@ -128,7 +131,6 @@ jobs:
             mv target/${NAME}_${VERSION}.dmg target/${NAME}_${VERSION}_${ARCH}.dmg || true
             mv target/${NAME}_${VERSION}.pkg target/${NAME}_${VERSION}_${ARCH}.pkg || true
             mv target/${NAME}-${VERSION}-mac.zip target/${NAME}-${VERSION}-mac-${ARCH}.zip || true
-            mv target/${NAME}-${VERSION}-mac.tar.gz target/${NAME}-${VERSION}-mac-${ARCH}.tar.gz || true
           fi
 
           # Windows
@@ -137,63 +139,20 @@ jobs:
             mv target/${NAME}_${VERSION}.msi target/${NAME}_${VERSION}_${ARCH}.msi || true
             mv target/${NAME}_${VERSION}.msm target/${NAME}_${VERSION}_${ARCH}.msm || true
             mv target/${NAME}-${VERSION}-windows.zip target/${NAME}-${VERSION}-windows-${ARCH}.zip || true
-            mv target/${NAME}-${VERSION}-windows.tar.gz target/${NAME}-${VERSION}-windows-${ARCH}.tar.gz || true
           fi
         shell: bash
 
-      - name: Upload Linux Artifacts
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-linux-${{ matrix.arch }}
-          path: |
-            target/${{ github.event.repository.name }}_*.AppImage
-            target/${{ github.event.repository.name }}_*.deb
-            target/${{ github.event.repository.name }}_*.rpm
-            target/${{ github.event.repository.name }}-*-linux-*.zip
-            target/${{ github.event.repository.name }}-*-linux-*.tar.gz
-
-      - name: Upload macOS Artifacts
-        if: matrix.os == 'macos-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-mac-${{ matrix.arch }}
-          path: |
-            target/${{ github.event.repository.name }}_*.dmg
-            target/${{ github.event.repository.name }}_*.pkg
-            target/${{ github.event.repository.name }}-*-mac-*.zip
-            target/${{ github.event.repository.name }}-*-mac-*.tar.gz
-
-      - name: Upload Windows Artifacts
-        if: matrix.os == 'windows-latest' && matrix.arch == 'x64'
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-windows-x64
-          path: |
-            target/${{ github.event.repository.name }}_*.exe
-            target/${{ github.event.repository.name }}_*.msi
-            target/${{ github.event.repository.name }}_*.msm
-            target/${{ github.event.repository.name }}-*-windows-*.zip
-            target/${{ github.event.repository.name }}-*-windows-*.tar.gz
-
-  publish:
-    name: Create GitHub Release with Native Packages
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: all_artifacts
-
-      - name: Create GitHub Release
+      - name: Publish release asset
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.version }}
           name: Release ${{ github.event.inputs.version }}
-          body: ${{ needs.build.outputs.release_notes }}
+          body: ${{ steps.set_release_notes.outputs.release_notes }}
           draft: false
           prerelease: false
-          files: all_artifacts/**/*
+          files: |
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_${{ matrix.arch }}.*
+            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-${{ PACKAGE_PLATFORM }}-${{ matrix.arch }}.*
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
