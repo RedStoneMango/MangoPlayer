@@ -40,14 +40,7 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
-      - name: Cache JavaFX JMods
-        uses: actions/cache@v3
-        with:
-          path: javafx-jmods
-          key: javafx-jmods-${{ matrix.os }}-${{ matrix.arch }}-24.0.1
-
-      - name: Download JavaFX JMods 24.0.1 (if cache miss)
-        if: steps.cache-javafx-jmods.outputs.cache-hit != 'true'
+      - name: Download JavaFX JMods 24.0.1
         run: |
           OS="${{ matrix.os }}"
           ARCH="${{ matrix.arch }}"
@@ -81,7 +74,6 @@ jobs:
           unzip javafx-jmods.zip -d javafx-jmods
           rm javafx-jmods.zip
         shell: bash
-        id: cache-javafx-jmods
 
       - name: Set JAVAFX_JMODS_DIR env var
         run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-24.0.1" >> $GITHUB_ENV
