@@ -152,6 +152,7 @@ jobs:
           files: |
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_${{ matrix.arch }}.*
             target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_*-${{ matrix.arch }}.zip
+          overwrite: true
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
