@@ -6,67 +6,59 @@ MangoPlayer is a lightweight, feature-rich music playlist manager that enables y
 
 ## ✨ Features
 
-### 🎶 Playlist Management
-- Create, rename, delete, and open playlists.
-- Set custom thumbnails for playlists.
-- Export playlists as `.zip` archives (songs included).
-- Context menu for advanced playlist actions.
-
-### 🎵 Song Management
-- Import songs from local `.mp3` files.
-- Download songs directly from YouTube (via `yt-dlp` & `ffmpeg`).
-- Edit song metadata (title, thumbnail, volume).
-- Export individual songs with metadata included.
-- View usage stats: play count, playlists used in, source link, and unique ID.
-
-### ▶️ Playback & Control
-- Play playlists or individual songs.
-- Pause, resume, stop, and skip tracks.
-- Adjust global volume and per-song volume.
-- Shuffle, loop (all or single), and "End After Song" modes.
-- Detachable player controls for seamless multitasking.
-
-### 🔍 Song & Playlist Statistics
-- Built-in usage analyzer with detailed stats:
-    - Songs: play count, use count
-    - Playlists: total songs played, total playtime
+- Simple song management
+- Playlist creation
+- Song metadata customization (title, thumbnail, volume)
+- Playlist thumbnail management
+- Export songs individually or as a whole playlist
+- All default playback features: pause, resume, stop, loop, shuffle, etc.
+- Detachable player controls for seamless multitasking
+- View statistics: times played, playback time, etc.
 
 ### 🧰 External Tool Integration (Optional)
-- **`yt-dlp`** for YouTube downloading
-- **`ffmpeg`** for audio conversion and thumbnail handling
-- Configure executable path or auto-detect via system `PATH`
+
+- Support for every major audio format (songs) and image format (thumbnails)
+- Direct audio download from YouTube
 
 ---
 
 ## 📦 Installation
 
-<!-- > Currently distributed as a standalone desktop application.
+### 1. Download the Application
 
-1. Download the latest release from the Releases tab.
-2. (Optional) For extended features:
-    - Install `yt-dlp` and/or `ffmpeg` from their official websites.
-    - Link them via:  
-      `MangoPlayer -> TOOL NAME -> Set Executable Directory`  
-      or resolve from PATH:  
-      `MangoPlayer -> TOOL NAME -> Resolve from PATH` -->
+Get the latest version of **MangoPlayer** from the [Releases page](https://github.com/RedStoneMango/MangoPlayer/releases). Choose the installer that matches your operating system:
 
-> There are no official releases yet. Please come back later
+- `MangoPlayer-XX.XX.XX-windows-x64` for 64-bit Windows
+- `MangoPlayer-XX.XX.XX-mac-arm64` for Apple Silicon (arm64) Macs
+- `MangoPlayer-XX.XX.XX-mac-x64` for Intel-based Macs
+- `MangoPlayer-XX.XX.XX-linux-x64` for 64-bit Linux
+- `MangoPlayer-XX.XX.XX-linux-arm64` for ARM64-based Linux systems
 
 ---
 
-## 🧩 External Tools (Optional)
+### 2. Optional: Enable Advanced Features
 
-### Tools Supported:
-- `yt-dlp` – For downloading songs from YouTube
-- `ffmpeg` – For converting audio and image formats
+To unlock additional features like direct song downloads from YouTube or media file conversion, install the following external tools:
 
-### Integration Options:
-- Link executable manually via top menu:
-    - `MangoPlayer -> TOOL NAME -> Set Executable Directory`
-- Or let the app resolve it from your system `PATH`.
+#### 🔧 ffmpeg
+1. Open the **MangoPlayer** application.
+2. In the menu bar, go to:  
+   `MangoPlayer -> Ffmpeg -> Open download page`
+3. Follow the instructions on the website to download and install **ffmpeg**.
 
-> You **do not need** these tools to use MangoPlayer.  
-They simply **enable additional features**.
+#### 🔧 yt-dlp  
+1. Open the **MangoPlayer** application.
+2. In the menu bar, go to:  
+   `MangoPlayer -> Yt-dlp -> Open download page`
+3. Follow the instructions on the website to download and install **yt-dlp`.
+
+> ⚠️ Note: **yt-dlp** requires **ffmpeg** to function properly.
+
+#### ❓ Having Issues?
+
+If the tools aren't being detected after installation, refer to:  
+`Help -> External Tools -> Installing External Tools -> Linking the Executable`  
+from the application's menu bar for troubleshooting steps.
 
 ---
 
