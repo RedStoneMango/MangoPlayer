@@ -150,8 +150,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            target/${NAME}_${VERSION}_${ARCH}.*
-            target/${NAME}_${VERSION}_*-${ARCH}.zip
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_${{ matrix.arch }}.*
+            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_*-${{ matrix.arch }}.zip
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
