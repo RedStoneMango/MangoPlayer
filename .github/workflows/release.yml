@@ -123,14 +123,14 @@ jobs:
             mv target/${NAME}_${VERSION}.AppImage target/${NAME}_${VERSION}_${ARCH}.AppImage || true
             mv target/${NAME}_${VERSION}.deb target/${NAME}_${VERSION}_${ARCH}.deb || true
             mv target/${NAME}_${VERSION}.rpm target/${NAME}_${VERSION}_${ARCH}.rpm || true
-            mv target/${NAME}-${VERSION}-linux.zip target/${NAME}-${VERSION}-linux-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-linux.zip target/${NAME}_${VERSION}_linux_${ARCH}.zip || true
           fi
 
           # macOS
           if [ "$PLATFORM" = "mac" ]; then
             mv target/${NAME}_${VERSION}.dmg target/${NAME}_${VERSION}_${ARCH}.dmg || true
             mv target/${NAME}_${VERSION}.pkg target/${NAME}_${VERSION}_${ARCH}.pkg || true
-            mv target/${NAME}-${VERSION}-mac.zip target/${NAME}-${VERSION}-mac-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-mac.zip target/${NAME}_${VERSION}_mac_${ARCH}.zip || true
           fi
 
           # Windows
@@ -138,7 +138,7 @@ jobs:
             mv target/${NAME}_${VERSION}.exe target/${NAME}_${VERSION}_${ARCH}.exe || true
             mv target/${NAME}_${VERSION}.msi target/${NAME}_${VERSION}_${ARCH}.msi || true
             mv target/${NAME}_${VERSION}.msm target/${NAME}_${VERSION}_${ARCH}.msm || true
-            mv target/${NAME}-${VERSION}-windows.zip target/${NAME}-${VERSION}-windows-${ARCH}.zip || true
+            mv target/${NAME}-${VERSION}-windows.zip target/${NAME}_${VERSION}_windows_${ARCH}.zip || true
           fi
         shell: bash
 
@@ -151,8 +151,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            target/${{ github.event.repository.name }}_${{ github.event.inputs.version }}_${{ matrix.arch }}.*
-            target/${{ github.event.repository.name }}-${{ github.event.inputs.version }}-${{ PACKAGE_PLATFORM }}-${{ matrix.arch }}.*
+            target/${NAME}_${VERSION}_${ARCH}.*
+            target/${NAME}_${VERSION}_*-${ARCH}.zip
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
