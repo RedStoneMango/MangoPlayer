@@ -27,9 +27,6 @@ jobs:
           - os: windows-latest
             arch: arm64
 
-    outputs:
-      release_notes: ${{ steps.set_release_notes.outputs.release_notes }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -134,6 +131,21 @@ jobs:
 
           # Windows
           if [ "$PLATFORM" = "windows" ]; then
+            echo "=== DEBUG START ==="
+            echo "--- Listing contents of 'target/' directory ---"
+            ls -l target || echo "target/ directory not found"
+            echo
+        
+            echo "--- Listing contents of 'target/${NAME}' (if exists) ---"
+            if [ -e "target/${NAME}" ]; then
+                ls -l "target/${NAME}"
+            else
+                echo "target/${NAME} not found"
+            fi
+            echo
+            echo "=== DEBUG END ==="
+      
+    
             mv target/${NAME}_${VERSION}.exe target/${NAME}_${VERSION}_${ARCH}.exe || true
             mv target/${NAME}_${VERSION}.msi target/${NAME}_${VERSION}_${ARCH}.msi || true
             mv target/${NAME}_${VERSION}.msm target/${NAME}_${VERSION}_${ARCH}.msm || true
