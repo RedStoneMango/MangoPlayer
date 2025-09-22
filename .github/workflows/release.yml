@@ -76,6 +76,19 @@ jobs:
         run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-24.0.1" >> $GITHUB_ENV
         shell: bash
 
+      - name: Install Inno Setup (ISCC)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          $url = 'https://jrsoftware.org/download.php/is.exe'
+          $output = "$env:TEMP\is.exe"
+          Invoke-WebRequest $url -OutFile $output
+          Start-Process -FilePath $output -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-' -Wait
+
+          # Add to PATH for current session
+          $innoPath = "${env:ProgramFiles(x86)}\Inno Setup 6"
+          echo "$innoPath" | Out-File -FilePath $env:GITHUB_PATH -Append
+
       - name: Set release notes fallback
         id: set_release_notes
         run: |
