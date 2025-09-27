@@ -28,11 +28,13 @@ MangoPlayer is a lightweight, feature-rich music playlist manager that enables y
 
 Get the latest version of **MangoPlayer** from the [Releases page](https://github.com/RedStoneMango/MangoPlayer/releases). Choose the installer that matches your operating system:
 
-- `MangoPlayer-XX.XX.XX-windows-x64` for 64-bit Windows
-- `MangoPlayer-XX.XX.XX-mac-arm64` for Apple Silicon (arm64) Macs
-- `MangoPlayer-XX.XX.XX-mac-x64` for Intel-based Macs
-- `MangoPlayer-XX.XX.XX-linux-x64` for 64-bit Linux
-- `MangoPlayer-XX.XX.XX-linux-arm64` for ARM64-based Linux systems
+- `MangoPlayer_XX.XX.XX_windows_x64` for 64-bit Windows
+- `MangoPlayer_XX.XX.XX_mac_arm64` for Apple Silicon (arm64) Macs
+- `MangoPlayer_XX.XX.XX_mac_x64` for Intel-based Macs
+- `MangoPlayer_XX.XX.XX_linux_x64` for 64-bit Linux
+- `MangoPlayer_XX.XX.XX_linux_arm64` for ARM64-based Linux systems
+
+> ⚠️ Please note that the release files may not be up to date with the repository, as the releases only contain the latest stable version of the app. If you are looking for this stable version's code, download the `Source code` file found among the release assets.
 
 ---
 
