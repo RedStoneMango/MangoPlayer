@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -34,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class PlaylistScreenController implements IInitializable, ISongSelectable, ISongPlayable, ISongViewable {
@@ -204,16 +206,12 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
 
         songsFilterField.getScene().addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             onKeyPress.accept(e);
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    if (PlaylistAudioManager.isPlaying()) {
-                        onStopButton();
-                    }
-                    else {
-                        onBackButton();
-                    }
+            if (Objects.requireNonNull(e.getCode()) == KeyCode.ESCAPE) {
+                if (PlaylistAudioManager.isPlaying()) {
+                    onStopButton();
+                } else {
+                    onBackButton();
                 }
-                case SPACE, K -> onPlayButton();
             }
         });
         songNameTooltip.setShowDelay(Duration.millis(10));
