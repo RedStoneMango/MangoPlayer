@@ -34,6 +34,9 @@ public class SongAdding implements IProcessExecuteable {
 
     public static final SongAdding INSTANCE = new SongAdding();
 
+    private SongListController controller;
+    private String lastSearch;
+
     public void onImportSong(SongListController controller) {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Audio file", "*.aac", "*.ac3", "*.aiff", "*.alac", "*.amr", "*.ape", "*.dts", "*.flac", "*.m4a", "*.mka", "*.mp2", "*.mp3", "*.oga", "*.ogg", "*.opus", "*.ra", "*.shn", "*.tta", "*.voc", "*.wav", "*.wma", "*.wv"));
@@ -82,8 +85,6 @@ public class SongAdding implements IProcessExecuteable {
         }
     }
 
-    private SongListController controller;
-
     public void onDownloadSong(SongListController controller) {
         this.controller = controller;
         if (YtDlpManager.ensureConnection()) {
@@ -94,27 +95,31 @@ public class SongAdding implements IProcessExecuteable {
             dialog.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
             dialog.showAndWait();
             if (dialog.getResult() != null && YtDlpManager.ensureConnection()) {
-                String input = dialog.getResult();
-                Stage stage = new Stage();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initOwner(MangoPlayer.primaryStage);
-                stage.setTitle("MangoPlayer | Load YouTube video");
-                SongDownloadResultScene scene = SongDownloadResultScene.createNewScene(input, () -> YtDlpManager.getInstance().destroyRunningProcess(), this::videoSearchSelected);
-                Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
-
-                new Thread(() -> {
-                    if (Utilities.isValidYoutubeLink(input)) {
-                        System.out.println("Looking up youtube video for link '" + input + "'");
-                        scene.sendNewResultInformation(YtDlpManager.getInstance().loadUrl(input));
-                    }
-                    else {
-                        System.out.println("Performing youtube video search for search query '" + input + "'");
-                        YtDlpManager.getInstance().searchYoutube(input, scene::sendNewResultInformation);
-                    }
-                    scene.sendEndInformation();
-                }).start();
+                startSearch(dialog.getResult());
             }
         }
+    }
+
+    public void startSearch(String search) {
+        lastSearch = search;
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(MangoPlayer.primaryStage);
+        stage.setTitle("MangoPlayer | Load YouTube video");
+        SongDownloadResultScene scene = SongDownloadResultScene.createNewScene(search, () -> YtDlpManager.getInstance().destroyRunningProcess(), this::videoSearchSelected);
+        Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
+
+        new Thread(() -> {
+            if (Utilities.isValidYoutubeLink(search)) {
+                System.out.println("Looking up youtube video for link '" + search + "'");
+                scene.sendNewResultInformation(YtDlpManager.getInstance().loadUrl(search));
+            }
+            else {
+                System.out.println("Performing youtube video search for search query '" + search + "'");
+                YtDlpManager.getInstance().searchYoutube(search, scene::sendNewResultInformation);
+            }
+            scene.sendEndInformation();
+        }).start();
     }
 
     private boolean videoSearchSelected(YtDlpManager.SearchResult searchResult) {
@@ -152,5 +157,9 @@ public class SongAdding implements IProcessExecuteable {
                 Utilities.showErrorScreen("Download song", "Error processing downloaded assets: " + e);
             }
         }
+    }
+
+    public String getLastSearch() {
+        return lastSearch;
     }
 }

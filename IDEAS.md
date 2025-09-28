@@ -1,6 +1,6 @@
 # Feature Ideas
 
-- [ ] **Yt-dlp update dialog on search error**
+- [X] **Yt-dlp update dialog on search error**
 
   Currently, the user has to update yt-dlp manually when an error occurs while searching YouTube for a track. Add a dialog that automatically detects a known error and suggests the user to update, maybe even runs `yt-dlp -U` automatically.
 

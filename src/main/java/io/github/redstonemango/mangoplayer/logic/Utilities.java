@@ -19,6 +19,7 @@ import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import io.github.redstonemango.mangoplayer.logic.config.SongConfigWrapper;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -288,5 +289,34 @@ public class Utilities {
         if (alert.getResult() == learnMoreBtn) {
             OperatingSystem.loadCurrentOS().open("https://www.oracle.com/java/technologies/javase/products-doc-jdk8-jre8-certconfig.html#:~:text=JavaFX%20Media,12.04%20or%20equivalent.");
         }
+    }
+
+    public static @Nullable String findExecutableInPath(String command) {
+        String pathEnv = System.getenv("PATH");
+        if (pathEnv == null || pathEnv.isEmpty()) {
+            return null;
+        }
+
+        String pathSeparator = File.pathSeparator;
+        String[] paths = pathEnv.split(pathSeparator);
+
+        String[] extensions = {""}; // Default for UNIX
+        if (OperatingSystem.isWindows()) {
+            String pathext = System.getenv("PATHEXT");
+            if (pathext != null) {
+                extensions = pathext.toLowerCase().split(";");
+            }
+        }
+
+        for (String dir : paths) {
+            for (String ext : extensions) {
+                File file = new File(dir, command + ext);
+                if (file.isFile() && file.canExecute()) {
+                    return file.getAbsolutePath();
+                }
+            }
+        }
+
+        return null;
     }
 }

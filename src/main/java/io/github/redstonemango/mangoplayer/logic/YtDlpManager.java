@@ -2,6 +2,7 @@ package io.github.redstonemango.mangoplayer.logic;
 
 import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import io.github.redstonemango.mangoplayer.logic.config.MainConfigWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -352,6 +353,43 @@ public class YtDlpManager {
         }
         this.runningProcess = null;
         return searchResult;
+    }
+
+    public boolean performSelfUpdate(Consumer<String> onLine) {
+        destroyRunningProcess();
+
+        ProcessBuilder processBuilder = new ProcessBuilder(createSelfUpdateCommand());
+
+        processBuilder.redirectErrorStream(true);
+        try {
+            Process process = processBuilder.start();
+
+            this.runningProcess = process;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                onLine.accept(line);
+            }
+
+            int code = process.waitFor();
+            if (code != 0 && code != 143) {
+                return false;
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            Platform.runLater(() -> Utilities.showErrorScreen("Update yt-dlp", e.getMessage()));
+            return false;
+        }
+        this.runningProcess = null;
+        return true;
+    }
+
+    public String[] createSelfUpdateCommand() {
+        String ytdlp = Utilities.findExecutableInPath(path);
+        if (ytdlp == null) ytdlp = path;
+
+        return OperatingSystem.loadCurrentOS().createProcessElevationCommand(new String[]{ytdlp, "--update"}, new String[]{});
     }
 
     public void destroyRunningProcess() {
