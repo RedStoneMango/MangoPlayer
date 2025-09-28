@@ -514,9 +514,9 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
     @Override
     public void onSongPlay(Song song) {
         Utilities.tryMovePlaylistToListTop(playlist);
+        ((ImageView) playButton.getGraphic()).setImage(Finals.IMAGE_PAUSE);
         PlaylistAudioManager.play(song);
         songsFilterField.requestFocus();
-        ((ImageView) playButton.getGraphic()).setImage(Finals.IMAGE_PAUSE);
     }
 
     @Override

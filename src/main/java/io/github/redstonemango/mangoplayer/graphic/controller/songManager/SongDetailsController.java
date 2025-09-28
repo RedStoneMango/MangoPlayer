@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -36,7 +37,6 @@ public class SongDetailsController implements IInitializable, IProcessExecuteabl
 
     private final double sMiddleSectionBounds = 5;
 
-    private @Nullable Media songMedia;
     private @Nullable MediaPlayer testListenPlayer = null;
     private double msMiddleSectionStart = -1;
 
@@ -55,13 +55,6 @@ public class SongDetailsController implements IInitializable, IProcessExecuteabl
     public void init() {
         if (songNameField.getScene() instanceof SongDetailsScene scene) {
             this.song = scene.getSong();
-        }
-        File audioFile = new File(Utilities.audioPathFromSong(song));
-        if (audioFile.exists()) {
-            songMedia = new Media(audioFile.toURI().toString());
-        }
-        else {
-            songMedia = null;
         }
 
         songNameField.setText(song.getName());
@@ -124,11 +117,27 @@ public class SongDetailsController implements IInitializable, IProcessExecuteabl
     }
 
     private boolean prepareAndStartPlayer() {
-        if (songMedia == null) {
+        Media songMedia;
+        File audioFile = new File(Utilities.audioPathFromSong(song));
+        if (audioFile.exists()) {
+            try {
+                songMedia = new Media(audioFile.toURI().toString());
+                testListenPlayer = new MediaPlayer(songMedia);
+            }
+            catch (MediaException e) {
+                System.err.println("Media error instantiating audio playback objects for volume test: " + e);
+                if (e.getType() == MediaException.Type.UNKNOWN) {
+                    Utilities.showCodecErrorMessage();
+                }
+                testListenPlayer = null;
+                return false;
+            }
+        }
+        else {
             Utilities.showErrorScreen("Play '" + song.getName() + "'", "The audio asset for the song could not be found.\nPlease try re-downloading/importing the song");
             return false;
         }
-        testListenPlayer = new MediaPlayer(songMedia);
+
         testListenPlayer.setOnReady(() -> {
             testListenPlayer.setVolume(MainConfigWrapper.loadConfig().volume * song.getVolumeAdjustment());
             msMiddleSectionStart = Math.max(songMedia.getDuration().toMillis() / 2 - sMiddleSectionBounds * 1000, 0);

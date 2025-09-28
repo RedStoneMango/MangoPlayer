@@ -4,7 +4,7 @@
 
   Currently, the user has to update yt-dlp manually when an error occurs while searching YouTube for a track. Add a dialog that automatically detects a known error and suggests the user to update, maybe even runs `yt-dlp -U` automatically.
 
-- [ ] **"Missing library" error**
+- [X] **"Missing library" error**
 
   Audio playback requires system dependencies. While they should normally be pre-installed, on some Linux devices `avcodec`, `ffmpeg`, or similar may be missing. Detect this situation and prompt the user to install the required packages.
 
