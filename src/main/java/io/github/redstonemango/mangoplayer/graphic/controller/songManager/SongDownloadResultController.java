@@ -1,6 +1,9 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.songManager;
 
+import io.github.redstonemango.mangoplayer.logic.Utilities;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
@@ -9,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import io.github.redstonemango.mangoplayer.graphic.controller.interfaces.IInitializable;
 import io.github.redstonemango.mangoplayer.logic.YtDlpManager;
+
+import java.io.IOException;
 
 public class SongDownloadResultController implements IInitializable {
     @FXML private Label headerLabel;
@@ -60,6 +65,19 @@ public class SongDownloadResultController implements IInitializable {
                 System.err.println("Received an invalid search result from yt-dlp. Result data are:");
                 System.err.println("<Result header>  " + searchResult.getName());
                 System.err.println("<Result footer>  " + searchResult.getUrl());
+                System.out.println("Prompting user to update yt-dlp and killing search process...");
+                scene.getOnKill().run();
+
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/io/github/redstonemango/mangoplayer/fxml/songManager/updateYtDlp.fxml"));
+                    Scene updateScene = new Scene(loader.load());
+                    Stage stage = (Stage) headerLabel.getScene().getWindow();
+                    stage.setTitle("MangoPlayer | Update yt-dlp");
+                    Utilities.prepareAndShowStage(stage, updateScene, loader);
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

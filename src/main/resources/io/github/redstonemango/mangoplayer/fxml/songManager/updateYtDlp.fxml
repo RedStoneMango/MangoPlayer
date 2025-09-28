@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.graphic.controller.songManager.UpdateYtDlpController">
+   <top>
+      <VBox alignment="CENTER" prefHeight="205.0" prefWidth="471.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="header1" text="Received an invalid answer from the yt-dlp YouTube search" textAlignment="CENTER" textFill="RED" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="header2" layoutX="10.0" layoutY="19.0" text="This might be because of newer HTTP patterns, youre version of yt-dlp does not yet support" textAlignment="CENTER" textFill="RED" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="header3" layoutX="10.0" layoutY="83.0" text="Would you like to perform a self-update for yt-dlp?" textAlignment="CENTER" textFill="RED" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </top>
+   <center>
+      <TextArea fx:id="outputField" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" text="\$ yt-dlp --update&#10;" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Button fx:id="updateButton" defaultButton="true" mnemonicParsing="false" onAction="#onUpdateButton" prefHeight="26.0" prefWidth="152.0" text="Update yt-dlp">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="closeButton" layoutX="216.0" layoutY="20.0" mnemonicParsing="false" onAction="#onCloseButton" prefWidth="152.0" text="Close">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

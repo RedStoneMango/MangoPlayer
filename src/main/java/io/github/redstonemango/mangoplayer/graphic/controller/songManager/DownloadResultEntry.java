@@ -31,7 +31,7 @@ public class DownloadResultEntry extends DownloadResultEntryBase {
             titleLabel.setTextFill(Color.RED);
             urlLabel.setTextFill(Color.RED);
             titleLabel.setText("Got an invalid answer from yt-dlp");
-            urlLabel.setText("Check the logs for more information");
+            urlLabel.setText("You should now see an update prompt");
             button.setDisable(true);
         }
     }
@@ -59,6 +59,5 @@ public class DownloadResultEntry extends DownloadResultEntryBase {
     protected void onLinkOpen(MouseEvent mouseEvent) {
         if (isValidResult()) OperatingSystem.loadCurrentOS().open(searchResult.getUrl());
         else OperatingSystem.loadCurrentOS().open(LogManager.resolveTodayLog());
-
     }
 }
