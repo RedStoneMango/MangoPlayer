@@ -1,5 +1,6 @@
 package io.github.redstonemango.mangoplayer.logic;
 
+import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -274,5 +275,18 @@ public class Utilities {
     }
     public static String graphicPathFromPlaylist(Playlist playlist) {
         return MangoPlayer.APP_FOLDER_PATH + "/assets/playlistGraphics/" + playlist.getId() + ".png";
+    }
+
+    public static void showCodecErrorMessage() {
+        ButtonType ignoreBtn = new ButtonType("Ignore");
+        ButtonType learnMoreBtn = new ButtonType("Learn more", ButtonBar.ButtonData.YES);
+        Alert alert = new Alert(Alert.AlertType.WARNING, "", ignoreBtn, learnMoreBtn);
+        alert.setTitle("FknPlayer | Missing codec");
+        alert.setHeaderText("The audio playback failed");
+        alert.setContentText("This might be due to a lack of codecs installed on your system");
+        alert.showAndWait();
+        if (alert.getResult() == learnMoreBtn) {
+            OperatingSystem.loadCurrentOS().open("https://www.oracle.com/java/technologies/javase/products-doc-jdk8-jre8-certconfig.html#:~:text=JavaFX%20Media,12.04%20or%20equivalent.");
+        }
     }
 }

@@ -1,7 +1,9 @@
 package io.github.redstonemango.mangoplayer.logic;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import io.github.redstonemango.mangoplayer.graphic.controller.playlistScreen.PlaylistScreenController;
@@ -47,6 +49,7 @@ public class PlaylistAudioManager {
         }
         if (!audioFile.exists()) {
             Utilities.showErrorScreen("Play '" + song.getName() + "'", "The audio asset for the song could not be found.\nPlease try re-downloading/importing the song");
+            currentlyPlayingSong = null;
             controller.onPlayEnd();
             return;
         }
@@ -56,8 +59,21 @@ public class PlaylistAudioManager {
         }
 
         currentlyPlayingSong = song;
-        currentMedia = new Media(audioFile.toURI().toString());
-        currentPlayer = new MediaPlayer(currentMedia);
+        try {
+            currentMedia = new Media(audioFile.toURI().toString());
+            currentPlayer = new MediaPlayer(currentMedia);
+        }
+        catch (MediaException e) {
+            System.err.println("Media error while instantiating audio playback objects for playlist: " + e);
+            if (e.getType() == MediaException.Type.UNKNOWN) {
+                Utilities.showCodecErrorMessage();
+            }
+            currentlyPlayingSong = null;
+            currentPlayer = null;
+            currentMedia = null;
+            controller.onPlayEnd();
+            return;
+        }
         updateVolume();
 
         currentPlayer.setOnReady(() -> {
