@@ -590,7 +590,12 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
 
     @FXML
     protected void onBackwardButton() {
-        PlaylistAudioManager.songQueueBackwards(true);
+        if (PlaylistAudioManager.getCurrentTime().toSeconds() < 2) {
+            PlaylistAudioManager.songQueueBackwards(true);
+        }
+        else {
+            PlaylistAudioManager.seek(Duration.seconds(0), false);
+        }
     }
 
     public void onNewSongStart(Song song, Duration duration, boolean jumpTo) {
