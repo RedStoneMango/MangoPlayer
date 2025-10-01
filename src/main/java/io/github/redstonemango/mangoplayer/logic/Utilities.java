@@ -256,7 +256,7 @@ public class Utilities {
     }
 
     public static String formatAsFriendlyText(String name) {
-        return name.replace(" ", "_").replace("/", "-").replace("\\", "_");
+        return name.trim().replace(" ", "_").replace("/", "-").replace("\\", "-").replaceAll("[^a-zA-Z0-9_-]", "");
     }
 
     public static String audioPathFromSong(Song song) {
