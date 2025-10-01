@@ -24,7 +24,7 @@ public class UniqueIdGenerator {
         Set<String> existingIds = loadExistingIds(use);
 
         // First try random attempts
-        int estimatedCollisions = (int) Math.min(MAX_RANDOM_ATTEMPTS, 10 * Math.sqrt(existingIds.size())); // birthday paradox logic
+        int estimatedCollisions = Math.max(1, (int) Math.min(MAX_RANDOM_ATTEMPTS, 10 * Math.sqrt(existingIds.size()))); // birthday paradox logic
         for (int attempt = 0; attempt < estimatedCollisions; attempt++) {
             String id = generateRandomString(length);
             if (!existingIds.contains(id)) {
