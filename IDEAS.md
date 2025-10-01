@@ -26,7 +26,7 @@
 
   When a user presses the “previous” or “queue backwards” button and the current playback time is greater than 2 seconds, restart the current song instead of going to the previous one.
 
-- [ ] **Trim redundant characters from exported song filenames**
+- [X] **Trim redundant characters from exported song filenames**
 
   Clean exported filenames by stripping unnecessary characters such as emojis, excess whitespace, or non-standard symbols, ensuring better compatibility across filesystems.
 
