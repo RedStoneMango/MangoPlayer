@@ -285,6 +285,7 @@ public class Utilities {
         alert.setTitle("FknPlayer | Missing codec");
         alert.setHeaderText("The audio playback failed");
         alert.setContentText("This might be due to a lack of codecs installed on your system");
+        alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
         alert.showAndWait();
         if (alert.getResult() == learnMoreBtn) {
             OperatingSystem.loadCurrentOS().open("https://www.oracle.com/java/technologies/javase/products-doc-jdk8-jre8-certconfig.html#:~:text=JavaFX%20Media,12.04%20or%20equivalent.");
