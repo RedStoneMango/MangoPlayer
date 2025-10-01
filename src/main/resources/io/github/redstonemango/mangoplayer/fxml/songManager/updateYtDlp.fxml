@@ -18,7 +18,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="header2" layoutX="10.0" layoutY="19.0" text="This might be because of newer HTTP patterns, youre version of yt-dlp does not yet support" textAlignment="CENTER" textFill="RED" wrapText="true">
+            <Label fx:id="header2" layoutX="10.0" layoutY="19.0" text="This might be because of newer HTTP patterns, your version of yt-dlp does not yet support" textAlignment="CENTER" textFill="RED" wrapText="true">
                <font>
                   <Font size="20.0" />
                </font>
