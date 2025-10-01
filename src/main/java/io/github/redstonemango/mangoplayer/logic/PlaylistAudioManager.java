@@ -1,7 +1,6 @@
 package io.github.redstonemango.mangoplayer.logic;
 
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
@@ -195,6 +194,13 @@ public class PlaylistAudioManager {
 
     public static @Nullable Song getCurrentlyPlayingSong() {
         return currentlyPlayingSong;
+    }
+
+    public static @Nullable Duration getCurrentTime() {
+        if (currentPlayer != null && currentlyPlayingSong != null) {
+            return currentPlayer.getCurrentTime();
+        }
+        return null;
     }
 
     public static void initializeSongQueue(@Nullable Song firstSong) {

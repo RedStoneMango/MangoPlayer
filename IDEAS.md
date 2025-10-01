@@ -22,7 +22,7 @@
 
   Automatically highlight/select a song in the song manager after it was added, or after an operation that modifies it, improving workflow clarity.
 
-- [ ] **Song restart behavior for “queue backwards” button**
+- [X] **Song restart behavior for “queue backwards” button**
 
   When a user presses the “previous” or “queue backwards” button and the current playback time is greater than 2 seconds, restart the current song instead of going to the previous one.
 
