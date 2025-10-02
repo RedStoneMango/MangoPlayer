@@ -2,7 +2,12 @@
 
 MangoPlayer is a lightweight, feature-rich music playlist manager that enables you to **import, edit, organize, and play music playlists** with ease. With powerful integration features, flexible song/playlist management, and a clean UI, MangoPlayer is built for users who want both simplicity and control.
 
+### Want to stay up-to-date?
+
+I document my future ideas for this project in [this document](./IDEAS.md). Have a look at it if you are interested in possible future features.
+
 ---
+
 
 ## ✨ Features
 
