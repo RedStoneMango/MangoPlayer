@@ -46,7 +46,7 @@
 
   After loading the I/O config, check for and remove multiple occurrences of the same song within a playlist.
 
-- [ ] **Make the song download process cancelable**
+- [X] **Make the song download process cancelable**
 
   Add the ability for users to cancel song downloads in progress, particularly helpful if the process is stalled or the wrong item is being downloaded.
 
