@@ -392,10 +392,16 @@ public class YtDlpManager {
         return OperatingSystem.loadCurrentOS().createProcessElevationCommand(new String[]{ytdlp, "--update"}, new String[]{});
     }
 
-    public void destroyRunningProcess() {
-        if (this.runningProcess != null) {
-            System.out.println("Destroying the running external process...");
-            this.runningProcess.destroy();
+    public synchronized void destroyRunningProcess() {
+        if (runningProcess != null) {
+            System.out.println("Destroying the running external process (" +
+                    runningProcess.info().commandLine().
+                            map(s -> "'" + s + "'").
+                            orElse("Unknown command")
+                    + ")...");
+
+            runningProcess.destroy();
+            runningProcess = null;
             System.out.println("Done destroying the running external process!");
         }
     }
