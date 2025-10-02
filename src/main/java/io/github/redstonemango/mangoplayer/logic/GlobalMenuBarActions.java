@@ -1,6 +1,7 @@
 package io.github.redstonemango.mangoplayer.logic;
 
 import io.github.redstonemango.mangoutils.OperatingSystem;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import io.github.redstonemango.mangoplayer.graphic.MangoPlayer;
@@ -390,21 +391,13 @@ public class GlobalMenuBarActions {
                 """);
     }
     public static void onHomepageMenu() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("No homepage");
-        alert.setHeaderText("This application does not have a homepage yet");
-        alert.setContentText("For information on how to use the application, please visit \"Help -> How To\"");
-        alert.show();
+        Platform.runLater(() -> {
+            OperatingSystem.loadCurrentOS().open("https://github.com/RedStoneMango/MangoPlayer");
+        });
     }
     public static void onIssuesMenu() {
-        ButtonType button = new ButtonType("Send e-mail");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "", button, ButtonType.CANCEL);
-        alert.setTitle("No issue tracker");
-        alert.setHeaderText("This application does not have an issue tracker yet");
-        alert.setContentText("If you want to report bugs, please contact via e-mail, filling out the given template");
-        alert.showAndWait();
-        if (alert.getResult() == button) {
-            OperatingSystem.loadCurrentOS().open("mailto:fabian@familie-krohn.de?subject=Issue%20tracker%20for%20%22MangoPlayer%22%20%7C%20YOUR%20SUBJECT%20HERE&body=Issue%20tracker%20for%20%22MangoPlayer%22%2C%20%5BMONTH%5D%2F%5BDAY%5D%2F%5BYEAR%5D%0D%0A%0D%0AShort%20description%20of%20the%20bug%3A%0D%0A%5BBrief%20summary%5D%0D%0A%0D%0A----------%0D%0AHow%20to%20replicate%3A%0D%0A1.%0D%0A2.%0D%0A3.%0D%0A...%0D%0A%0D%0A----------%0D%0AError%20message%20(if%20one%20exists)%3A%0D%0A%5BMessage%5D%0D%0A%0D%0A----------%0D%0ABy%20sending%20this%20mail%2C%20I%20confirm%3A%0D%0A-%20Latest%20application%20version%20is%20in%20use.%0D%0A-%20The%20bug%20is%20not%20caused%20by%20external%20tools.%0D%0A-%20If%20reported%20before%2C%20this%20is%20a%20new%20version%20or%20over%20a%20month%20old.%0D%0A-%20My%20email%20can%20be%20stored%20for%20five%20months,%20but%20no%20sharing%20of%20my%20personal%20info%20without%20my%20explicit%20permission");
-        }
+        Platform.runLater(() -> {
+            OperatingSystem.loadCurrentOS().open("https://github.com/RedStoneMango/MangoPlayer/issues");
+        });
     }
 }
