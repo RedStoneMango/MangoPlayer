@@ -2,7 +2,6 @@ package io.github.redstonemango.mangoplayer.logic;
 
 import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import io.github.redstonemango.mangoplayer.logic.config.MainConfigWrapper;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +65,7 @@ public class YtDlpManager {
             int code = process.waitFor();
 
             if (code != 0 && code != 143) {
-                showConversionErrorDialog(true, audioFile.getName());
+                showConversionErrorDialog(audioFile.getName());
             }
 
             return code == 0;
@@ -104,7 +103,7 @@ public class YtDlpManager {
             int code = process.waitFor();
 
             if (code != 0 && code != 143) {
-                showConversionErrorDialog(true, imageFile.getName());
+                showConversionErrorDialog(imageFile.getName());
             }
 
             return code == 0;
@@ -311,7 +310,6 @@ public class YtDlpManager {
             e.printStackTrace();
             Platform.runLater(() -> Utilities.showErrorScreen("Search youtube", String.valueOf(e)));
         }
-        this.runningProcess = null;
     }
 
     public SearchResult loadUrl(String url) {
@@ -351,7 +349,6 @@ public class YtDlpManager {
             e.printStackTrace();
             Platform.runLater(() -> Utilities.showErrorScreen("Load url", e.getMessage()));
         }
-        this.runningProcess = null;
         return searchResult;
     }
 
@@ -381,7 +378,6 @@ public class YtDlpManager {
             Platform.runLater(() -> Utilities.showErrorScreen("Update yt-dlp", e.getMessage()));
             return false;
         }
-        this.runningProcess = null;
         return true;
     }
 
@@ -393,31 +389,40 @@ public class YtDlpManager {
     }
 
     public synchronized void destroyRunningProcess() {
-        if (runningProcess != null) {
-            System.out.println("Destroying the running external process (" +
+        destroyRunningProcess(false);
+    }
+
+    public synchronized void destroyRunningProcess(boolean forceKill) {
+        System.out.println(runningProcess);
+        if (runningProcess != null && runningProcess.isAlive()) {
+            System.out.println((forceKill ? "Force-d" : "D") + "estroying the running external process (" +
                     runningProcess.info().commandLine().
                             map(s -> "'" + s + "'").
                             orElse("Unknown command")
                     + ")...");
 
-            runningProcess.destroy();
-            runningProcess = null;
-            System.out.println("Done destroying the running external process!");
+            if (forceKill) runningProcess.destroyForcibly();
+            else runningProcess.destroy();
+            System.out.println("Done " + (forceKill ? "force-" : "") + "destroying the running external process!");
         }
     }
 
     private void showDownloadErrorDialog(boolean exception, String asset) {
-        if (exception) new Thread(() -> {throw new RuntimeException("Error whiles downloading asset '" + asset + "'. Either an external tool (yt-dlp / ffmpeg) is not installed or this is a serious bug. Reference to Process error redirect for more information. If no error was redirected, the eternal tool's very likely missing");}, "AssetDownload").start();
-        if (JOptionPane.showOptionDialog(null, "An error occurred while downloading asset '" + asset + "'.\n\n This may have been caused due to a lack of the ffmpeg library.\nIf ffmpeg is installed, this is a serious bug and should be reported to the developer", "Error whiles downloading asset", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ffmpeg download", "Back"}, exception ? "Ffmpeg download" : "Back") == 0) {
+        if (exception) System.err.println("An error occurred while downloading asset '" + asset + "'!");
+        int choice = JOptionPane.showOptionDialog(null, "An error occurred while downloading asset '" + asset + "'.\n\n This may have been caused by a lack of the ffmpeg library or a canceled execution of the process.\nIf this is not the case, please report this to the developer", "Error while downloading asset", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ffmpeg download", "Back", "Report Bug"}, exception ? "Ffmpeg download" : "Back");
+        if (choice == 0) {
             OperatingSystem.loadCurrentOS().open(FFMPEG_DOWNLOAD);
             showDownloadErrorDialog(false, asset);
         }
+        else if (choice == 2) {
+            GlobalMenuBarActions.onIssuesMenu();
+        }
     }
-    private void showConversionErrorDialog(boolean exception, String asset) {
-        if (exception) new Thread(() -> {throw new RuntimeException("Error whiles downloading asset '" + asset + "'. Either an external tool (yt-dlp / ffmpeg) is not installed or this is a serious bug. Reference to Process error redirect for more information. If no error was redirected, the eternal tool's very likely missing");}, "AssetDownload").start();
-        if (JOptionPane.showOptionDialog(null, "An error occurred while conversion of '" + asset + "'.\n\n This may have been caused due to a lack of the ffmpeg library.\nIf ffmpeg is installed, this is a serious bug and should be reported to the developer", "Error whiles downloading asset", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ffmpeg download", "Back"}, exception ? "Ffmpeg download" : "Back") == 0) {
-            OperatingSystem.loadCurrentOS().open(FFMPEG_DOWNLOAD);
-            showConversionErrorDialog(false, asset);
+    private void showConversionErrorDialog(String asset) {
+        System.err.println("An error occurred during conversion of '" + asset + "'!");
+        int choice = JOptionPane.showOptionDialog(null, "An error occurred during conversion of '" + asset + "'.\n\n This may have been caused by a canceled execution of the process.\nIf this is not the case, please report this to the developer", "Error while conversion of asset", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ignore", "Report Bug"}, "Ignore");
+        if (choice == 1) {
+            GlobalMenuBarActions.onIssuesMenu();
         }
     }
 
