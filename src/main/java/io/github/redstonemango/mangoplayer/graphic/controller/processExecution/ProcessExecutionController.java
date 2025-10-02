@@ -1,6 +1,6 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.processExecution;
 
-import javafx.event.Event;
+import io.github.redstonemango.mangoplayer.logic.YtDlpManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -15,7 +15,8 @@ public class ProcessExecutionController implements IInitializable {
 
     @Override
     public void init() {
-        processNameLabel.getScene().getWindow().setOnCloseRequest(Event::consume);
+        processNameLabel.getScene().getWindow().setOnCloseRequest(_ -> onClose());
+
         processNameLabel.getScene().getWindow().widthProperty().addListener((_, _, newValue) -> {
             processStatusLabel.setPrefWidth(newValue.intValue() - 82);
         });
@@ -36,5 +37,9 @@ public class ProcessExecutionController implements IInitializable {
         ProcessExecutionScene scene = (ProcessExecutionScene) processNameLabel.getScene();
         System.out.println("Process '" + scene.getProcessName() + "' finished");
         ((Stage)processNameLabel.getScene().getWindow()).close();
+    }
+
+    private void onClose() {
+        YtDlpManager.getInstance().destroyRunningProcess(true);
     }
 }
