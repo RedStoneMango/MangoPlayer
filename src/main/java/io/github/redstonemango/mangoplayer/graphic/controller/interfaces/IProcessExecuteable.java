@@ -42,7 +42,7 @@ public interface IProcessExecuteable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(MangoPlayer.primaryStage);
             stage.setTitle("MangoPlayer | Process information");
-            ProcessExecutionScene scene = ProcessExecutionScene.createNewScene("Download song", Utilities.cmdStringFromList(YtDlpManager.getInstance().createDownloadCommand(Utilities.youtubeUrlFromSong(song), new File(Utilities.thumbnailPathFromSong(song, false)), false)));
+            ProcessExecutionScene scene = ProcessExecutionScene.createNewScene("Download song", Utilities.cmdStringFromList(YtDlpManager.getInstance().createDownloadCommand(Utilities.youtubeUrlFromSong(song), new File(Utilities.dummyPathFromSong(song)), false)));
             Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
             new Thread(() -> {
                 boolean bl = YtDlpManager.getInstance().downloadSong(Utilities.youtubeUrlFromSong(song), new File(Utilities.dummyPathFromSong(song)), scene::sendStatusUpdate);
