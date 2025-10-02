@@ -103,7 +103,7 @@ public class SongListController implements IInitializable, ISongControllable {
                 sendCloseInformation();
             }
         });
-        songFilterField.getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+        songFilterField.getScene().addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             if (e.getCode() == KeyCode.ESCAPE) {
                 if (actionOccupied) {
                     Toolkit.getDefaultToolkit().beep();
