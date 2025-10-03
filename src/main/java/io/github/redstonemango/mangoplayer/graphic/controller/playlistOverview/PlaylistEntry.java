@@ -29,7 +29,7 @@ public class PlaylistEntry extends PlaylistEntryBase {
         nameLabel.setText(playlist.getName());
 
         //init song count
-        int songCount = playlist.songCount();
+        int songCount = playlist.getSongs().size();
         songCountLabel.setText(songCount == 0 ? "No songs" : (songCount == 1 ? "1 song" : songCount + " songs"));
 
         //init graphic
@@ -63,8 +63,8 @@ public class PlaylistEntry extends PlaylistEntryBase {
         if (songGraphicFile.exists()) {
             graphicView.setImage(new Image(songGraphicFile.toURI().toString()));
         }
-        else if (playlist.songCount() != 0) {
-            File songThumbnail = new File(Utilities.thumbnailPathFromSong(playlist.getSong(0)));
+        else if (!playlist.getSongs().isEmpty()) {
+            File songThumbnail = new File(Utilities.thumbnailPathFromSong(playlist.getSongs().getFirst()));
             if (songThumbnail.exists()) {
                 graphicView.setImage(new Image(songThumbnail.toURI().toString()));
             }

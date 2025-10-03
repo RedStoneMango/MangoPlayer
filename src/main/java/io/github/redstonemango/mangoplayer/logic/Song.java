@@ -79,7 +79,7 @@ public class Song implements Comparable<Song>, Serializable {
     public int summarizeUseCount() {
         AtomicInteger integer = new AtomicInteger(0);
         PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> {
-            playlist.forEachSong((song, _) -> {
+            playlist.getSongs().forEach(song -> {
                 if (song.id.equals(this.id)) integer.incrementAndGet();
             });
         });
@@ -150,7 +150,7 @@ public class Song implements Comparable<Song>, Serializable {
             new File(Utilities.thumbnailPathFromSong(this)).delete();
             new File(Utilities.audioPathFromSong(this)).delete();
             SongConfigWrapper.loadConfig().songs.remove(this.getId());
-            PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> playlist.removeSongOccurrences(this));
+            PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> playlist.getSongs().remove(this));
             System.out.println("Deleted song '" + name + "' (ID was '" + id + "')");
             return true;
         }

@@ -22,15 +22,15 @@ public class PlaylistDataRepresentation {
         this.name = new SimpleStringProperty(playlist.getName());
         this.playedSongCount = new SimpleStringProperty(playlist.getPlayedSongCount() + "x");
         this.totalPlayTime = new SimpleStringProperty(Utilities.formatDuration(playlist.getPlayTime()));
-        int songCountInt = playlist.songCount();
+        int songCountInt = playlist.getSongs().size();
         this.songCount = new SimpleStringProperty(songCountInt == 0 ? "No songs" : (songCountInt == 1 ? "1 song" : songCountInt + " songs"));
 
         File playlistGraphicFile = new File(Utilities.graphicPathFromPlaylist(playlist));
         if (playlistGraphicFile.exists()) {
             graphic = new SimpleObjectProperty<>(new Image(playlistGraphicFile.toURI().toString()));
         }
-        else if (playlist.songCount() != 0) {
-            File songThumbnail = new File(Utilities.thumbnailPathFromSong(playlist.getSong(0)));
+        else if (!playlist.getSongs().isEmpty()) {
+            File songThumbnail = new File(Utilities.thumbnailPathFromSong(playlist.getSongs().getFirst()));
             if (songThumbnail.exists()) {
                 graphic = new SimpleObjectProperty<>(new Image(songThumbnail.toURI().toString()));
             }
