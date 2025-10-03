@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class PlaylistScreenController implements IInitializable, ISongSelectable, ISongPlayable, ISongViewable {
@@ -493,16 +494,26 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
 
     @Override
     public void onSelectionProcessContentChanges(Map<Song, Boolean> changedSongs) {
-        changedSongs.forEach(((song, shallBeContained) -> {
+        AtomicReference<Song> lastAddedSong = new AtomicReference<>(null);
+        changedSongs.forEach((song, shallBeContained) -> {
             if (shallBeContained && !playlist.getSongs().contains(song)) {
                 playlist.getSongs().add(song);
                 songsView.getItems().add(song);
                 TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().add(song.getName());
+                lastAddedSong.set(song);
             }
             else if (!shallBeContained && playlist.getSongs().contains(song)) {
                 onSongDelete(song);
             }
-        }));
+        });
+        Platform.runLater(() -> {
+            if (lastAddedSong.get() != null) {
+                System.out.println(lastAddedSong.get().getName());
+                songsView.getSelectionModel().select(lastAddedSong.get());
+                songsView.scrollTo(lastAddedSong.get());
+                songsView.requestFocus();
+            }
+        });
         playButton.setDisable(playlist.getSongs().isEmpty());
     }
 

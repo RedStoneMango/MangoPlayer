@@ -12,13 +12,13 @@
 
   Allow the user to export playlists into `.m3u` format in addition to other formats, enabling compatibility with a wide range of media players.
 
-- [ ] **Expanded “scroll to element” behavior**
+- [X] **Expanded “scroll to element” behavior**
 
   Improve UX by auto-scrolling to relevant UI components, such as:
   - When adding a song to a playlist
   - When returning from a detail view to a playlist overview
 
-- [ ] **Expanded ListView element selection support**
+- [X] **Expanded ListView element selection support**
 
   Automatically highlight/select a song in the song manager after it was added, or after an operation that modifies it, improving workflow clarity.
 
