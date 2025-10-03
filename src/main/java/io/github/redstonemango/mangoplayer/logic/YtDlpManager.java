@@ -393,7 +393,6 @@ public class YtDlpManager {
     }
 
     public synchronized void destroyRunningProcess(boolean forceKill) {
-        System.out.println(runningProcess);
         if (runningProcess != null && runningProcess.isAlive()) {
             System.out.println((forceKill ? "Force-d" : "D") + "estroying the running external process (" +
                     runningProcess.info().commandLine().
