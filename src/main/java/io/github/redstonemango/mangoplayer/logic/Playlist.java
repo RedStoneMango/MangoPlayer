@@ -50,7 +50,6 @@ public class Playlist implements Comparable<Playlist> {
 
         List<Song> songsObjs = new ArrayList<>();
         songIds.forEach(id -> songsObjs.add(Song.songFromId(id)));
-        System.out.println(songIds);
         songObjects = FXCollections.observableList(songsObjs);
         songObjects.removeIf(Objects::isNull);
         songObjects.addListener((ListChangeListener<Song>) change -> {
