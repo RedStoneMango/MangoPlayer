@@ -280,7 +280,7 @@ public class Utilities {
 
     public static void showCodecErrorMessage() {
         ButtonType ignoreBtn = new ButtonType("Ignore");
-        ButtonType learnMoreBtn = new ButtonType("Learn more", ButtonBar.ButtonData.YES);
+        ButtonType learnMoreBtn = new ButtonType("Learn More", ButtonBar.ButtonData.YES);
         Alert alert = new Alert(Alert.AlertType.WARNING, "", ignoreBtn, learnMoreBtn);
         alert.setTitle("FknPlayer | Missing codec");
         alert.setHeaderText("The audio playback failed");
@@ -290,6 +290,21 @@ public class Utilities {
         if (alert.getResult() == learnMoreBtn) {
             OperatingSystem.loadCurrentOS().open("https://www.oracle.com/java/technologies/javase/products-doc-jdk8-jre8-certconfig.html#:~:text=JavaFX%20Media,12.04%20or%20equivalent.");
         }
+    }
+    public static void showProcessErrorMessage(boolean conversionProcess, String failedAsset) {
+        Platform.runLater(() -> {
+            ButtonType issueButton = new ButtonType("Report Issue");
+            ButtonType ignoreButton = new ButtonType("Ignore", ButtonBar.ButtonData.YES);
+            Alert alert = new Alert(Alert.AlertType.WARNING, "", issueButton, ignoreButton);
+            alert.setTitle("FknPlayer | " + (conversionProcess ? "Conversion" : "Download") + " error");
+            alert.setHeaderText("An error occurred while " + (conversionProcess ? "converting" : "downloading") + " " + failedAsset);
+            alert.setContentText("This may have been caused by a canceled execution of the process.\nIf this is not the case, please report the error to the developer");
+            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
+            alert.showAndWait();
+            if (alert.getResult() == issueButton) {
+                GlobalMenuBarActions.onIssuesMenu();
+            }
+        });
     }
 
     public static @Nullable String findExecutableInPath(String command) {

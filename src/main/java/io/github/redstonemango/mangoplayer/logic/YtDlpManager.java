@@ -140,7 +140,7 @@ public class YtDlpManager {
             int code = process.waitFor();
 
             if (code != 0 && code != 143) {
-                showDownloadErrorDialog(true, url);
+                showDownloadErrorDialog(url);
             }
 
             return code == 0;
@@ -243,7 +243,7 @@ public class YtDlpManager {
             int code = process.waitFor();
 
             if (code != 0 && code != 143) {
-                showDownloadErrorDialog(true, url);
+                showDownloadErrorDialog(url);
             }
 
             return code == 0;
@@ -406,23 +406,13 @@ public class YtDlpManager {
         }
     }
 
-    private void showDownloadErrorDialog(boolean exception, String asset) {
-        if (exception) System.err.println("An error occurred while downloading asset '" + asset + "'!");
-        int choice = JOptionPane.showOptionDialog(null, "An error occurred while downloading asset '" + asset + "'.\n\n This may have been caused by a lack of the ffmpeg library or a canceled execution of the process.\nIf this is not the case, please report this to the developer", "Error while downloading asset", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ffmpeg download", "Back", "Report Bug"}, exception ? "Ffmpeg download" : "Back");
-        if (choice == 0) {
-            OperatingSystem.loadCurrentOS().open(FFMPEG_DOWNLOAD);
-            showDownloadErrorDialog(false, asset);
-        }
-        else if (choice == 2) {
-            GlobalMenuBarActions.onIssuesMenu();
-        }
+    private void showDownloadErrorDialog(String asset) {
+        System.err.println("An error occurred while downloading asset '" + asset + "'!");
+        Utilities.showProcessErrorMessage(false, asset);
     }
     private void showConversionErrorDialog(String asset) {
         System.err.println("An error occurred during conversion of '" + asset + "'!");
-        int choice = JOptionPane.showOptionDialog(null, "An error occurred during conversion of '" + asset + "'.\n\n This may have been caused by a canceled execution of the process.\nIf this is not the case, please report this to the developer", "Error while conversion of asset", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, new String[]{"Ignore", "Report Bug"}, "Ignore");
-        if (choice == 1) {
-            GlobalMenuBarActions.onIssuesMenu();
-        }
+        Utilities.showProcessErrorMessage(true, asset);
     }
 
 
