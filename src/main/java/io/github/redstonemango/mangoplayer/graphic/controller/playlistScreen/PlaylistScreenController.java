@@ -501,6 +501,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
                 songsView.getItems().add(song);
                 TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().add(song.getName());
                 lastAddedSong.set(song);
+                System.out.println("Added song '" + song.getName() + "' (" + song.getId() + ") to playlist '" + playlist.getName() + "' (" + playlist.getId() + ")");
             }
             else if (!shallBeContained && playlist.getSongs().contains(song)) {
                 onSongDelete(song);
@@ -541,6 +542,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
             playlist.getSongs().remove(song);
             songsView.getItems().remove(song);
             TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().remove(song.getName());
+            System.out.println("Removed song '" + song.getName() + "' (" + song.getId() + ") from playlist '" + playlist.getName() + "' (" + playlist.getId() + ")");
         }
     }
 
