@@ -1,6 +1,7 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.songManager;
 
 import io.github.redstonemango.mangoutils.OperatingSystem;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -194,6 +195,9 @@ public class SongDetailsController implements IInitializable, IProcessExecuteabl
             SongListScene scene = SongListScene.createViewingScene(thisScene.getMainWindowController());
             stage.setTitle("MangoPlayer | Song manager");
             Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
+            Platform.runLater(() -> {
+                ((SongListController) scene.getLoader().getController()).highlightSong(song);
+            });
         }
     }
 

@@ -311,7 +311,11 @@ public class SongListController implements IInitializable, ISongControllable {
         songsView.getItems().addAll(SongConfigWrapper.loadConfig().songs.values());
     }
 
-    public void scrollToSong(Song song) {
-        songsView.scrollTo(song);
+    public void highlightSong(Song song) {
+        Platform.runLater(() -> {
+            songsView.getSelectionModel().select(song);
+            songsView.scrollTo(song);
+            songsView.requestFocus();
+        });
     }
 }

@@ -149,7 +149,7 @@ public class SongAdding implements IProcessExecuteable {
                     Files.move(Path.of(Utilities.dummyPathFromSong(song) + ".png"), Path.of(Utilities.thumbnailPathFromSong(song)));
                     SongConfigWrapper.loadConfig().songs.put(song.getId(), song);
                     controller.sortAndRepaintSongs();
-                    controller.scrollToSong(song);
+                    controller.highlightSong(song);
                     System.out.println("Downloaded song '" + song.getName() + "' (ID is '" + song.getId() + "') from youtube video with ID '" + song.getYoutubeId() + "' using the yt-dlp integration");
                 }
 
