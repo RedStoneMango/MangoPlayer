@@ -72,7 +72,10 @@ public class SongAdding implements IProcessExecuteable {
                         mp3file.save(new File(Utilities.audioPathFromSong(song)));
 
                         SongConfigWrapper.loadConfig().songs.put(song.getId(), song);
-                        Platform.runLater(controller::sortAndRepaintSongs);
+                        Platform.runLater(() -> {
+                            controller.sortAndRepaintSongs();
+                            controller.highlightSong(song);
+                        });
                         System.out.println("Imported song '" + song.getName() + "' (ID is '" + song.getId() + "') from file '" + file.getAbsolutePath() + "'" + (file.getName().endsWith(".mp3") ? "" : " (Used ffmpeg conversion for importing)"));
                     }
                     catch (IOException | TagException | ReadOnlyFileException | CannotReadException | InvalidAudioFrameException e) {

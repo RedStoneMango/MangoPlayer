@@ -235,7 +235,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
         });
 
         // load songs
-        playlist.forEachSong((song, _) -> {
+        playlist.getSongs().forEach(song -> {
             songsView.getItems().add(song);
             TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().add(song.getName());
         });
@@ -243,7 +243,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
         // register filter listener
         songsFilterField.textProperty().addListener((_, _, newValue) -> {
             songsView.getItems().clear();
-            playlist.forEachSong((song, _) -> {
+            playlist.getSongs().forEach(song -> {
                 if (song.getName().toLowerCase(Locale.ROOT).contains(newValue.toLowerCase(Locale.ROOT))) {
                     songsView.getItems().add(song);
                 }
@@ -494,12 +494,12 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
     @Override
     public void onSelectionProcessContentChanges(Map<Song, Boolean> changedSongs) {
         changedSongs.forEach(((song, shallBeContained) -> {
-            if (shallBeContained && !playlist.hasSong(song)) {
-                playlist.addSong(song);
+            if (shallBeContained && !playlist.getSongs().contains(song)) {
+                playlist.getSongs().add(song);
                 songsView.getItems().add(song);
                 TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().add(song.getName());
             }
-            else if (!shallBeContained && playlist.hasSong(song)) {
+            else if (!shallBeContained && playlist.getSongs().contains(song)) {
                 onSongDelete(song);
             }
         }));
@@ -527,7 +527,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
         alert.setContentText("After removing it, the song will still be accessible in the song manager.");
         alert.showAndWait();
         if (alert.getResult() != null && alert.getResult() == ButtonType.OK) {
-            playlist.removeSongOccurrences(song);
+            playlist.getSongs().remove(song);
             songsView.getItems().remove(song);
             TextFieldAutoCompletion.autoCompletable(songsFilterField).getCompletions().remove(song.getName());
         }
@@ -547,8 +547,8 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
 
     @Override
     public void onSongsSorted() {
-        playlist.clearSongs();
-        songsView.getItems().forEach(song -> playlist.addSong(song));
+        playlist.getSongs().clear();
+        songsView.getItems().forEach(song -> playlist.getSongs().add(song));
     }
 
     @FXML

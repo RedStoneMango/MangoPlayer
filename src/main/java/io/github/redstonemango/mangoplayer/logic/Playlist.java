@@ -1,5 +1,10 @@
 package io.github.redstonemango.mangoplayer.logic;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
@@ -8,23 +13,23 @@ import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.BiConsumer;
+import java.util.Objects;
 
 public class Playlist implements Comparable<Playlist> {
-    private String id;
-    private String name;
-    private List<String> songs;
-    private long playedSongCount;
-    private long secondsPlayed;
+    @Expose private String id;
+    @Expose private String name;
+    @Expose @SerializedName("songs") private List<String> songIds;
+    @Expose private long playedSongCount;
+    @Expose private long secondsPlayed;
+    private ObservableList<Song> songObjects;
 
 
-    public Playlist(String name, List<String> songs, long playedSongCount, long secondsPlayed) {
+
+    public Playlist(String name, List<String> songIds, long playedSongCount, long secondsPlayed) {
         this.id = UniqueIdGenerator.generateUniqueString(UniqueIdGenerator.IdUse.PLAYLIST_ID);
         this.name = name;
-        this.songs = songs;
+        this.songIds = songIds;
         this.playedSongCount = playedSongCount;
         this.secondsPlayed = secondsPlayed;
     }
@@ -38,48 +43,30 @@ public class Playlist implements Comparable<Playlist> {
             name = "Unnamed Playlist";
             System.err.println("Playlist with ID '" + id + "' does not have a name. Initialized name to 'Unnamed Playlist'");
         }
-        if (songs == null) {
-            songs = new ArrayList<>();
+        if (songIds == null) {
+            songIds = new ArrayList<>();
         }
-    }
+        songIds.removeIf(Objects::isNull);
 
-    public Song getSong(int index) {
-        return Song.songFromId(songs.get(index));
+        List<Song> songsObjs = new ArrayList<>();
+        songIds.forEach(id -> songsObjs.add(Song.songFromId(id)));
+        System.out.println(songIds);
+        songObjects = FXCollections.observableList(songsObjs);
+        songObjects.removeIf(Objects::isNull);
+        songObjects.addListener((ListChangeListener<Song>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    change.getAddedSubList().forEach(song -> songIds.add(song.getId()));
+                }
+                if (change.wasRemoved()) {
+                    change.getRemoved().forEach(song -> songIds.remove(song.getId()));
+                }
+            }
+        });
     }
 
     public List<Song> getSongs() {
-        List<Song> songs = new ArrayList<>();
-        this.songs.forEach(id -> songs.add(Song.songFromId(id)));
-        return Collections.unmodifiableList(songs);
-    }
-
-    public int songCount() {
-        return songs.size();
-    }
-
-    public boolean hasSong(Song song) {
-        return songs.contains(song.getId());
-    }
-
-    public void forEachSong(BiConsumer<Song, Integer> action) {
-        AtomicInteger index = new AtomicInteger(0);
-        this.songs.forEach(id -> action.accept(Song.songFromId(id), index.getAndIncrement()));
-    }
-
-    public void removeSongOccurrences(Song song) {
-        songs.removeIf(id -> id.equals(song.getId()));
-    }
-
-    public void clearSongs() {
-        this.songs.clear();
-    }
-
-    public void addSong(Song song) {
-        songs.add(song.getId());
-    }
-
-    public void removeSongIndex(int index) {
-        songs.remove(index);
+        return songObjects;
     }
 
     public String getName() {
@@ -123,7 +110,7 @@ public class Playlist implements Comparable<Playlist> {
     }
 
     public boolean askAndRunDelete() {
-        if (!songs.isEmpty()) {
+        if (!songIds.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("MangoPlayer | Delete playlist");
             alert.setHeaderText("Do you really want to delete '" + name + "'?");

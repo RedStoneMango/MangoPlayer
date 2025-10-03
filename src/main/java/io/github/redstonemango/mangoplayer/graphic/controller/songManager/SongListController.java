@@ -78,7 +78,7 @@ public class SongListController implements IInitializable, ISongControllable {
             entry.setPrefWidth(width - 18);
             entry.getNameLabel().setPrefWidth(width - 214);
             if (selectionMode && parent != null) {
-                boolean selected = parent.hasSong(song);
+                boolean selected = parent.getSongs().contains(song);
                 if (songSelectionData.containsKey(song)) {
                     selected = songSelectionData.get(song);
                 }
@@ -198,10 +198,10 @@ public class SongListController implements IInitializable, ISongControllable {
         }
 
         if (isSelected != null && parent != null) {
-            if (isSelected && parent.hasSong(song)) { // Selected and contained in playlist? This is the default -> Remove from map
+            if (isSelected && parent.getSongs().contains(song)) { // Selected and contained in playlist? This is the default -> Remove from map
                 songSelectionData.remove(song);
             }
-            else if (!isSelected && !parent.hasSong(song)) { // Not selected and not contained in playlist? This is the default -> Remove from map
+            else if (!isSelected && !parent.getSongs().contains(song)) { // Not selected and not contained in playlist? This is the default -> Remove from map
                 songSelectionData.remove(song);
             }
             else { // Selection state and contained in playlist state differ? Store this inside map

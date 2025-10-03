@@ -48,7 +48,7 @@ public class PlaylistExporting {
         }
 
         System.out.println("Exporting playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' using the temporary directory '" + tempFolder.getAbsolutePath() + "':");
-        playlist.forEachSong((song, _) -> {
+        playlist.getSongs().forEach(song -> {
             StringBuilder songNumber = new StringBuilder(String.valueOf(playlist.getSongs().indexOf(song) + 1));
             while (songNumber.length() < latestSongNumberLength.get()) {
                 songNumber.insert(0, "0");
