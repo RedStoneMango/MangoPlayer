@@ -42,7 +42,7 @@
 
   In the use-analyser tables, allow the user to click on a song or playlist entry to directly jump to it in the UI.
 
-- [ ] **Remove duplicate songs in playlists after config load**
+- [X] **Remove duplicate songs in playlists after config load**
 
   After loading the I/O config, check for and remove multiple occurrences of the same song within a playlist.
 
