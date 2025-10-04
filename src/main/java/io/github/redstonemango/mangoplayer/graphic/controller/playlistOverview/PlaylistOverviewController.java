@@ -22,10 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class PlaylistOverviewController implements IInitializable, IPlaylistListable, ISongViewable {
 
@@ -160,7 +157,7 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         dialog.setContentText("Playlist name: ");
         dialog.showAndWait();
         if (dialog.getResult() != null) {
-            Playlist playlist = new Playlist(dialog.getResult(), new ArrayList<>(), 0, 0);
+            Playlist playlist = new Playlist(dialog.getResult(), new HashSet<>(), 0, 0);
             PlaylistConfigWrapper.loadConfig().playlists.addFirst(playlist);
             repaintPlaylists();
             System.out.println("Creating new playlist '" + dialog.getResult() + "' with ID '" + playlist.getId() + "'");

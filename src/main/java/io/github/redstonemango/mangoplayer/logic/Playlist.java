@@ -12,21 +12,19 @@ import javafx.util.Duration;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Playlist implements Comparable<Playlist> {
     @Expose private String id;
     @Expose private String name;
-    @Expose @SerializedName("songs") private List<String> songIds;
+    @Expose @SerializedName("songs") private Set<String> songIds;
     @Expose private long playedSongCount;
     @Expose private long secondsPlayed;
     private ObservableList<Song> songObjects;
 
 
 
-    public Playlist(String name, List<String> songIds, long playedSongCount, long secondsPlayed) {
+    public Playlist(String name, Set<String> songIds, long playedSongCount, long secondsPlayed) {
         this.id = UniqueIdGenerator.generateUniqueString(UniqueIdGenerator.IdUse.PLAYLIST_ID);
         this.name = name;
         this.songIds = songIds;
@@ -44,7 +42,7 @@ public class Playlist implements Comparable<Playlist> {
             System.err.println("Playlist with ID '" + id + "' does not have a name. Initialized name to 'Unnamed Playlist'");
         }
         if (songIds == null) {
-            songIds = new ArrayList<>();
+            songIds = new HashSet<>();
         }
         songIds.removeIf(Objects::isNull);
 
