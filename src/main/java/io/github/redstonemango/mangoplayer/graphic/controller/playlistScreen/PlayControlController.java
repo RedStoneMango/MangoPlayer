@@ -35,7 +35,6 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
     private @Nullable Label newPauseKeyCombinationLabel = null;
     private final Set<Integer> pressedKeys = new HashSet<>();
     private boolean combinationTriggered = false;
-    private boolean gottaRestoreDefaultKeyPopupFace = false;
 
     @FXML private Tooltip controlSongNameTooltip;
     @FXML private ToggleButton controlStopAfterSongButton;
@@ -208,7 +207,6 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
 
     private void applyPauseKeyPopupDefaultFace() {
         newPauseKeyCombinationLabel = null;
-        gottaRestoreDefaultKeyPopupFace = false;
         pauseKeyPopup.getContent().clear();
         StringBuilder combinationLiteral = new StringBuilder();
         MainConfigWrapper.loadConfig().nativePauseKeyCombination.forEach(keyCode -> {
@@ -228,7 +226,6 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
     }
 
     private void applyPauseKeyPopupRedefineFace() {
-        gottaRestoreDefaultKeyPopupFace = false;
         pauseKeyPopup.getContent().clear();
         Label pauseKeyLabel1 = new Label("Press the new key combination (click icon to cancel):");
         pauseKeyLabel1.setLayoutX(5);
