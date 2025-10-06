@@ -164,6 +164,8 @@ public class TextFieldAutoCompletion {
         else {
             metaData.popupPane.setPrefHeight(metaData.lineCount * (2 * padding + 10) + 10);
         }
+        metaData.popupBox.setMaxWidth(metaData.textField.getWidth() - 4);
+        metaData.popupBox.setPrefWidth(metaData.textField.getWidth() - 4);
     }
 
     /**
