@@ -38,7 +38,7 @@
   
   Also compute and show the total playlist length in the analyser. Consider lazy-loading the media metadata at startup (with a splash screen while initializing?).
 
-- [ ] **“Jump to song/playlist” in use-analyser**
+- [X] **“Jump to song/playlist” in use-analyser**
 
   In the use-analyser tables, allow the user to click on a song or playlist entry to directly jump to it in the UI.
 

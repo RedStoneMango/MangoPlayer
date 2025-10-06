@@ -72,7 +72,7 @@ public class SongListController implements IInitializable, ISongControllable {
 
         updateYtDlpAvailable();
 
-        Utilities.applyCustomNodeCellFactory(songsView, song -> {
+        Utilities.applyListViewCellFactory(songsView, song -> {
             ManagerSongEntry entry = new ManagerSongEntry(song, selectionMode, this);
             double width = songFilterField.getScene().getWindow().getWidth();
             entry.setPrefWidth(width - 18);

@@ -68,7 +68,7 @@ public class Utilities {
      * @apiNote             Originally part of another utility class of mine. This method has been copied into the player's utility class for consistency.
      * @author              Fabian Krohn
      */
-    public static <T> void applyCustomNodeCellFactory(ListView<T> listView, Function<T, Node> nodeFunction) {
+    public static <T> void applyListViewCellFactory(ListView<T> listView, Function<T, Node> nodeFunction) {
         listView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<T> call(ListView<T> lv) {
@@ -85,6 +85,35 @@ public class Utilities {
                         }
                     }
                 };
+            }
+        });
+    }
+
+    public static <T> void applyComboBoxCellFactory(ComboBox<T> comboBox, Function<T, Node> nodeFunction) {
+        comboBox.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<T> call(ListView<T> lv) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || item == null) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            setGraphic(nodeFunction.apply(item));
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+        comboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(null);
+                setGraphic(null);
             }
         });
     }
