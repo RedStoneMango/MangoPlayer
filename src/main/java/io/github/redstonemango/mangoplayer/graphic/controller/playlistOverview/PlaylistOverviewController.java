@@ -39,7 +39,7 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
 
         repaintPlaylists();
 
-        Utilities.applyCustomNodeCellFactory(playlistsView, playlist -> {
+        Utilities.applyListViewCellFactory(playlistsView, playlist -> {
             PlaylistEntry entry = new PlaylistEntry(playlist, this);
             double width = songFilterField.getScene().getWindow().getWidth();
             entry.setPrefWidth(width - 18);

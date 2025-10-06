@@ -1,12 +1,20 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser;
 
+import io.github.redstonemango.mangoplayer.graphic.ComboBoxSearching;
+import io.github.redstonemango.mangoplayer.graphic.controller.songManager.SongListController;
+import io.github.redstonemango.mangoplayer.logic.Song;
+import javafx.application.Platform;
+import javafx.beans.property.Property;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import io.github.redstonemango.mangoplayer.graphic.controller.interfaces.IInitializable;
@@ -15,6 +23,7 @@ import io.github.redstonemango.mangoplayer.logic.Utilities;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import io.github.redstonemango.mangoplayer.logic.config.SongConfigWrapper;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +38,7 @@ public class AnalyserController implements IInitializable {
     @FXML private TableColumn<SongDataRepresentation, Image> songThumbnailColumn;
     @FXML private TableColumn<SongDataRepresentation, String> songListenColumn;
     @FXML private TableColumn<SongDataRepresentation, String> songUseColumn;
+    @FXML private ComboBox<SongDataRepresentation> songJumpBox;
 
     @FXML private TableView<PlaylistDataRepresentation> playlistTable;
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistNameColumn;
@@ -36,6 +46,7 @@ public class AnalyserController implements IInitializable {
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistPlayCountColumn;
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistTimeColumn;
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistSongCountColumn;
+    @FXML private ComboBox<PlaylistDataRepresentation> playlistJumpBox;
 
     @Override
     public void init() {
@@ -51,6 +62,34 @@ public class AnalyserController implements IInitializable {
     }
 
     private void initSongTab() {
+        ComboBoxSearching.apply(songJumpBox, SongDataRepresentation.class);
+        Utilities.applyComboBoxCellFactory(songJumpBox, songData -> {
+            BorderPane pane = new BorderPane();
+            Label label = new Label(songData.nameProperty().get());
+            BorderPane.setAlignment(label, Pos.CENTER_LEFT);
+            label.setTextFill(Color.BLACK);
+            pane.setCenter(label);
+            ImageView image = new ImageView(songData.thumbnailProperty().get());
+            image.setPreserveRatio(true);
+            image.setPickOnBounds(true);
+            image.setFitHeight(20);
+            BorderPane.setMargin(image, new Insets(0, 5, 0, 0));
+            pane.setLeft(image);
+            return pane;
+        });
+
+        List<SongDataRepresentation> boxOptions = ComboBoxSearching.getOptions(songJumpBox, SongDataRepresentation.class);
+        Property<SongDataRepresentation> boxSelection = ComboBoxSearching.selectionProperty(songJumpBox, SongDataRepresentation.class);
+        assert boxOptions != null;
+        assert boxSelection != null;
+        boxSelection.addListener((_, _, selection) -> {
+            if (selection == null) return;
+            songTable.scrollTo(selection);
+            songTable.getSelectionModel().select(selection);
+            songTable.requestFocus();
+            boxSelection.setValue(null);
+        });
+
         songNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         songThumbnailColumn.setCellValueFactory(cellData -> cellData.getValue().thumbnailProperty());
         songListenColumn.setCellValueFactory(cellData -> cellData.getValue().listenCountProperty());
@@ -79,7 +118,11 @@ public class AnalyserController implements IInitializable {
                 };
             }
         });
-        SongConfigWrapper.loadConfig().songs.forEach((_, song) -> songTable.getItems().add(new SongDataRepresentation(song)));
+        SongConfigWrapper.loadConfig().songs.forEach((_, song) -> {
+            SongDataRepresentation data = new SongDataRepresentation(song);
+            songTable.getItems().add(data);
+            boxOptions.add(data);
+        });
 
         applyComparator(songUseColumn);
         applyComparator(songListenColumn);
@@ -90,6 +133,34 @@ public class AnalyserController implements IInitializable {
     }
 
     private void initPlaylistTab() {
+        ComboBoxSearching.apply(playlistJumpBox, PlaylistDataRepresentation.class);
+        Utilities.applyComboBoxCellFactory(playlistJumpBox, songData -> {
+            BorderPane pane = new BorderPane();
+            Label label = new Label(songData.nameProperty().get());
+            BorderPane.setAlignment(label, Pos.CENTER_LEFT);
+            label.setTextFill(Color.BLACK);
+            pane.setCenter(label);
+            ImageView image = new ImageView(songData.graphicProperty().get());
+            image.setPreserveRatio(true);
+            image.setPickOnBounds(true);
+            image.setFitHeight(20);
+            BorderPane.setMargin(image, new Insets(0, 5, 0, 0));
+            pane.setLeft(image);
+            return pane;
+        });
+
+        List<PlaylistDataRepresentation> boxOptions = ComboBoxSearching.getOptions(playlistJumpBox, PlaylistDataRepresentation.class);
+        Property<PlaylistDataRepresentation> boxSelection = ComboBoxSearching.selectionProperty(playlistJumpBox, PlaylistDataRepresentation.class);
+        assert boxOptions != null;
+        assert boxSelection != null;
+        boxSelection.addListener((_, _, selection) -> {
+            if (selection == null) return;
+            playlistTable.scrollTo(selection);
+            playlistTable.getSelectionModel().select(selection);
+            playlistTable.requestFocus();
+            boxSelection.setValue(null);
+        });
+
         playlistNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         playlistGraphicColumn.setCellValueFactory(cellData -> cellData.getValue().graphicProperty());
         playlistPlayCountColumn.setCellValueFactory(cellData -> cellData.getValue().playedSongCountProperty());
@@ -122,7 +193,12 @@ public class AnalyserController implements IInitializable {
         applyComparator(playlistSongCountColumn);
         applyComparator(playlistPlayCountColumn);
         applyComparator(playlistTimeColumn);
-        PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> playlistTable.getItems().add(new PlaylistDataRepresentation(playlist)));
+
+        PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> {
+            PlaylistDataRepresentation data = new PlaylistDataRepresentation(playlist);
+            playlistTable.getItems().add(data);
+            boxOptions.add(data);
+        });
         playlistPlayCountColumn.setSortType(TableColumn.SortType.DESCENDING);
         playlistTable.getSortOrder().add(playlistPlayCountColumn);
         playlistTable.sort();
@@ -133,11 +209,6 @@ public class AnalyserController implements IInitializable {
         if (tabPane.getTabs().getFirst().isSelected() && initialized) {
             onBack();
         }
-    }
-
-    @FXML
-    private void onTableSelect() {
-        tabPane.requestFocus();
     }
 
     @FXML

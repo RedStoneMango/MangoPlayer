@@ -1,5 +1,6 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser;
 
+import io.github.redstonemango.mangoplayer.graphic.ComboBoxSearching;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
@@ -8,8 +9,9 @@ import io.github.redstonemango.mangoplayer.logic.Song;
 import io.github.redstonemango.mangoplayer.logic.Utilities;
 
 import java.io.File;
+import java.util.Locale;
 
-public class SongDataRepresentation {
+public class SongDataRepresentation implements ComboBoxSearching.ISearchComparable {
     private final SimpleStringProperty name;
     private final SimpleStringProperty listenCount;
     private final SimpleStringProperty useCount;
@@ -49,5 +51,15 @@ public class SongDataRepresentation {
 
     public Song getSong() {
         return song;
+    }
+
+    @Override
+    public boolean matches(String typedText) {
+        return name.get().toLowerCase(Locale.ROOT).contains(typedText.toLowerCase());
+    }
+
+    @Override
+    public String toString() {
+        return name.get();
     }
 }
