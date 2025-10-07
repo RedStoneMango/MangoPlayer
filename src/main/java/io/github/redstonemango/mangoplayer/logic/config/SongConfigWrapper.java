@@ -18,7 +18,7 @@ public class SongConfigWrapper {
 
     public static final String configFilePath = MangoPlayer.APP_FOLDER_PATH + "/songs.json";
 
-    public LinkedHashMap<String, Song> songs;
+    @Expose public LinkedHashMap<String, Song> songs;
 
     public static synchronized SongConfigWrapper loadConfig() {
         if (INSTANCE == null) {
@@ -36,7 +36,7 @@ public class SongConfigWrapper {
                 file.getParentFile().mkdirs();
             }
             try (FileWriter writer = new FileWriter(file)) {
-                writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(INSTANCE) + "\n");
+                writer.write(new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create().toJson(INSTANCE) + "\n");
             }
         } catch (IOException e) {
             System.err.println("Unable to save SongConfigWrapper: " + e);

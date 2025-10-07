@@ -1,5 +1,6 @@
 package io.github.redstonemango.mangoplayer.logic;
 
+import com.google.gson.annotations.Expose;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
@@ -20,12 +21,12 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Song implements Comparable<Song>, Serializable {
-    private String name;
+    @Expose private String name;
     private String id;
-    private final @Nullable String youtubeId;
-    private long listenCount;
-    private double volumeAdjustment;
-    public Song(String name,  @Nullable String youtubeId, long listenCount, double volumeAdjustment) {
+    @Expose private final @Nullable String youtubeId;
+    @Expose private long listenCount;
+    @Expose private double volumeAdjustment;
+    @Expose public Song(String name,  @Nullable String youtubeId, long listenCount, double volumeAdjustment) {
         this.id = UniqueIdGenerator.generateUniqueString(UniqueIdGenerator.IdUse.SONG_ID);
         this.name = name;
         this.listenCount = listenCount;
@@ -34,14 +35,13 @@ public class Song implements Comparable<Song>, Serializable {
     }
 
     public void ensureFields(String requiredId) {
-        if (!Objects.equals(id, requiredId)) {
-            id = requiredId;
-            System.err.println("Found a song with an ID field that does not match the hash map key!" + (name != null && !name.isBlank() ? " (Name is '" + name + "')." : "") + " Initialized required ID with value '" + id + "'");
-        }
+        id = requiredId;
+
         if (name == null || name.isBlank()) {
             name = "Unnamed Song";
             System.err.println("Song with ID '" + id + "' does not have a name. Initialized name to 'Unnamed Song'");
         }
+
         volumeAdjustment = Math.clamp(volumeAdjustment, 0.01, 1);
     }
 
