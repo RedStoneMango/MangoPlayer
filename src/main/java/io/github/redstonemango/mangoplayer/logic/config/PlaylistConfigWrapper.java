@@ -4,7 +4,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 import io.github.redstonemango.mangoplayer.graphic.MangoPlayer;
+import io.github.redstonemango.mangoplayer.logic.GlobalMenuBarActions;
 import io.github.redstonemango.mangoplayer.logic.Playlist;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -20,6 +23,7 @@ public class PlaylistConfigWrapper {
     private static PlaylistConfigWrapper INSTANCE = null;
 
     public static final String configFilePath = MangoPlayer.APP_FOLDER_PATH + "/playlists.json";
+    public static boolean loadError = false;
 
     public @Expose List<Playlist> playlists;
 
@@ -33,6 +37,12 @@ public class PlaylistConfigWrapper {
     }
 
     public static synchronized void save() {
+        if (loadError) {
+            System.out.println("Not saving playlist config due to an error during its I/O load!"); // Do not save (i.e. possibly overwrite) the config file if loading failed
+            return;
+        }
+        System.out.println("Saving playlist config...");
+
         File file = new File(configFilePath);
         try {
             if (!file.exists()) {
@@ -54,8 +64,22 @@ public class PlaylistConfigWrapper {
             return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(scanner.next(), PlaylistConfigWrapper.class);
         } catch (FileNotFoundException e) {
             return null;
-        } catch (JsonSyntaxException e) {
-            System.err.println("Invalid JSON syntax in playlist config file: " + e);
+        }
+        catch (Exception e) {
+            loadError = true;
+            System.err.println("Error loading playlist config:");
+            e.printStackTrace(System.err);
+
+            ButtonType errorButton = new ButtonType("Submit issue");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "", errorButton, ButtonType.CLOSE);
+            alert.setTitle("FknPlayer | Config I/O Error");
+            alert.setHeaderText("An error occurred while loading the configuration file '" + new File(configFilePath).getName() + "'");
+            alert.setContentText("This might be due to a malformed JSON text.\nPlease submit an issue if you are unable to fix this");
+            alert.showAndWait();
+            if (alert.getResult() == errorButton) {
+                GlobalMenuBarActions.onIssuesMenu();
+            }
+            MangoPlayer.primaryStage.close();
             return null;
         }
     }

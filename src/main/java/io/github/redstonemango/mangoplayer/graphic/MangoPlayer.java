@@ -85,7 +85,7 @@ public class MangoPlayer extends Application {
     }
 
     public void save(boolean showNotification) {
-        System.out.println("Saving application data (" + (showNotification ? "" : "not ") + "notifying the user)...");
+        System.out.println("Beginning to save application data (" + (showNotification ? "" : "not ") + "notifying the user)...");
         if (showNotification) {
             Platform.runLater(() -> {
                 String oldName = primaryStage.getTitle();
@@ -111,7 +111,7 @@ public class MangoPlayer extends Application {
         MainConfigWrapper.save();
         PlaylistConfigWrapper.save();
         SongConfigWrapper.save();
-        System.out.println("Saved application data!");
+        System.out.println("Done saving application data!");
     }
 
     public static void main(String[] args) {
