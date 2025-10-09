@@ -1,15 +1,22 @@
 package io.github.redstonemango.mangoplayer.logic;
 
+import io.github.redstonemango.mangoplayer.graphic.controller.waitScreen.WaitScreenScene;
 import io.github.redstonemango.mangoutils.MangoIO;
 import io.github.redstonemango.mangoutils.OperatingSystem;
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import io.github.redstonemango.mangoplayer.graphic.MangoPlayer;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlaylistExporting {
@@ -46,42 +53,63 @@ public class PlaylistExporting {
         if (latestSongNumberLength.get() == 1) {
             latestSongNumberLength.set(2);
         }
-
-        System.out.println("Exporting playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' using the temporary directory '" + tempFolder.getAbsolutePath() + "':");
-        playlist.getSongs().forEach(song -> {
-            StringBuilder songNumber = new StringBuilder(String.valueOf(playlist.getSongs().indexOf(song) + 1));
-            while (songNumber.length() < latestSongNumberLength.get()) {
-                songNumber.insert(0, "0");
-            }
-
-            String newFilePath = tempFolder.getAbsolutePath();
-            newFilePath = newFilePath + "/Track_" + songNumber + "--" + Utilities.formatAsFriendlyText(song.getName()) + ".mp3";
-            song.exportToFile(new File(newFilePath), playlist.getName());
-        });
-
-        boolean success = true;
-        try {
-            MangoIO.compressFile(tempFolder, targetFile);
-            MangoIO.deleteDirectoryRecursively(tempFolder);
-        } catch (IOException e) {
-            success = false;
-            Utilities.showErrorScreen("Export playlist", String.valueOf(e));
+        if (targetFile.exists()) {
+            targetFile.delete();
         }
 
-        if (success) {
-            System.out.println("Export of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' finished");
+        System.out.println("Exporting playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' using the temporary directory '" + tempFolder.getAbsolutePath() + "':");
 
-            ButtonType browseButton = new ButtonType("Browse file", ButtonBar.ButtonData.YES);
-            ButtonType continueButton = new ButtonType("Stay in application", ButtonBar.ButtonData.NO);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "", browseButton, continueButton);
-            alert.setTitle("Export finished");
-            alert.setHeaderText("Finished exporting \"" + playlist.getName() + "\" to \"" + targetFile.getName() + "\"");
-            alert.setContentText("Do you want to browse the file?");
-            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
-            alert.showAndWait();
-            if (alert.getResult() == browseButton) {
-                OperatingSystem.loadCurrentOS().browse(targetFile);
-            }
+        Stage stage = new Stage();
+        stage.setTitle("MangoPlayer | Export playlist (running)");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(MangoPlayer.primaryStage);
+        stage.setOnCloseRequest(Event::consume);
+        WaitScreenScene scene = WaitScreenScene.createNewScene("Exporting playlist...", "The playlist is currently being exported. It will be done any minute.");
+        Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
+
+        // Async export
+        {
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.execute(() -> {
+                boolean success = true;
+                playlist.getSongs().forEach(song -> {
+                    StringBuilder songNumber = new StringBuilder(String.valueOf(playlist.getSongs().indexOf(song) + 1));
+                    while (songNumber.length() < latestSongNumberLength.get()) {
+                        songNumber.insert(0, "0");
+                    }
+
+                    String newFilePath = tempFolder.getAbsolutePath();
+                    newFilePath = newFilePath + "/Track_" + songNumber + "--" + Utilities.formatAsFriendlyText(song.getName()) + ".mp3";
+                    song.exportToFile(new File(newFilePath), playlist.getName());
+                });
+
+                try {
+                    MangoIO.compressFile(tempFolder, targetFile);
+                    MangoIO.deleteDirectoryRecursively(tempFolder);
+                } catch (IOException e) {
+                    success = false;
+                    Utilities.showErrorScreen("Export playlist", String.valueOf(e), false);
+                }
+
+                if (success) {
+                    System.out.println("Export of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' finished");
+
+                    Platform.runLater(() -> {
+                        ButtonType browseButton = new ButtonType("Browse file", ButtonBar.ButtonData.YES);
+                        ButtonType continueButton = new ButtonType("Stay in application", ButtonBar.ButtonData.NO);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "", browseButton, continueButton);
+                        alert.setTitle("Export finished");
+                        alert.setHeaderText("Finished exporting \"" + playlist.getName() + "\" to \"" + targetFile.getName() + "\"");
+                        alert.setContentText("Do you want to browse the file?");
+                        alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
+                        alert.showAndWait();
+                        if (alert.getResult() == browseButton) {
+                            OperatingSystem.loadCurrentOS().browse(targetFile);
+                        }
+                    });
+                }
+                Platform.runLater(stage::close);
+            });
         }
     }
 
