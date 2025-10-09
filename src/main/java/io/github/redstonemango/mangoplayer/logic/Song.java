@@ -153,7 +153,9 @@ public class Song implements Comparable<Song>, Serializable {
             }
             tag.setField(FieldKey.TITLE, name);
             if (albumName != null) tag.setField(FieldKey.ALBUM, albumName);
-            tag.addField(StandardArtwork.createArtworkFromFile(new File(Utilities.thumbnailPathFromSong(this))));
+
+            File thumbnail = new File(Utilities.thumbnailPathFromSong(this));
+            if (thumbnail.exists()) tag.addField(StandardArtwork.createArtworkFromFile(thumbnail));
 
             Files.copy(audioAsset.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             mp3File.save(file);
