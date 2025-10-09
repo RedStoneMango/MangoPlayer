@@ -49,7 +49,7 @@ public class SongConfigWrapper {
         if (!file.exists()) return null;
         try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) {
             if (!scanner.hasNext()) return null;
-            return new Gson().fromJson(scanner.next(), SongConfigWrapper.class);
+            return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().fromJson(scanner.next(), SongConfigWrapper.class);
         } catch (FileNotFoundException e) {
             return null;
         } catch (JsonSyntaxException e) {
