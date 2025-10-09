@@ -44,6 +44,7 @@ public class FfmpegFileConverter implements IProcessExecuteable {
             alert.setTitle("Unsupported file type");
             alert.setHeaderText(file.getName() + " is not a supported file type");
             alert.setContentText("The file will be skipped as no ffmpeg implementation is available for converting");
+            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
             alert.showAndWait();
             return true;
         }
@@ -52,6 +53,7 @@ public class FfmpegFileConverter implements IProcessExecuteable {
         alert.setTitle("Unsupported file type");
         alert.setHeaderText(file.getName() + " is not a supported file type");
         alert.setContentText("You can convert the file to a supported type using ffmpeg");
+        alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
         alert.showAndWait();
         return alert.getResult() != convertButton;
     }
