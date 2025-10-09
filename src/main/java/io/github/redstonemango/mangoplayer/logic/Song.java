@@ -26,7 +26,7 @@ public class Song implements Comparable<Song>, Serializable {
     @Expose private final @Nullable String youtubeId;
     @Expose private long listenCount;
     @Expose private double volumeAdjustment;
-    @Expose public Song(String name,  @Nullable String youtubeId, long listenCount, double volumeAdjustment) {
+    public Song(String name,  @Nullable String youtubeId, long listenCount, double volumeAdjustment) {
         this.id = UniqueIdGenerator.generateUniqueString(UniqueIdGenerator.IdUse.SONG_ID);
         this.name = name;
         this.listenCount = listenCount;

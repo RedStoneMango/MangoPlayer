@@ -3,6 +3,7 @@ package io.github.redstonemango.mangoplayer.logic.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.annotations.Expose;
 import io.github.redstonemango.mangoplayer.graphic.MangoPlayer;
 import io.github.redstonemango.mangoplayer.logic.Song;
 import org.jetbrains.annotations.Nullable;
