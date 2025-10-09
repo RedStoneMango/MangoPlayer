@@ -163,6 +163,7 @@
                         <additionalModule>javafx.fxml</additionalModule>
                         <additionalModule>javafx.media</additionalModule>
                         <additionalModule>javafx.web</additionalModule>
+                        <additionalModule>java.logging</additionalModule>
                     </additionalModules>
                 </configuration>
                 <executions>
