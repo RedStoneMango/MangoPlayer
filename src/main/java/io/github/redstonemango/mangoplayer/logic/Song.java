@@ -162,7 +162,7 @@ public class Song implements Comparable<Song>, Serializable {
             System.out.println("Exported song '" + name + "' (ID is '" + id + "') to file '" + file.getAbsolutePath() + "'");
             return true;
         } catch (Exception e) {
-            Utilities.showErrorScreen("Export song '" + name + "'", String.valueOf(e));
+            Utilities.showErrorScreen("Export song '" + name + "'", String.valueOf(e), false);
             return false;
         }
     }
