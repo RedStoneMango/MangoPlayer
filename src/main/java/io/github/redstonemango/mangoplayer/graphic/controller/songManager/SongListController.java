@@ -3,6 +3,7 @@ package io.github.redstonemango.mangoplayer.graphic.controller.songManager;
 import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.AnalyserController;
 import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.PlaylistDataRepresentation;
 import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.SongDataRepresentation;
+import io.github.redstonemango.mangoplayer.graphic.controller.waitScreen.WaitScreenScene;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
@@ -314,9 +315,8 @@ public class SongListController implements IInitializable, ISongControllable {
 
         stage.setTitle("MangoPlayer | Use analyser (load)");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/io/github/redstonemango/mangoplayer/fxml/useAnalyser/loading.fxml"));
-            Scene scene = new Scene(loader.load());
-            Utilities.prepareAndShowStage(stage, scene, loader);
+            WaitScreenScene scene = WaitScreenScene.createNewScene("Collecting data...", "Your songs and playlists are currently indexed in order to supply reliable data");
+            Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
