@@ -194,6 +194,7 @@ public class AnalyserController {
         applyComparator(playlistSongCountColumn);
         applyComparator(playlistPlayCountColumn);
         applyComparator(playlistTimeColumn);
+        applyComparator(playlistTotalDurationColumn);
 
         AnalyserScene scene = (AnalyserScene) tabPane.getScene();
         playlistTable.getItems().addAll(scene.getPlaylistData());
@@ -260,32 +261,40 @@ public class AnalyserController {
     }
 
     private static boolean isLikelyTime(String input) {
-        int colonCount = 0;
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == ':') colonCount++;
-            else if (!Character.isDigit(input.charAt(i)) && input.charAt(i) != ':') {
-                return false; // Early exit: invalid character
-            }
+        String[] parts = input.split(":");
+        if (parts.length != 2 && parts.length != 3) return false;
+
+        for (String part : parts) {
+            if (!part.matches("\\d+")) return false;
         }
-        return colonCount >= 1;
+
+        return true;
     }
 
     private static long parseTimeToMillis(String timeString) {
         String[] parts = timeString.split(":");
-        long total = 0;
-        int[] multipliers = {1, 1000, 60000, 3600000, 86400000}; // ms, sec, min, hr, day
-        int index = parts.length - 1;
 
-        for (int i = 0; i < parts.length && i < multipliers.length; i++) {
-            try {
-                int unit = Integer.parseInt(parts[index - i]);
-                total += unit * (long) multipliers[i];
-            } catch (NumberFormatException e) {
-                break; // stop parsing on first invalid part
+        try {
+            int hours = 0, minutes = 0, seconds = 0;
+
+            if (parts.length == 2) {
+                // Format: mm:ss
+                minutes = Integer.parseInt(parts[0]);
+                seconds = Integer.parseInt(parts[1]);
+            } else if (parts.length == 3) {
+                // Format: hh:mm:ss
+                hours = Integer.parseInt(parts[0]);
+                minutes = Integer.parseInt(parts[1]);
+                seconds = Integer.parseInt(parts[2]);
+            } else {
+                // Unsupported format
+                return 0;
             }
-        }
 
-        return total;
+            return (hours * 3600L + minutes * 60L + seconds) * 1000L;
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 
     private static Integer extractLeadingInteger(String input) {
