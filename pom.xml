@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
         <javapackager.version>1.7.6</javapackager.version>
-        <package.mainClass>io.github.redstonemango.mangoplayer.graphic.MangoPlayer</package.mainClass>
+        <package.mainClass>io.github.redstonemango.mangoplayer.front.MangoPlayer</package.mainClass>
         <package.application.name>MangoPlayer</package.application.name>
         <!-- allow override from command-line or environment -->
         <!-- if not set, plugin may default or error (you may define a default) -->
@@ -130,7 +130,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>io.github.redstonemango.mangoplayer.graphic.MangoPlayer</mainClass>
+                            <mainClass>io.github.redstonemango.mangoplayer.front.MangoPlayer</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
