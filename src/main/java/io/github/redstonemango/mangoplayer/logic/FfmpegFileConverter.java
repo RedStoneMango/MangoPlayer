@@ -28,23 +28,8 @@ public class FfmpegFileConverter implements IProcessExecuteable {
 
     private FfmpegFileConverter() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (audioTempDir.exists()) {
-                try {
-                    System.out.println("Cleaning up temporary audio conversion directory");
-                    MangoIO.deleteDirectoryRecursively(audioTempDir);
-                } catch (IOException e) {
-                    System.err.println("Error cleaning up temporary audio conversion directory: " + e);
-                }
-            }
-            if (imageTempDir.exists()) {
-                try {
-                    System.out.println("Cleaning up temporary image conversion directory");
-                    MangoIO.deleteDirectoryRecursively(imageTempDir);
-                } catch (IOException e) {
-                    System.err.println("Error cleaning up temporary image conversion directory: " + e);
-                }
-            }
-            System.out.println("Done cleaning up temporary file conversion directories!");
+            cleanupFilesToMp3Conversion();
+            cleanupFilesToPngConversion();
         }));
     }
 
@@ -114,11 +99,13 @@ public class FfmpegFileConverter implements IProcessExecuteable {
                 .thenApply(_ -> result);
     }
     public void cleanupFilesToMp3Conversion() {
-        try {
-            System.out.println("Cleaning up temporary audio conversion directory");
-            MangoIO.deleteDirectoryRecursively(audioTempDir);
-        } catch (IOException e) {
-            System.err.println("Error cleaning up temporary audio conversion directory: " + e);
+        if (audioTempDir.exists()) {
+            try {
+                System.out.println("Cleaning up temporary audio conversion directory");
+                MangoIO.deleteDirectoryRecursively(audioTempDir);
+            } catch (IOException e) {
+                System.err.println("Error cleaning up temporary audio conversion directory: " + e);
+            }
         }
     }
 
@@ -165,11 +152,13 @@ public class FfmpegFileConverter implements IProcessExecuteable {
                 .thenApply(_ -> result);
     }
     public void cleanupFilesToPngConversion() {
-        try {
-            System.out.println("Cleaning up temporary image conversion directory");
-            MangoIO.deleteDirectoryRecursively(imageTempDir);
-        } catch (IOException e) {
-            System.err.println("Error cleaning up temporary image conversion directory: " + e);
+        if (imageTempDir.exists()) {
+            try {
+                System.out.println("Cleaning up temporary image conversion directory");
+                MangoIO.deleteDirectoryRecursively(imageTempDir);
+            } catch (IOException e) {
+                System.err.println("Error cleaning up temporary image conversion directory: " + e);
+            }
         }
     }
 
