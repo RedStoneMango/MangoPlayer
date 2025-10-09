@@ -57,7 +57,7 @@ To unlock additional features like direct song downloads from YouTube or media f
 1. Open the **MangoPlayer** application.
 2. In the menu bar, go to:  
    `MangoPlayer -> Yt-dlp -> Open download page`
-3. Follow the instructions on the website to download and install **yt-dlp`.
+3. Follow the instructions on the website to download and install **yt-dlp**.
 
 > ⚠️ Note: **yt-dlp** requires **ffmpeg** to function properly.
 
