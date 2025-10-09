@@ -1,9 +1,15 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.songManager;
 
+import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.AnalyserController;
+import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.PlaylistDataRepresentation;
+import io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser.SongDataRepresentation;
+import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -27,6 +33,9 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.io.File;
 import java.util.*;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SongListController implements IInitializable, ISongControllable {
     @FXML private Tooltip songFilterTooltip;
@@ -273,12 +282,44 @@ public class SongListController implements IInitializable, ISongControllable {
             Toolkit.getDefaultToolkit().beep();
             return;
         }
-
-        Utilities.removeHeldListeners(this);
-        AnalyserScene scene = AnalyserScene.createNewScene(((SongListScene) songFilterField.getScene()).getMainWindowController());
         Stage stage = (Stage) songFilterField.getScene().getWindow();
-        stage.setTitle("MangoPlayer | Use analyser");
-        Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
+
+        // Async load
+        {
+            ExecutorService service = Executors.newSingleThreadExecutor();
+            service.execute(() -> {
+                List<SongDataRepresentation> songData = new ArrayList<>();
+                List<PlaylistDataRepresentation> playlistData = new ArrayList<>();
+
+                SongConfigWrapper.loadConfig().songs.forEach((_, song) -> songData.add(new SongDataRepresentation(song)));
+                PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> playlistData.add(new PlaylistDataRepresentation(playlist)));
+
+                AnalyserScene analyserScene = AnalyserScene.createNewScene(
+                        ((SongListScene) songFilterField.getScene()).getMainWindowController(),
+                        playlistData,
+                        songData
+                );
+                ((AnalyserController) analyserScene.getLoader().getController()).init();
+
+                Utilities.removeHeldListeners(this);
+
+                Platform.runLater(() -> {
+                    if (stage.isShowing()) {
+                        stage.setTitle("MangoPlayer | Use analyser");
+                        Utilities.prepareAndShowStage(stage, analyserScene, analyserScene.getLoader());
+                    }
+                });
+            });
+        }
+
+        stage.setTitle("MangoPlayer | Use analyser (load)");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/io/github/redstonemango/mangoplayer/fxml/useAnalyser/loading.fxml"));
+            Scene scene = new Scene(loader.load());
+            Utilities.prepareAndShowStage(stage, scene, loader);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

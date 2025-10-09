@@ -10,8 +10,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.util.Duration;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Playlist implements Comparable<Playlist> {
@@ -60,6 +69,15 @@ public class Playlist implements Comparable<Playlist> {
                 }
             }
         });
+    }
+
+    public Duration computeTotalDuration() {
+        Duration duration = Duration.ZERO;
+        for (Song song : songObjects) {
+            Duration dur = song.loadDuration();
+            if (dur != null) duration = duration.add(dur);
+        }
+        return duration;
     }
 
     public List<Song> getSongs() {

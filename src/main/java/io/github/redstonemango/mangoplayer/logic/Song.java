@@ -5,24 +5,32 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import io.github.redstonemango.mangoplayer.logic.config.PlaylistConfigWrapper;
 import io.github.redstonemango.mangoplayer.logic.config.SongConfigWrapper;
+import javafx.util.Duration;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.jaudiotagger.tag.images.StandardArtwork;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Song implements Comparable<Song>, Serializable {
     @Expose private String name;
     private String id;
+    private @Nullable Duration duration;
     @Expose private final @Nullable String youtubeId;
     @Expose private long listenCount;
     @Expose private double volumeAdjustment;
@@ -43,6 +51,24 @@ public class Song implements Comparable<Song>, Serializable {
         }
 
         volumeAdjustment = Math.clamp(volumeAdjustment, 0.01, 1);
+    }
+
+    // === Lazy-Load Duration Value To Simplify Tag-Read For Analyzer === //
+    public @Nullable Duration loadDuration() {
+        if (duration == null) {
+            try {
+                AudioFile af = AudioFileIO.read(new File(Utilities.audioPathFromSong(this)));
+                duration = Duration.seconds(af.getAudioHeader().getTrackLength());
+            } catch (CannotReadException | IOException | TagException | ReadOnlyFileException | InvalidAudioFrameException _) {
+                return null;
+            }
+        }
+        return duration;
+    }
+    public void registerDurationIfNeeded(Duration duration) {
+        if (this.duration == null) {
+            this.duration = duration;
+        }
     }
 
     public String getName() {

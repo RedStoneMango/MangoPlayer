@@ -1,9 +1,6 @@
 package io.github.redstonemango.mangoplayer.graphic.controller.useAnalyser;
 
 import io.github.redstonemango.mangoplayer.graphic.ComboBoxSearching;
-import io.github.redstonemango.mangoplayer.graphic.controller.songManager.SongListController;
-import io.github.redstonemango.mangoplayer.logic.Song;
-import javafx.application.Platform;
 import javafx.beans.property.Property;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -27,7 +24,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AnalyserController implements IInitializable {
+// This is a standalone class, not an inheritor of IInitializable to enable us to do an async load
+public class AnalyserController {
 
     private boolean initialized = false;
 
@@ -38,6 +36,7 @@ public class AnalyserController implements IInitializable {
     @FXML private TableColumn<SongDataRepresentation, Image> songThumbnailColumn;
     @FXML private TableColumn<SongDataRepresentation, String> songListenColumn;
     @FXML private TableColumn<SongDataRepresentation, String> songUseColumn;
+    @FXML private TableColumn<SongDataRepresentation, String> songDurationColumn;
     @FXML private ComboBox<SongDataRepresentation> songJumpBox;
 
     @FXML private TableView<PlaylistDataRepresentation> playlistTable;
@@ -46,9 +45,10 @@ public class AnalyserController implements IInitializable {
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistPlayCountColumn;
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistTimeColumn;
     @FXML private TableColumn<PlaylistDataRepresentation, String> playlistSongCountColumn;
+    @FXML private TableColumn<PlaylistDataRepresentation, String> playlistTotalDurationColumn;
     @FXML private ComboBox<PlaylistDataRepresentation> playlistJumpBox;
 
-    @Override
+    // This is a standalone method, not an inheritor of IInitializable to enable us to do an async load
     public void init() {
         tabPane.getSelectionModel().select(1);
         tabPane.getScene().addEventHandler(KeyEvent.KEY_PRESSED, e -> {
@@ -94,6 +94,7 @@ public class AnalyserController implements IInitializable {
         songThumbnailColumn.setCellValueFactory(cellData -> cellData.getValue().thumbnailProperty());
         songListenColumn.setCellValueFactory(cellData -> cellData.getValue().listenCountProperty());
         songUseColumn.setCellValueFactory(cellData -> cellData.getValue().useCountProperty());
+        songDurationColumn.setCellValueFactory(cellData -> cellData.getValue().durationProperty());
         songThumbnailColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<SongDataRepresentation, Image> call(TableColumn<SongDataRepresentation, Image> param) {
@@ -118,13 +119,12 @@ public class AnalyserController implements IInitializable {
                 };
             }
         });
-        SongConfigWrapper.loadConfig().songs.forEach((_, song) -> {
-            SongDataRepresentation data = new SongDataRepresentation(song);
-            songTable.getItems().add(data);
-            boxOptions.add(data);
-        });
+        AnalyserScene scene = (AnalyserScene) tabPane.getScene();
+        songTable.getItems().addAll(scene.getSongData());
+        boxOptions.addAll(scene.getSongData());
 
         applyComparator(songUseColumn);
+        applyComparator(songDurationColumn);
         applyComparator(songListenColumn);
 
         songListenColumn.setSortType(TableColumn.SortType.DESCENDING);
@@ -166,6 +166,7 @@ public class AnalyserController implements IInitializable {
         playlistPlayCountColumn.setCellValueFactory(cellData -> cellData.getValue().playedSongCountProperty());
         playlistTimeColumn.setCellValueFactory(cellData -> cellData.getValue().totalPlayTimeProperty());
         playlistSongCountColumn.setCellValueFactory(cellData -> cellData.getValue().songCountProperty());
+        playlistTotalDurationColumn.setCellValueFactory(cellData -> cellData.getValue().totalDurationProperty());
         playlistGraphicColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<PlaylistDataRepresentation, Image> call(TableColumn<PlaylistDataRepresentation, Image> param) {
@@ -194,11 +195,10 @@ public class AnalyserController implements IInitializable {
         applyComparator(playlistPlayCountColumn);
         applyComparator(playlistTimeColumn);
 
-        PlaylistConfigWrapper.loadConfig().playlists.forEach(playlist -> {
-            PlaylistDataRepresentation data = new PlaylistDataRepresentation(playlist);
-            playlistTable.getItems().add(data);
-            boxOptions.add(data);
-        });
+        AnalyserScene scene = (AnalyserScene) tabPane.getScene();
+        playlistTable.getItems().addAll(scene.getPlaylistData());
+        boxOptions.addAll(scene.getPlaylistData());
+
         playlistPlayCountColumn.setSortType(TableColumn.SortType.DESCENDING);
         playlistTable.getSortOrder().add(playlistPlayCountColumn);
         playlistTable.sort();
