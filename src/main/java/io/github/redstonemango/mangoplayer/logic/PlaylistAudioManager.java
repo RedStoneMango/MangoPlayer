@@ -77,6 +77,7 @@ public class PlaylistAudioManager {
 
         currentPlayer.setOnReady(() -> {
             currentPlayer.play();
+            song.registerDurationIfNeeded(currentMedia.getDuration()); // Lazy-load to simplify tag read for analyzer
             controller.onNewSongStart(song, currentMedia.getDuration(), jumpTo);
         });
 

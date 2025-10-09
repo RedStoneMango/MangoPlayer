@@ -16,6 +16,7 @@ public class PlaylistDataRepresentation implements ComboBoxSearching.ISearchComp
     private final SimpleStringProperty playedSongCount;
     private final SimpleStringProperty totalPlayTime;
     private final SimpleStringProperty songCount;
+    private final SimpleStringProperty totalDuration;
     private final SimpleObjectProperty<Image> graphic;
     private final Playlist playlist;
 
@@ -24,6 +25,7 @@ public class PlaylistDataRepresentation implements ComboBoxSearching.ISearchComp
         this.name = new SimpleStringProperty(playlist.getName());
         this.playedSongCount = new SimpleStringProperty(playlist.getPlayedSongCount() + "x");
         this.totalPlayTime = new SimpleStringProperty(Utilities.formatDuration(playlist.getPlayTime()));
+        this.totalDuration = new SimpleStringProperty(Utilities.formatDuration(playlist.computeTotalDuration()));
         int songCountInt = playlist.getSongs().size();
         this.songCount = new SimpleStringProperty(songCountInt == 0 ? "No songs" : (songCountInt == 1 ? "1 song" : songCountInt + " songs"));
 
@@ -67,6 +69,10 @@ public class PlaylistDataRepresentation implements ComboBoxSearching.ISearchComp
 
     public SimpleStringProperty songCountProperty() {
         return songCount;
+    }
+
+    public SimpleStringProperty totalDurationProperty() {
+        return totalDuration;
     }
 
     @Override

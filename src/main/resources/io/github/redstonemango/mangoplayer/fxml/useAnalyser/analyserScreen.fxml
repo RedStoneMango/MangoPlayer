@@ -56,6 +56,7 @@
                         <TableColumn fx:id="songNameColumn" editable="false" prefWidth="75.0" text="Name" />
                         <TableColumn fx:id="songListenColumn" editable="false" prefWidth="75.0" text="Listen count" />
                         <TableColumn fx:id="songUseColumn" editable="false" prefWidth="75.0" text="Use count" />
+                        <TableColumn fx:id="songDurationColumn" editable="false" prefWidth="75.0" text="Duration" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -96,11 +97,12 @@
                <center>
                   <TableView fx:id="playlistTable" prefHeight="200.0" prefWidth="0.0">
                      <columns>
-                        <TableColumn fx:id="playlistGraphicColumn" editable="false" prefWidth="75.0" sortable="false" text="Graphic" />
-                        <TableColumn fx:id="playlistNameColumn" editable="false" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="playlistPlayCountColumn" editable="false" prefWidth="75.0" text="Songs played" />
-                        <TableColumn fx:id="playlistTimeColumn" editable="false" prefWidth="75.0" text="Total play time" />
-                        <TableColumn fx:id="playlistSongCountColumn" editable="false" prefWidth="75.0" text="Song count" />
+                        <TableColumn fx:id="playlistGraphicColumn" editable="false" prefWidth="90.0" sortable="false" text="Graphic" />
+                        <TableColumn fx:id="playlistNameColumn" editable="false" prefWidth="95.0" text="Name" />
+                        <TableColumn fx:id="playlistSongCountColumn" editable="false" prefWidth="90.0" text="Song count" />
+                        <TableColumn fx:id="playlistPlayCountColumn" editable="false" prefWidth="108.0" text="Songs played" />
+                        <TableColumn fx:id="playlistTimeColumn" editable="false" prefWidth="119.0" text="Total time played" />
+                        <TableColumn fx:id="playlistTotalDurationColumn" editable="false" prefWidth="93.0" text="Total duration" />
                      </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

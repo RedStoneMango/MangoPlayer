@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import io.github.redstonemango.mangoplayer.logic.Finals;
 import io.github.redstonemango.mangoplayer.logic.Song;
 import io.github.redstonemango.mangoplayer.logic.Utilities;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.Locale;
@@ -15,6 +16,7 @@ public class SongDataRepresentation implements ComboBoxSearching.ISearchComparab
     private final SimpleStringProperty name;
     private final SimpleStringProperty listenCount;
     private final SimpleStringProperty useCount;
+    private final SimpleStringProperty duration;
     private final SimpleObjectProperty<Image> thumbnail;
     private final Song song;
 
@@ -23,6 +25,9 @@ public class SongDataRepresentation implements ComboBoxSearching.ISearchComparab
         this.name = new SimpleStringProperty(song.getName());
         this.listenCount = new SimpleStringProperty(song.getListenCount() + "x");
         this.useCount = new SimpleStringProperty(song.summarizeUseCount() + "x");
+
+        Duration dur = song.loadDuration();
+        this.duration = new SimpleStringProperty(dur == null ? "??" : Utilities.formatDuration(dur));
 
         File thumbnailExpected = new File(Utilities.thumbnailPathFromSong(song));
         if (thumbnailExpected.exists()) {
@@ -43,6 +48,10 @@ public class SongDataRepresentation implements ComboBoxSearching.ISearchComparab
 
     public SimpleStringProperty useCountProperty() {
         return useCount;
+    }
+
+    public SimpleStringProperty durationProperty() {
+        return duration;
     }
 
     public SimpleObjectProperty<Image> thumbnailProperty() {

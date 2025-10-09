@@ -140,6 +140,7 @@ public class SongDetailsController implements IInitializable, IProcessExecuteabl
         }
 
         testListenPlayer.setOnReady(() -> {
+            song.registerDurationIfNeeded(songMedia.getDuration()); // Lazy-load to simplify tag read for analyzer
             testListenPlayer.setVolume(MainConfigWrapper.loadConfig().volume * song.getVolumeAdjustment());
             msMiddleSectionStart = Math.max(songMedia.getDuration().toMillis() / 2 - sMiddleSectionBounds * 1000, 0);
             testListenPlayer.seek(Duration.millis(msMiddleSectionStart));

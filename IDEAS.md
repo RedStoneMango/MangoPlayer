@@ -30,7 +30,7 @@
 
   Clean exported filenames by stripping unnecessary characters such as emojis, excess whitespace, or non-standard symbols, ensuring better compatibility across filesystems.
 
-- [ ] **Track and display song duration in statistics**
+- [X] **Track and display song duration in statistics**
 
   Store a song's length in its metadata, display it:
   - In the song editor’s statistics section
