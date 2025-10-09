@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 import io.github.redstonemango.mangoplayer.graphic.MangoPlayer;
+import io.github.redstonemango.mangoplayer.logic.Finals;
 import io.github.redstonemango.mangoplayer.logic.GlobalMenuBarActions;
 import io.github.redstonemango.mangoplayer.logic.Playlist;
 import javafx.scene.control.Alert;
@@ -76,6 +77,7 @@ public class PlaylistConfigWrapper {
             alert.setHeaderText("An error occurred while loading the configuration file '" + new File(configFilePath).getName() + "'");
             alert.setContentText("This might be due to a malformed JSON text.\nPlease submit an issue if you are unable to fix this");
             alert.showAndWait();
+            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
             if (alert.getResult() == errorButton) {
                 GlobalMenuBarActions.onIssuesMenu();
             }
