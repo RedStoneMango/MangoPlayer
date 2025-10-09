@@ -149,18 +149,20 @@ public class Utilities {
     }
 
     public static void showErrorScreen(String processName, String text, boolean wait) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("MangoPlayer | Error");
-        alert.setHeaderText("An error occurred during process '" + processName + "'");
-        alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
-        alert.setContentText(text);
-        if (wait) {
-            alert.showAndWait();
-        }
-        else {
-            alert.show();
-        }
-        System.err.println("An error occurred during process '" + processName + "': " + text);
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("MangoPlayer | Error");
+            alert.setHeaderText("An error occurred during process '" + processName + "'");
+            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
+            alert.setContentText(text);
+            if (wait) {
+                alert.showAndWait();
+            }
+            else {
+                alert.show();
+            }
+            System.err.println("An error occurred during process '" + processName + "': " + text);
+        });
     }
 
     public static void showInformationScreen(String processName, String text) {
@@ -168,17 +170,19 @@ public class Utilities {
     }
 
     public static void showInformationScreen(String processName, String text, boolean wait) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("MangoPlayer | Info");
-        alert.setHeaderText("Information about process '" + processName + "'");
-        alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
-        alert.setContentText(text);
-        if (wait) {
-            alert.showAndWait();
-        }
-        else {
-            alert.show();
-        }
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("MangoPlayer | Info");
+            alert.setHeaderText("Information about process '" + processName + "'");
+            alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
+            alert.setContentText(text);
+            if (wait) {
+                alert.showAndWait();
+            }
+            else {
+                alert.show();
+            }
+        });
     }
 
     public static <T> T getRandomElementExcluding(List<T> list, T exclusion) {
