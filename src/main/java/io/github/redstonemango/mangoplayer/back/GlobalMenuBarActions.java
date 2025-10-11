@@ -382,10 +382,38 @@ public class GlobalMenuBarActions {
         TextDisplay.showNewDisplay(MangoPlayer.primaryStage, "About Window", "Help -> About", """
                 # About
                 
-                MangoPlayer started as a personal project — a music player built for my own needs and preferences. Over time, it has evolved through multiple versions, continuously improving in performance, usability, and features.<br>
+                ## Content
+                1. [General](#general)
+                2. [Contributions Welcome](#contributions-welcome)
                 
-                Any form of contribution is welcome! Contact me via GitHub, create an Issue or submit a PR - I'm happy about your feedback.
+                ---
                 
+                ## General
+                
+                **MangoPlayer** started as a personal side project — a simple music player built to suit my own workflow and listening habits. Frustrated with existing players (whether due to bulky UIs or missing features), I wanted something lightweight, clean, and distraction-free.
+                
+                Over time, the project has grown beyond its original scope, shaped by experimentation, user feedback, and continuous iteration.
+                
+                Today, MangoPlayer is an open-source project aimed at delivering a **clean**, **efficient**, and **customizable** music experience for anyone who values simplicity without sacrificing functionality. With every release, it continues to evolve — adding new features, refining usability, and improving cross-platform support.
+                
+                ---
+                
+                ## Contributions Welcome
+                
+                MangoPlayer is still actively evolving, and I’m always open to new ideas, feature requests, and improvements from the community. Whether you're a developer, designer, tester, or someone with helpful feedback — your contributions are genuinely appreciated.
+                
+                Ways you can help:
+                
+                - Report bugs or issues
+                - Suggest new features or UI/UX improvements
+                - Submit pull requests with enhancements or fixes
+                - Improve the documentation
+                - Share the project with others
+                
+                Feel free to reach out via GitHub, open an issue, or submit a PR using the links under
+                `Help → Links` in the application's menu bar.
+                
+                Thanks for being part of the journey!
                 """);
     }
     public static void onHomepageMenu() {
