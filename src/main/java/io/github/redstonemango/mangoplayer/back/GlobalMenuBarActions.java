@@ -113,7 +113,7 @@ public class GlobalMenuBarActions {
                 
                 ### Downloading songs
                 The second button in the bottom part of the song manager allows integration with the tools 'yt-dlp' and 'ffmpeg' for downloading audio directly from YouTube.<br>
-                For further information, refer to `Help -> External Tools` in this application's top menu.
+                For further information, refer to `Help -> External Tools` in this application's menu bar.
                 A downloaded song can then be used in any playlist you wish.
                 
                 ### Deleting songs
@@ -204,7 +204,7 @@ public class GlobalMenuBarActions {
                 ---
                 
                 ## Opening a playlist
-                Once a playlist is created _(refer to `Help -> How To -> Manage Playlists` in the application's top menu)_, it can be opened by pressing the checkmark button on its entry's right.<br>
+                Once a playlist is created _(refer to `Help -> How To -> Manage Playlists` in the application's menu bar)_, it can be opened by pressing the checkmark button on its entry's right.<br>
                 The newly opening screen can be used to interact with your playlist.
                 
                 ## Collapsing the controls
@@ -214,7 +214,7 @@ public class GlobalMenuBarActions {
                 ## Controlling the playlist's songs
                 
                 ### Adding songs
-                To add songs to your playlist, use the `Add / Remove songs` button at the screen's bottom. This will being up a restricted version of the Song Manager _(refer to `Help -> How To -> Manage Songs` in the application's top menu)_ allowing you to set which songs to use inside our playlist by checking the checkmark button at every song's right<br>
+                To add songs to your playlist, use the `Add / Remove songs` button at the screen's bottom. This will being up a restricted version of the Song Manager _(refer to `Help -> How To -> Manage Songs` in the application's menu bar)_ allowing you to set which songs to use inside our playlist by checking the checkmark button at every song's right<br>
                 Once all songs are selected / deselected the way you wish, you can confirm the changes by pressing the blue button in the window's top-right corner or just by pressing `Enter`. This will...
                 - ... Add all newly selected songs to the playlist's bottom and automatically scroll to the lastly added song.
                 - ... Remove all deselected songs from the playlist. Before a song is removed, a confirmation dialog will be shown.
@@ -225,7 +225,7 @@ public class GlobalMenuBarActions {
                 1. By pressing the delete button _(bin icon)_ at it's right.
                 2. By pressing the `Add / Remove songs` button at the screen's bottom and deselecting the song in the newly opened window.
                 With both ways, you will be prompted a confirmation dialog first and the song will then be removed from your playlist.<br>
-                A removed song stays accessible using the Song Manager _(refer to `Help -> How To -> Manage Playlists` in the application's top menu)_ and is still part of other playlist if they contained it before. In order to fully delete a song, the Song Manager has to be used.
+                A removed song stays accessible using the Song Manager _(refer to `Help -> How To -> Manage Playlists` in the application's menu bar)_ and is still part of other playlist if they contained it before. In order to fully delete a song, the Song Manager has to be used.
                 
                 ### Sorting songs
                 Sometimes you may want to re-arrange your songs in a different order.<br>
@@ -340,7 +340,7 @@ public class GlobalMenuBarActions {
                 
                 ### Installing the executeable
                 Because the external tools are not connected with us, we are legally not allowed to share or distribute them. However, you can download the executeable on the vendor's website and install it that way.<br>
-                To simplify this process for you, we offer a direct link to the download pages of these tools. They can be accessed by using `MangoPlayer -> TOOL NAME -> Open download page` in the application's top menu.<br>
+                To simplify this process for you, we offer a direct link to the download pages of these tools. They can be accessed by using `MangoPlayer -> TOOL NAME -> Open download page` in the application's menu bar.<br>
                 Once the executeable is downloaded, you have to install it like any CLI tool. In most cases, this is not a classic application, so please refer to the vendor's instructions on how to install it.<br>
                 Sometimes, the executeable may not be resolved correctly by the MangoPlayer. In this case, please [link it](#linking-the-executeable)
                 
@@ -348,7 +348,7 @@ public class GlobalMenuBarActions {
                 Once the executeable is installed, it may be possible that the MangoPlayer cannot resolve it correctly because it doesn't have permissions to check your system's PATH.<br>
                 The PATH is a list of folders in your computer that contain CLI applications and expose them to other tools like this player.<br>
                 If you however do not want the player to grant all permissions over the PATH or your system's security manager does so by default, you can give the player the location of your tool, so it automatically uses it instead of searching your PATH. In most cases this will redundant as on most operating systems _(except MacOS)_ you will never get a problem like this.<br>
-                To define the absolute path to your executeable, you can use `MangoPlayer -> TOOL NAME -> Set executeable directory` in the application's top menu and to resolve using the PATh, use `MangoPlayer -> TOOL NAME -> Resolve from PATH`.<br>
+                To define the absolute path to your executeable, you can use `MangoPlayer -> TOOL NAME -> Set executeable directory` in the application's menu bar and to resolve using the PATh, use `MangoPlayer -> TOOL NAME -> Resolve from PATH`.<br>
                 <br>
                 If you've linked your tool and the player is still unable to find it, you are most likely running the application in a sandboxed _(= restricted)_ environment. In this case, try in a not-sandboxed environment first, before opening an issue in the issue tracker.
                 """);
