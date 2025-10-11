@@ -560,6 +560,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
 
     @Override
     public void onSongsSorted() {
+        Utilities.tryMovePlaylistToListTop(playlist);
         playlist.getSongs().clear();
         songsView.getItems().forEach(song -> playlist.getSongs().add(song));
     }
