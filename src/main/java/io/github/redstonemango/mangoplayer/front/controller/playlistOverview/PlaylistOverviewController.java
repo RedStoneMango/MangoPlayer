@@ -158,6 +158,7 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         dialog.showAndWait();
         if (dialog.getResult() != null) {
             Playlist playlist = new Playlist(dialog.getResult(), new HashSet<>(), 0, 0);
+            playlist.ensureFields();
             PlaylistConfigWrapper.loadConfig().playlists.addFirst(playlist);
             repaintPlaylists();
             System.out.println("Creating new playlist '" + dialog.getResult() + "' with ID '" + playlist.getId() + "'");
