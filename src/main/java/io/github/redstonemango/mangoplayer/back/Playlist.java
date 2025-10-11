@@ -47,9 +47,10 @@ public class Playlist implements Comparable<Playlist> {
         songIds.removeIf(Objects::isNull);
 
         List<Song> songsObjs = new ArrayList<>();
-        songIds.forEach(id -> songsObjs.add(Song.songFromId(id)));
         songObjects = FXCollections.observableList(songsObjs);
-        songObjects.removeIf(Objects::isNull);
+        songIds.removeIf(id -> Song.songFromId(id) == null);
+        songIds.forEach(id -> songsObjs.add(Song.songFromId(id)));
+        songObjects.removeIf(Objects::isNull); // Just to be sure. Actually, all 'null' songs should already have been removed
         songObjects.addListener((ListChangeListener<Song>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
