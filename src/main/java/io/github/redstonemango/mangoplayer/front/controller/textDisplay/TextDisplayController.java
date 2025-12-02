@@ -30,9 +30,24 @@ public class TextDisplayController implements IInitializable {
         });
         if (titleLabel.getScene() instanceof TextDisplay scene) {
             titleLabel.setText(scene.getHeader());
+            String darkCss = """
+                    <style>
+                      body {
+                        background-color: #373e43;
+                        color: #e0e0e0;
+                      }
+                      a {
+                        color: #bb86fc;
+                      }
+                      pre, code {
+                        background-color: #373e43;
+                        color: #cfcfcf;
+                      }
+                    </style>
+                    """;
             String htmlText = markdownToHtml(scene.getMarkdown());
             textView.getEngine().setUserDataDirectory(new File(MangoPlayer.APP_FOLDER_PATH + "/internalData/"));
-            textView.getEngine().loadContent(htmlText, "text/html");
+            textView.getEngine().loadContent(darkCss + htmlText, "text/html");
             textView.setContextMenuEnabled(false);
 
             textView.getEngine().getLoadWorker().stateProperty().addListener((_, _, newState) -> {
