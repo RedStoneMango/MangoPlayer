@@ -14,6 +14,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class YtDlpManager {
 
@@ -269,13 +271,17 @@ public class YtDlpManager {
                 this.path,
                 "ytsearch10:" + search,
                 "--get-title",
-                "--get-id");
+                "--get-id",
+                "--print", "YOUTUBE_RESULT{%(title)s//%(id)s}"
+        );
         if (!this.ffmpegPath.equals("ffmpeg")) {
             List<String> cmd = processBuilder.command();
             cmd.add(1, "--ffmpeg-location");
             cmd.add(2, this.ffmpegPath);
             processBuilder.command(cmd);
         }
+
+        final Pattern RESULT_PATTERN = Pattern.compile("YOUTUBE_RESULT\\{(.+)//([A-Za-z0-9_-]{11})}");
 
         processBuilder.redirectErrorStream(true);
         try {
@@ -287,18 +293,15 @@ public class YtDlpManager {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             int index = 0;
             String line;
-            boolean url = false;
             while ((line = reader.readLine()) != null) {
-                if (url) {
-                    searchResults[index].url = String.format("https://www.youtube.com/watch?v=%s", line);
+                Matcher matcher = RESULT_PATTERN.matcher(line);
+                if (matcher.matches()) {
+                    SearchResult result = searchResults[index];
+                    result.name = matcher.group(1);
+                    result.url = String.format("https://youtube.com/watch?v=%s", matcher.group(2));
                     consumer.accept(searchResults[index]);
-                    index ++;
+                    index++;
                 }
-                else {
-                    searchResults[index].name = line;
-                }
-                url = !url;
-
             }
 
             int code = process.waitFor();
