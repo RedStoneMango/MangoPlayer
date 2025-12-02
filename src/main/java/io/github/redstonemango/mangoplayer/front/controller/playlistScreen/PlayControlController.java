@@ -112,7 +112,7 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
         Pane volumePane = new Pane(volumeSlider);
         volumePane.setPrefWidth(21.5);
         volumePane.setPrefHeight(144);
-        volumePane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        volumePane.setBackground(new Background(new BackgroundFill(Color.web("#373e43"), new CornerRadii(10), Insets.EMPTY)));
         volumePopup.getContent().add(volumePane);
         volumePopup.setAutoHide(false);
 
@@ -220,8 +220,8 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
         pauseKeyLabel2.setLayoutY(25);
         pauseKeyLabel2.setFont(Font.font(Font.getDefault().getName(), FontPosture.ITALIC, Font.getDefault().getSize() - 2));
         Pane pauseKeyPane = new Pane(pauseKeyLabel1, pauseKeyLabel2);
-        pauseKeyPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
-        pauseKeyPane.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(5))));
+        pauseKeyPane.setBackground(new Background(new BackgroundFill(Color.web("#373e43"), new CornerRadii(10), Insets.EMPTY)));
+        pauseKeyPane.setBorder(new Border(new BorderStroke(Color.web("#373e43"), BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(5))));
         pauseKeyPopup.getContent().add(pauseKeyPane);
     }
 
@@ -235,8 +235,8 @@ public class PlayControlController implements IInitializable, NativeKeyListener 
         newPauseKeyCombinationLabel.setLayoutY(25);
         newPauseKeyCombinationLabel.setFont(Font.font(Font.getDefault().getName(), Font.getDefault().getSize() - 1));
         Pane pauseKeyPane = new Pane(pauseKeyLabel1, newPauseKeyCombinationLabel);
-        pauseKeyPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
-        pauseKeyPane.setBorder(new Border(new BorderStroke(Color.LIGHTGRAY, BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(5))));
+        pauseKeyPane.setBackground(new Background(new BackgroundFill(Color.web("#373e43"), new CornerRadii(10), Insets.EMPTY)));
+        pauseKeyPane.setBorder(new Border(new BorderStroke(Color.web("#373e43"), BorderStrokeStyle.SOLID, new CornerRadii(10), new BorderWidths(5))));
         pauseKeyPopup.getContent().add(pauseKeyPane);
     }
 
