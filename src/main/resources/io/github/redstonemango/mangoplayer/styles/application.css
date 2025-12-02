@@ -38,7 +38,9 @@
 }
 
 .list-cell:filled:selected,
-.list-cell:filled:selected:focused {
+.list-cell:filled:selected:focused,
+.table-row-cell:filled:selected,
+.table-row-cell:filled:selected:focused {
     -fx-background-color: -fx-accent;
 }
 
