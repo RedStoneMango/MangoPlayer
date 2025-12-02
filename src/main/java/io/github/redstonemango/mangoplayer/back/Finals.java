@@ -29,7 +29,7 @@ public class Finals {
 
     public static final Image IMAGE_STOP_AFTER_SONG_WARNING = new Image(Finals.class.getResource("/io/github/redstonemango/mangoplayer/images/stop_after_song_warning.png").toExternalForm());
 
-    public static final String STYLESHEET_FORM_APPLICATION_MAIN = Finals.class.getResource("/io/github/redstonemango/mangoplayer/styles/none.css").toExternalForm();
+    public static final String STYLESHEET_FORM_APPLICATION_MAIN = Finals.class.getResource("/io/github/redstonemango/mangoplayer/styles/application.css").toExternalForm();
 
     public static final Image IMAGE_SELECT = new Image(Finals.class.getResource("/io/github/redstonemango/mangoplayer/images/select.png").toExternalForm());
 
