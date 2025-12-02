@@ -35,7 +35,6 @@ public class SongAdding implements IProcessExecuteable {
     public static final SongAdding INSTANCE = new SongAdding();
 
     private SongListController controller;
-    private String lastSearch;
 
     public void onImportSong(SongListController controller) {
         FileChooser chooser = new FileChooser();
@@ -104,7 +103,6 @@ public class SongAdding implements IProcessExecuteable {
     }
 
     public void startSearch(String search) {
-        lastSearch = search;
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(MangoPlayer.primaryStage);
@@ -160,9 +158,5 @@ public class SongAdding implements IProcessExecuteable {
                 Utilities.showErrorScreen("Download song", "Error processing downloaded assets: " + e);
             }
         }
-    }
-
-    public String getLastSearch() {
-        return lastSearch;
     }
 }

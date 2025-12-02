@@ -21,7 +21,7 @@
          <center>
             <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0">
                <children>
-                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onPlaylistCreate" prefHeight="41.0" prefWidth="139.0" text="Add playlist" />
+                  <Button focusTraversable="false" mnemonicParsing="false" onAction="#onPlaylistCreate" prefHeight="41.0" prefWidth="139.0" text="Add Playlist" />
                </children>
             </HBox>
          </center>
@@ -67,6 +67,8 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <MenuItem mnemonicParsing="false" onAction="#onChangeYtDlpMenu" text="Set executeable directory" />
                               <MenuItem mnemonicParsing="false" onAction="#onDefaultYtDlpMenu" text="Resolve from PATH" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onUpdateYtDlpMenu" text="Update" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ffmpeg">

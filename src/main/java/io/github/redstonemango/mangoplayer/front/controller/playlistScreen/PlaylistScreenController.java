@@ -440,6 +440,10 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
         GlobalMenuBarActions.onDefaultYtDlpMenu();
     }
     @FXML
+    private void onUpdateYtDlpMenu() {
+        GlobalMenuBarActions.onUpdateYtDlpMenu();
+    }
+    @FXML
     private void onDownloadFfmpegMenu() {
         GlobalMenuBarActions.onDownloadFfmpegMenu();
     }

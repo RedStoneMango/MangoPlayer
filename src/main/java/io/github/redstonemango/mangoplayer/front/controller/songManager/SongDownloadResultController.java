@@ -1,9 +1,11 @@
 package io.github.redstonemango.mangoplayer.front.controller.songManager;
 
+import io.github.redstonemango.mangoplayer.back.Finals;
 import io.github.redstonemango.mangoplayer.back.Utilities;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
@@ -63,21 +65,15 @@ public class SongDownloadResultController implements IInitializable {
             }
             else {
                 System.err.println("Received an invalid search result from yt-dlp. Result data are:");
-                System.err.println("<Result header>  " + searchResult.getName());
-                System.err.println("<Result footer>  " + searchResult.getUrl());
-                System.out.println("Prompting user to update yt-dlp and killing search process...");
-                scene.getOnKill().run();
+                System.err.println("<Name>  " + searchResult.getName());
+                System.err.println("<URL>  " + searchResult.getUrl());
 
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/io/github/redstonemango/mangoplayer/fxml/songManager/updateYtDlp.fxml"));
-                    Scene updateScene = new Scene(loader.load());
-                    Stage stage = (Stage) headerLabel.getScene().getWindow();
-                    stage.setTitle("MangoPlayer | Update yt-dlp");
-                    Utilities.prepareAndShowStage(stage, updateScene, loader);
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("MangoPlayer | Invalid Search Result");
+                alert.setHeaderText("Received an invalid search result from yt-dlp");
+                alert.setContentText("Please consider updating yt-dlp using 'MangoPlayer -> Yt-dlp -> Update'");
+                alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
+                alert.show();
             }
         }
     }

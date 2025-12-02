@@ -5,8 +5,13 @@ import javafx.application.Platform;
 import io.github.redstonemango.mangoplayer.front.MangoPlayer;
 import io.github.redstonemango.mangoplayer.front.controller.textDisplay.TextDisplay;
 import io.github.redstonemango.mangoplayer.back.config.MainConfigWrapper;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 public class GlobalMenuBarActions {
     public static void onOpenDirectoryMenu() {
@@ -25,6 +30,20 @@ public class GlobalMenuBarActions {
     public static void onDefaultYtDlpMenu() {
         boolean valid = YtDlpManager.getInstance().useDefaultExecuteable();
         if (valid) Utilities.showInformationScreen("Resolve yt-dlp from PATH", "Successfully configured the player to resolve the yt-dlp executeable from the PATH. Calling yt-dlp will use the first 'yt-dlp' file found in your PATH");
+    }
+    public static void onUpdateYtDlpMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(GlobalMenuBarActions.class.getResource("/io/github/redstonemango/mangoplayer/fxml/songManager/updateYtDlp.fxml"));
+            Scene updateScene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.initOwner(MangoPlayer.primaryStage);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("MangoPlayer | Update yt-dlp");
+            Utilities.prepareAndShowStage(stage, updateScene, loader);
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static void onDownloadFfmpegMenu() {
         OperatingSystem.loadCurrentOS().open(YtDlpManager.FFMPEG_DOWNLOAD);

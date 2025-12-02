@@ -85,6 +85,10 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         GlobalMenuBarActions.onDefaultYtDlpMenu();
     }
     @FXML
+    private void onUpdateYtDlpMenu() {
+        GlobalMenuBarActions.onUpdateYtDlpMenu();
+    }
+    @FXML
     private void onDownloadFfmpegMenu() {
         GlobalMenuBarActions.onDownloadFfmpegMenu();
     }
