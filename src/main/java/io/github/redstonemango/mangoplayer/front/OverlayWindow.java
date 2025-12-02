@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  *     <li>Sizing methods ({@linkplain #setWidth(double)} and {@linkplain #setHeight(double)}) do not affect the window. The window itself is also not resizable by the user, instead it will always fit its {@linkplain Scene}'s size.</li>
  *     <li>Though this is a {@linkplain Popup} inheritor, {@linkplain #autoHideProperty() auto hide} and {@linkplain #hideOnEscapeProperty() hide on escape} methods will throw {@linkplain UnsupportedOperationException UnsupportedOperationExceptions}.</li>
  * </ol>
- * @author Fabian Krohn
+ * @author RedStoneMango
  */
 public class OverlayWindow extends Popup {
 
