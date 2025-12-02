@@ -153,7 +153,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
         Pane volumePane = new Pane(volumeSlider);
         volumePane.setPrefWidth(21.5);
         volumePane.setPrefHeight(144);
-        volumePane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(10), Insets.EMPTY)));
+        volumePane.setBackground(new Background(new BackgroundFill(Color.web("#373e43"), new CornerRadii(10), Insets.EMPTY)));
         volumePopup.getContent().add(volumePane);
         volumePopup.setAutoHide(false);
 
