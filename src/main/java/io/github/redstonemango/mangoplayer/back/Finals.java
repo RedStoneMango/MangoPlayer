@@ -33,8 +33,5 @@ public class Finals {
 
     public static final Image IMAGE_SELECT = new Image(Finals.class.getResource("/io/github/redstonemango/mangoplayer/images/select.png").toExternalForm());
 
-    public static final Image IMAGE_SAVING = new Image(Finals.class.getResource("/io/github/redstonemango/mangoplayer/images/saving.png").toExternalForm());
-
-    public static final String STYLE_CODE_SONG_PLAYING = "-fx-border-color: blue; -fx-border-width: 2;";
-    public static final String STYLE_CODE_SONG_NOT_PLAYING = "-fx-border-color: gray; -fx-border-width: 1";
+    public static final String STYLE_CODE_SONG_PLAYING = "-fx-border-color: purple; -fx-border-width: 3;";
 }
