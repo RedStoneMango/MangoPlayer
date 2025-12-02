@@ -92,7 +92,7 @@
             </BorderPane>
          </top>
          <bottom>
-            <FlowPane alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <FlowPane alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="600.0" style="-fx-background-color: derive(-fx-base, 15%); -fx-background-insets: 2 0 0 0;" BorderPane.alignment="CENTER">
                <children>
                   <Label text="Volume adjustment: ">
                      <padding>
@@ -128,9 +128,9 @@
       </BorderPane>
    </top>
    <center>
-      <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="273.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="273.0" prefWidth="600.0" style="-fx-background-color: derive(-fx-base, 15%);" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="248.0" prefWidth="517.0" style="-fx-border-color: purple;">
+            <AnchorPane prefHeight="248.0" prefWidth="517.0" style="-fx-border-color: orange; -fx-border-width: 2;">
                <children>
                   <Label layoutX="14.0" layoutY="13.0" text="Played:">
                      <font>
