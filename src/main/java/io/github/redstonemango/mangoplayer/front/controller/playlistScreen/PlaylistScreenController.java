@@ -106,7 +106,7 @@ public class PlaylistScreenController implements IInitializable, ISongSelectable
             public void onDragDone(DragEvent event) {
                 onSongsSorted();
             }
-        }, new DraggableGraphicCell.LineData(Color.DARKGREEN, 5)));                                // Separator line settings
+        }, new DraggableGraphicCell.LineData(Color.ORANGE, 5)));                                   // Separator line settings
 
         Platform.runLater(() -> {
             Node header = controlsTitledPane.lookup(".title");
