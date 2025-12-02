@@ -12,6 +12,7 @@ public class PlayControlWindow extends OverlayWindow {
         super(loader.load(), null, null, true);
         this.bindingSource = bindingSource;
         this.loader = loader;
+        getRoot().setStyle("-fx-background-color: -fx-background;"); // Enforce background color to prevent transparency
         setOnHiding(_ -> {
             ((PlayControlController) loader.getController()).destroy();
             ((PlayControlController) loader.getController()).hidePopups();

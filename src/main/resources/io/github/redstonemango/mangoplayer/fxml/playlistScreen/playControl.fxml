@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane minWidth="5.0" prefHeight="98.0" prefWidth="382.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.front.controller.playlistScreen.PlayControlController">
+<BorderPane minWidth="5.0" prefHeight="98.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.front.controller.playlistScreen.PlayControlController">
    <left>
       <AnchorPane prefHeight="36.0" prefWidth="78.0" BorderPane.alignment="CENTER">
          <children>
