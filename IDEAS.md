@@ -51,6 +51,6 @@
   Add the ability for users to cancel song downloads in progress, particularly helpful if the process is stalled or the wrong item is being downloaded.
   **This is not meant to be an official cancel feature but a killing mechanism if a process gets stuck**
 
-- [ ] **Identify yt-dlp search results more reliably**
+- [X] **Identify yt-dlp search results more reliably**
 
   Use the `--print` option to prefix yt-dlp's YouTube search results more reliably. This helps to distinguish between warning messages and actual search output while searching YouTube.
