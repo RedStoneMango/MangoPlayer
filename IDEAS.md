@@ -53,4 +53,4 @@
 
 - [ ] **Identify yt-dlp search results more reliably**
 
-  Use the `--print` option to prefix yt-dlp's YouTube search results more reliably. This helps distinguishing between warning messages and actual search output while searching YouTube.
+  Use the `--print` option to prefix yt-dlp's YouTube search results more reliably. This helps to distinguish between warning messages and actual search output while searching YouTube.
