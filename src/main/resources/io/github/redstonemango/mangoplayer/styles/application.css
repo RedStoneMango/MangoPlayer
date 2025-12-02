@@ -1,360 +1,71 @@
-/* ---- NODE SPECIFIC STYLES ---- */
-#long-sized-button {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(0, 180, 255)); /* Gradient from Electric Blue to Muted Cyan */
-    -fx-text-fill: black;
-}
-
-/* ---- GENERAL STYLES ---- */
 .root {
-    -fx-background-color: rgb(10, 25, 47); /* Deep Navy Blue */
-    -fx-text-fill: rgb(230, 230, 230); /* Silver White */
+    -fx-accent: #1e74c6;
+    -fx-base: #373e43;
+    -fx-control-inner-background: derive(-fx-base, 35%);
+    -fx-control-inner-background-alt: -fx-control-inner-background;
+    -fx-focus-color: orange;
 }
 
-/* ---- PANES & BOXES ---- */
-.pane, .border-pane, .anchor-pane, .titled-pane, .hbox, .vbox {
-    -fx-background-color: rgb(15, 45, 90); /* Midnight Blue */
-    -fx-border-width: 1;
-    -fx-border-color: transparent; /* Reduced border visibility */
+.label {
+    -fx-text-fill: white;
 }
 
-/* ---- TABPANE STYLES ---- */
-.tab-pane {
-    -fx-background-color: rgb(15, 45, 90); /* Midnight Blue for the background */
-    -fx-border-color: rgb(30, 30, 30); /* Charcoal Grey border */
-    -fx-border-width: 1;
+.text-field {
+    -fx-prompt-text-fill: gray;
 }
 
-.tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(100, 80, 200)); /* Gradient from Electric Blue to Soft Purple */
+.button {
+    -fx-focus-traversable: false;
 }
 
-.tab {
-    -fx-background-color: rgb(15, 45, 90); /* Midnight Blue for the tabs */
-    -fx-font-weight: bold;
-    -fx-border-color: transparent; /* Transparent borders by default */
-    -fx-border-radius: 5; /* Rounded corners */
-    -fx-padding: 3px; /* Decreased padding */
-    -fx-background-radius: 5; /* Rounded background */
+.button:default {
+    -fx-base: derive(-fx-accent, 10%);
+    -fx-text-fill: white;
 }
 
-.tab-label {
-    -fx-text-fill: rgb(230, 230, 230);
+.button:pressed {
+    -fx-background-color: derive(-fx-base, 15%);
 }
 
-.tab:selected {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue when selected */
-}
-
-.tab:hover {
-    -fx-background-color: rgb(0, 150, 255); /* Slightly lighter blue on hover */
-    -fx-effect: dropshadow(gaussian, rgba(0, 150, 255, 0.4), 20, 0.3, 0, 0); /* Hover shadow effect */
-    -fx-text-fill: rgb(10, 25, 47); /* Darker text color on hover */
-}
-
-/* ---- TITLED PANE ---- */
-.titled-pane {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-text-fill: rgb(230, 230, 230);
-}
-
-.titled-pane > .title {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(80, 60, 150)); /* Gradient from Electric Blue to Soft Purple */
-    -fx-text-fill: rgb(10, 25, 47); /* Darker text */
-    -fx-font-weight: bold;
-    -fx-background-radius: 5;
-}
-
-/* ---- SCROLL PANE ---- */
-.scroll-pane {
-    -fx-background-color: rgb(15, 45, 90);
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: rgb(15, 45, 90);
+.separator *.line {
+    -fx-background-color: #3C3C3C;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
 }
 
 .scroll-bar {
-    -fx-background-color: rgb(30, 30, 30); /* Charcoal Grey */
+    -fx-background-color: derive(-fx-base,45%);
 }
 
-.scroll-bar .thumb {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-    -fx-background-radius: 5;
+.list-cell:filled:selected,
+.list-cell:filled:selected:focused {
+    -fx-background-color: -fx-accent;
 }
 
-.scroll-bar .thumb:hover {
-    -fx-background-color: rgb(0, 150, 255); /* Muted Cyan */
-    -fx-effect: dropshadow(gaussian, rgba(0, 150, 255, 0.4), 20, 0.3, 0, 0); /* Softer hover shadow */
+.list-cell:even,
+.table-row-cell {
+    -fx-control-inner-background: derive(-fx-base, 15%);
 }
 
-/* ---- BUTTONS ---- */
-.button, .toggle-button {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-    -fx-text-fill: rgb(255, 255, 255); /* White text */
-    -fx-font-weight: bold;
-    -fx-border-radius: 5;
-    -fx-border-width: 2;
-    -fx-border-color: rgb(0, 122, 255);
+.list-cell:odd {
+    -fx-control-inner-background: derive(-fx-base, 20%);
 }
 
-.button:hover, .toggle-button:hover {
-    -fx-background-color: rgb(0, 180, 255); /* Muted hover blue */
-    -fx-border-color: rgb(0, 150, 255); /* Lighter border */
-    -fx-effect: dropshadow(gaussian, rgba(0, 150, 255, 0.4), 20, 0.4, 0, 0); /* Softer shadow */
-    -fx-text-fill: rgb(10, 25, 47); /* Darker text on hover for contrast */
+.combo-box .list-cell {
+    -fx-control-inner-background: derive(-fx-base, 30%);
+    -fx-text-fill: white;
+}
+.combo-box .list-cell:hover {
+    -fx-control-inner-background: derive(-fx-base, 40%);
 }
 
-.button:pressed, .toggle-button:selected {
-    -fx-background-color: radial-gradient(center 50% 50%, radius 50%, rgb(0, 200, 255), rgb(0, 60, 140)); /* Increased difference between light and dark blue */
-    -fx-border-color: rgb(0, 100, 200); /* Match border to the selected background */
-    -fx-text-fill: rgb(255, 255, 255); /* White text to maintain readability */
+.list-cell:empty,
+.table-row-cell:empty {
+    -fx-background-color: transparent;
 }
 
-/* ---- LABELS ---- */
-.label {
-    -fx-text-fill: rgb(230, 230, 230);
-}
-
-/* ---- TOOLTIPS ---- */
-.tooltip {
-    -fx-background-color: rgb(0, 122, 255);
-    -fx-text-fill: rgb(10, 25, 47);
-    -fx-border-color: rgb(0, 255, 230);
-    -fx-effect: dropshadow(gaussian, rgba(0, 255, 230, 0.5), 8, 0.3, 0, 3);
-    -fx-background-radius: 5;
-    -fx-padding: 5px 8px;
-}
-
-.tooltip:hover {
-    -fx-background-color: rgb(0, 150, 255); /* Slightly muted tooltip hover color */
-}
-
-/* ---- TABLEVIEW ---- */
-.table-view {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-border-color: rgb(30, 30, 30);
-    -fx-background-radius: 5;
-}
-
-.table-view .column-header {
-    -fx-background-color: rgb(0, 122, 255);
-    -fx-text-fill: rgb(10, 25, 47);
-    -fx-font-weight: bold;
-}
-
-.table-row-cell .table-column {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-text-fill: rgb(230, 230, 230);
-    -fx-alignment: center;
+.list-cell,
+.table-row-cell {
     -fx-border-color: transparent;
-}
-
-.table-row-cell:selected {
-    -fx-background-color: rgb(100, 80, 200);
-    -fx-text-fill: rgb(230, 230, 230);
-    -fx-alignment: center;
-}
-
-/* ---- TEXT FIELDS ---- */
-.text-field, .text-area {
-    -fx-background-color: rgb(25, 55, 105);
-    -fx-text-fill: rgb(230, 230, 230);
-    -fx-border-color: rgb(50, 80, 150);
-    -fx-border-radius: 5;
-    -fx-padding: 8px;
-    -fx-font-size: 14px;
-}
-
-.text-field:focused, .text-area:focused {
-    -fx-border-color: rgb(0, 122, 255); /* Focused border color */
-    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.6), 6, 0.3, 0, 3); /* Focus shadow */
-}
-
-.text-field:hover, .text-area:hover {
-    -fx-background-color: rgb(30, 60, 120);
-    -fx-border-color: rgb(0, 122, 255);
-}
-
-/* ---- MENU BAR ---- */
-.menu-bar {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(0, 180, 255)); /* Gradient from Electric Blue to Muted Cyan */
-    -fx-border-color: rgb(30, 30, 30);
-    -fx-border-width: 1;
-}
-
-.menu:hover {
-    -fx-background-color: rgb(0, 122, 255);
-    -fx-text-fill: rgb(10, 25, 47);
-}
-
-.menu .menu-item {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-text-fill: rgb(230, 230, 230);
-    -fx-padding: 5px 10px;
-}
-
-.menu-item:hover {
-    -fx-background-color: rgb(0, 122, 255);
-    -fx-text-fill: rgb(10, 25, 47);
-}
-
-.menu-bar .menu .menu-item:selected {
-    -fx-background-color: rgb(100, 80, 200);
-    -fx-text-fill: rgb(230, 230, 230);
-}
-
-/* ---- CONTEXT MENUS ---- */
-.context-menu {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-border-color: rgb(30, 30, 30);
-    -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 12, 0.3, 0, 6); /* Slightly softened shadow */
-}
-
-.context-menu .menu-item {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-text-fill: rgb(230, 230, 230);
-    -fx-padding: 5px 10px;
-}
-
-.context-menu .menu-item:hover {
-    -fx-background-color: rgb(0, 122, 255);
-    -fx-text-fill: rgb(10, 25, 47);
-}
-
-.context-menu .menu-item:selected {
-    -fx-background-color: rgb(100, 80, 200);
-    -fx-text-fill: rgb(230, 230, 230);
-}
-
-/* ---- SLIDER STYLES ---- */
-.slider .track {
-    -fx-background-color: rgb(50, 80, 150); /* Soft Blue track */
-    -fx-background-radius: 3;
-}
-
-.slider .thumb {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-    -fx-background-radius: 10;
-    -fx-pref-width: 20;
-    -fx-pref-height: 20;
-}
-
-.slider .thumb:hover {
-    -fx-background-color: rgb(0, 150, 255); /* Muted Cyan on hover */
-    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.4), 20, 0.3, 0, 0); /* Light thumb shadow */
-}
-
-.slider .thumb:pressed {
-    -fx-background-color: rgb(100, 80, 200); /* Soft Purple on press */
-}
-
-.slider .tick-mark {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-}
-
-.slider .tick-mark:horizontal {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue for horizontal tick marks */
-}
-
-.slider .label {
-    -fx-text-fill: rgb(230, 230, 230); /* Silver White */
-}
-
-/* Alert Dialog */
-.alert {
-    -fx-background-color: rgb(15, 45, 90); /* Midnight Blue background */
-    -fx-border-color: rgb(30, 30, 30);
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-font-size: 14px;
-}
-
-.alert .header-panel {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(0, 180, 255)); /* Gradient header */
-    -fx-text-fill: rgb(10, 25, 47); /* Darker text for contrast */
-    -fx-font-weight: bold;
-}
-
-.alert .content {
-    -fx-background-color: rgb(15, 45, 90);
-    -fx-text-fill: rgb(230, 230, 230); /* Light grey text */
-}
-
-.alert .button {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-    -fx-text-fill: rgb(255, 255, 255);
-    -fx-font-weight: bold;
-    -fx-border-radius: 5;
-    -fx-border-width: 2;
-    -fx-border-color: rgb(0, 122, 255);
-}
-
-.alert .button:hover {
-    -fx-background-color: rgb(0, 180, 255); /* Muted hover blue */
-    -fx-border-color: rgb(0, 150, 255); /* Lighter border */
-    -fx-effect: dropshadow(gaussian, rgba(0, 150, 255, 0.4), 20, 0.4, 0, 0); /* Softer shadow */
-    -fx-text-fill: rgb(10, 25, 47);
-}
-
-.alert .button:pressed {
-    -fx-background-color: rgb(0, 100, 200); /* Darker blue on press */
-    -fx-border-color: rgb(0, 100, 200);
-}
-
-/* TextInputDialog */
-.text-input-dialog {
-    -fx-background-color: rgb(15, 45, 90); /* Midnight Blue background */
-    -fx-border-radius: 10;
-    -fx-font-size: 14px;
-}
-
-.text-input-dialog .header-panel {
-    -fx-background-color: linear-gradient(to bottom, rgb(0, 122, 255), rgb(0, 180, 255)); /* Gradient header */
-    -fx-text-fill: rgb(10, 25, 47); /* Darker text */
-    -fx-font-weight: bold;
-}
-
-.text-input-dialog .content {
-    -fx-background-color: rgb(15, 45, 90); /* Matching background */
-    -fx-text-fill: rgb(230, 230, 230); /* Silver White */
-}
-
-.text-input-dialog .text-field {
-    -fx-background-color: rgb(25, 55, 105); /* Darker blue background for text fields */
-    -fx-text-fill: rgb(230, 230, 230); /* Silver White text */
-    -fx-border-color: rgb(50, 80, 150); /* Soft blue border */
-    -fx-border-radius: 5;
-    -fx-padding: 8px;
-    -fx-font-size: 14px;
-}
-
-.text-input-dialog .text-field:focused {
-    -fx-border-color: rgb(0, 122, 255); /* Focused border color */
-    -fx-effect: dropshadow(gaussian, rgba(0, 122, 255, 0.6), 6, 0.3, 0, 3); /* Focus shadow */
-}
-
-.text-input-dialog .button {
-    -fx-background-color: rgb(0, 122, 255); /* Electric Blue */
-    -fx-text-fill: rgb(255, 255, 255);
-    -fx-font-weight: bold;
-    -fx-border-radius: 5;
-    -fx-border-width: 2;
-    -fx-border-color: rgb(0, 122, 255);
-}
-
-.text-input-dialog .button:hover {
-    -fx-background-color: rgb(0, 180, 255); /* Muted hover blue */
-    -fx-border-color: rgb(0, 150, 255); /* Lighter border */
-    -fx-effect: dropshadow(gaussian, rgba(0, 150, 255, 0.4), 20, 0.4, 0, 0); /* Softer shadow */
-    -fx-text-fill: rgb(10, 25, 47);
-}
-
-.text-input-dialog .button:pressed {
-    -fx-background-color: rgb(0, 100, 200); /* Darker blue on press */
-    -fx-border-color: rgb(0, 100, 200);
-}
-
-.table-view-menu-button {
-    -fx-background-color: rgb(0, 100, 200);
+    -fx-table-cell-border-color:transparent;
 }
