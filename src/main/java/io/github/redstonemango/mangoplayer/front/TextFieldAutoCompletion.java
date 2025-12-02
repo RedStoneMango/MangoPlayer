@@ -228,7 +228,7 @@ public class TextFieldAutoCompletion {
         label.setPrefHeight(10);
         label.setMouseTransparent(true);
         AnchorPane pane = new AnchorPane(label);
-        pane.setStyle("-fx-background-color: white;");
+        pane.setStyle("-fx-background-color: -fx-background;");
         pane.setOnMouseEntered(_ -> setSelectedIndex(metaData, boxIndex));
         pane.setOnMouseExited(_ -> setSelectedIndex(metaData, -1));
         pane.setOnMouseClicked(_ -> onEntrySelected(metaData, boxIndex));
@@ -280,9 +280,9 @@ public class TextFieldAutoCompletion {
      * @return Whether the index could be selected, i.e., whether it was in bounds of the possible completions
      */
     private static boolean setSelectedIndex(MetaData metaData, int index) {
-        metaData.popupBox.getChildren().forEach(child -> child.setStyle("-fx-background-color: white;"));
+        metaData.popupBox.getChildren().forEach(child -> child.setStyle("-fx-background-color: -fx-background;"));
         if (index >= 0 && index <= metaData.popupBox.getChildren().size() - 1) {
-            metaData.popupBox.getChildren().get(index).setStyle("-fx-background-color: silver;");
+            metaData.popupBox.getChildren().get(index).setStyle("-fx-background-color: derive(-fx-background, -10%);");
             return true;
         }
         return false;
@@ -294,7 +294,7 @@ public class TextFieldAutoCompletion {
      */
     private static int getSelectedIndex(MetaData metaData) {
         for (int i = 0; i < metaData.popupBox.getChildren().size(); i++) {
-            if (metaData.popupBox.getChildren().get(i).getStyle().equals("-fx-background-color: silver;")) return i;
+            if (metaData.popupBox.getChildren().get(i).getStyle().equals("-fx-background-color: derive(-fx-background, -10%);")) return i;
         }
         return -1;
     }
