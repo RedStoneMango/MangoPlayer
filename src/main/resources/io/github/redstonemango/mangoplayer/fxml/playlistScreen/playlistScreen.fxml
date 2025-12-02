@@ -49,6 +49,8 @@
                               <SeparatorMenuItem mnemonicParsing="false" />
                               <MenuItem mnemonicParsing="false" onAction="#onChangeYtDlpMenu" text="Set executeable directory" />
                               <MenuItem mnemonicParsing="false" onAction="#onDefaultYtDlpMenu" text="Resolve from PATH" />
+                              <SeparatorMenuItem mnemonicParsing="false" />
+                              <MenuItem mnemonicParsing="false" onAction="#onUpdateYtDlpMenu" text="Update" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Ffmpeg">
