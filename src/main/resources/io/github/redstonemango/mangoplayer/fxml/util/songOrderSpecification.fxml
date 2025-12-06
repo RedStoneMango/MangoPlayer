@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="693.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Song Order Specification" underline="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label text="There are several ways to define order of this playlist's songs once exported" />
+      <Label layoutX="77.0" layoutY="74.0" text="Which one do you want to use?" />
+      <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES" />
+      <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="74.0" prefWidth="201.0" spacing="10.0">
+               <children>
+                  <CheckBox mnemonicParsing="false" text="Add .m3u8 manifest file" />
+                  <Separator prefWidth="200.0" />
+                  <CheckBox mnemonicParsing="false" text="Add .wpl manifest file" />
+                  <Separator prefWidth="200.0" />
+                  <CheckBox layoutX="20.0" layoutY="38.0" mnemonicParsing="false" text="Prefix names numerically" />
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="A widely supported manifest file format" />
+                  <Separator layoutX="10.0" layoutY="66.0" prefWidth="200.0" />
+                  <Label text="A manifest file format mainly popular in the windows ecosystem" />
+                  <Separator prefWidth="200.0" />
+                  <Label layoutX="10.0" layoutY="38.0" text="Prefix file names with 01, 02,... (Most applications order songs by their names)" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" text="Cancel" />
+            <Button defaultButton="true" mnemonicParsing="false" text="Export Playlist" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </HBox>
+   </children>
+   <padding>
+      <Insets top="20.0" />
+   </padding>
+</VBox>
