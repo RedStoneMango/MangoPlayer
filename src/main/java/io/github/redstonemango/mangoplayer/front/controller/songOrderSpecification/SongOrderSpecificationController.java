@@ -24,6 +24,7 @@ public class SongOrderSpecificationController {
                 wpl.isSelected(),
                 numeric.isSelected()
         ));
+        onCancel();
     }
 
     public void setAction(Consumer<SongOrderType> action) {
