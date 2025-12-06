@@ -144,6 +144,7 @@ public class Song implements Comparable<Song>, Serializable {
         File audioAsset = new File(Utilities.audioPathFromSong(this));
 
         try {
+            System.out.println("Exporting song '" + name + "' (ID is '" + id + "') to file '" + file.getAbsolutePath() + "'...");
             MP3File mp3File = new MP3File(audioAsset);
 
             Tag tag = mp3File.getTag();
@@ -159,7 +160,6 @@ public class Song implements Comparable<Song>, Serializable {
 
             Files.copy(audioAsset.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             mp3File.save(file);
-            System.out.println("Exported song '" + name + "' (ID is '" + id + "') to file '" + file.getAbsolutePath() + "'");
             return true;
         } catch (Exception e) {
             Utilities.showErrorScreen("Export song '" + name + "'", String.valueOf(e), false);
