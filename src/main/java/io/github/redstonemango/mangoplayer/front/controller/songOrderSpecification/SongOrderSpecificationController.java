@@ -2,6 +2,7 @@ package io.github.redstonemango.mangoplayer.front.controller.songOrderSpecificat
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -34,5 +35,10 @@ public class SongOrderSpecificationController {
         return action;
     }
 
-    public record SongOrderType(boolean m3u8, boolean wpl, boolean numeric) {}
+    public record SongOrderType(boolean m3u8, boolean wpl, boolean numeric) {
+        @Override
+        public @NotNull String toString() {
+            return String.format("{m3u8:%s,wpl:%s,numeric:%s}", m3u8, wpl, numeric);
+        }
+    }
 }
