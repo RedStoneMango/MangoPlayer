@@ -78,7 +78,6 @@ public class PlaylistExporting {
         {
             ExecutorService service = Executors.newSingleThreadExecutor();
             service.execute(() -> {
-                boolean success = true;
                 playlist.getSongs().forEach(song -> {
                     StringBuilder songNumber = new StringBuilder(String.valueOf(playlist.getSongs().indexOf(song) + 1));
                     while (songNumber.length() < latestSongNumberLength.get()) {
@@ -90,12 +89,17 @@ public class PlaylistExporting {
                     song.exportToFile(new File(newFilePath), playlist.getName());
                 });
 
+                boolean success = true;
                 try {
                     MangoIO.compressFile(tempFolder, targetFile);
-                    MangoIO.deleteDirectoryRecursively(tempFolder);
                 } catch (IOException e) {
                     success = false;
-                    Utilities.showErrorScreen("Export playlist", String.valueOf(e), false);
+                    Utilities.showErrorScreen("Compress playlist", String.valueOf(e), false);
+                }
+                try {
+                    MangoIO.deleteDirectoryRecursively(tempFolder);
+                } catch (IOException e) {
+                    Utilities.showErrorScreen("Delete temporary export directory", String.valueOf(e), false);
                 }
 
                 if (success) {
