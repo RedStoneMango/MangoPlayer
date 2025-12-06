@@ -5,6 +5,9 @@ import io.github.redstonemango.mangoutils.MangoIO;
 import io.github.redstonemango.mangoutils.OperatingSystem;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -35,8 +38,9 @@ public class PlaylistExporting {
         }
     }
 
-    private static void resumeExport(Playlist playlist, File targetFile) {
-        File tempFolder = new File(MangoPlayer.APP_FOLDER_PATH + "/exportTemp/" + targetFile.getName().substring(0, targetFile.getName().lastIndexOf(".")));
+    private static void resumeExport(Playlist playlist, File targetFile, boolean m3u8, boolean wpl) {
+        String targetFileName = targetFile.getName().substring(0, targetFile.getName().lastIndexOf("."));
+        File tempFolder = new File(MangoPlayer.APP_FOLDER_PATH + "/exportTemp/" + targetFileName);
         tempFolder.mkdirs();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Cleaning up temporary playlist exporting directory...");
@@ -57,14 +61,17 @@ public class PlaylistExporting {
             targetFile.delete();
         }
 
-        System.out.println("Exporting playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' using the temporary directory '" + tempFolder.getAbsolutePath() + "':");
+        System.out.println("Exporting playlist '" + playlist.getName()
+                + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath()
+                + "' using the temporary directory '" + tempFolder.getAbsolutePath() + "':");
 
         Stage stage = new Stage();
         stage.setTitle("MangoPlayer | Export playlist (running)");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(MangoPlayer.primaryStage);
         stage.setOnCloseRequest(Event::consume);
-        WaitScreenScene scene = WaitScreenScene.createNewScene("Exporting playlist...", "The playlist is currently being exported. It will be done any minute.");
+        WaitScreenScene scene = WaitScreenScene.createNewScene("Exporting playlist...",
+                "The playlist is currently being exported. It will be done any minute.");
         Utilities.prepareAndShowStage(stage, scene, scene.getLoader());
 
         // Async export
@@ -92,7 +99,8 @@ public class PlaylistExporting {
                 }
 
                 if (success) {
-                    System.out.println("Export of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' finished");
+                    System.out.println("Export of playlist '" + playlist.getName()
+                            + "' (ID is '" + playlist.getId() + "') to file '" + targetFile.getAbsolutePath() + "' finished");
 
                     Platform.runLater(() -> {
                         ButtonType browseButton = new ButtonType("Browse file", ButtonBar.ButtonData.YES);
