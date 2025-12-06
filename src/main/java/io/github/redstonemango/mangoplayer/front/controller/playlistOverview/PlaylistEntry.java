@@ -32,7 +32,7 @@ public class PlaylistEntry extends PlaylistEntryBase {
         int songCount = playlist.getSongs().size();
         songCountLabel.setText(songCount == 0 ? "No songs" : (songCount == 1 ? "1 song" : songCount + " songs"));
 
-        //init front
+        //init graphic
         updateGraphic();
 
         //init context menu
@@ -40,7 +40,7 @@ public class PlaylistEntry extends PlaylistEntryBase {
         MenuItem openMenuItem = new MenuItem("Open");
         MenuItem deleteMenuItem = new MenuItem("Delete");
         MenuItem renameMenuItem = new MenuItem("Rename");
-        MenuItem graphicMenuItem = new MenuItem("Manage front");
+        MenuItem graphicMenuItem = new MenuItem("Manage graphic");
         MenuItem exportMenuItem = new MenuItem("Export");
         openMenuItem.setOnAction(_ -> controller.onPlaylistOpen(playlist));
         deleteMenuItem.setOnAction(_ -> controller.onPlaylistDelete(playlist));
