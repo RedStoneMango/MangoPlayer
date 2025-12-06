@@ -8,9 +8,9 @@
 
   Audio playback requires system dependencies. While they should normally be pre-installed, on some Linux devices `avcodec`, `ffmpeg`, or similar may be missing. Detect this situation and prompt the user to install the required packages.
 
-- [ ] **Export playlists as `.m3u` files**
+- [X] **Export playlists with `.m3u8` files**
 
-  Allow the user to export playlists into `.m3u` format in addition to other formats, enabling compatibility with a wide range of media players.
+  Allow the user to export playlists with the `.m3u8` format in addition to other formats, enabling compatibility with a wide range of media players.
 
 - [X] **Expanded “scroll to element” behavior**
 
