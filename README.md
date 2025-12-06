@@ -1,4 +1,4 @@
-# MangoPlayer 🎵
+# MangoPlayer
 
 MangoPlayer is a user-friendly, feature-rich music playlist manager that enables you to **import, edit, organize, and play music playlists** with ease. With powerful integration features, flexible song/playlist management, and a clean UI, MangoPlayer is built for users who want both simplicity and control.
 
@@ -9,7 +9,7 @@ I document my future ideas for this project in [this document](./IDEAS.md). Have
 ---
 
 
-## ✨ Features
+## Features
 
 - Simple song management
 - Playlist creation
@@ -20,14 +20,14 @@ I document my future ideas for this project in [this document](./IDEAS.md). Have
 - Detachable player controls for seamless multitasking
 - View statistics: times played, playback time, etc.
 
-### 🧰 External Tool Integration (Optional)
+### External Tool Integration (Optional)
 
 - Support for every major audio format (songs) and image format (thumbnails)
 - Direct audio download from YouTube
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### 1. Download the Application
 
@@ -39,7 +39,7 @@ Get the latest version of **MangoPlayer** from the [Releases page](https://githu
 - `MangoPlayer_XX.XX.XX_linux_x64` for 64-bit Linux
 - `MangoPlayer_XX.XX.XX_linux_arm64` for ARM64-based Linux systems
 
-> ⚠️ Please note that the release files may not be up to date with the repository, as the releases only contain the latest stable version of the app. If you are looking for this stable version's code, download the `Source code` file found among the release assets.
+> Please note that the release files may not be up to date with the repository, as the releases only contain the latest stable version of the app. If you are looking for this stable version's code, download the `Source code` file found among the release assets.
 
 ---
 
@@ -47,13 +47,13 @@ Get the latest version of **MangoPlayer** from the [Releases page](https://githu
 
 To unlock additional features like direct song downloads from YouTube or media file conversion, install the following external tools:
 
-#### 🔧 ffmpeg
+#### ffmpeg
 1. Open the **MangoPlayer** application.
 2. In the menu bar, go to:  
    `MangoPlayer -> Ffmpeg -> Open download page`
 3. Follow the instructions on the website to download and install **ffmpeg**.
 
-#### 🔧 yt-dlp  
+#### yt-dlp  
 1. Open the **MangoPlayer** application.
 2. In the menu bar, go to:  
    `MangoPlayer -> Yt-dlp -> Open download page`
@@ -61,7 +61,7 @@ To unlock additional features like direct song downloads from YouTube or media f
 
 > ⚠️ Note: **yt-dlp** requires **ffmpeg** to function properly.
 
-#### ❓ Having Issues?
+#### Having Issues?
 
 If the tools aren't being detected after installation, refer to:  
 `Help -> External Tools -> Installing External Tools -> Linking the Executable`  
@@ -69,7 +69,6 @@ from the application's menu bar for troubleshooting steps.
 
 ---
 
-## 📄 License
+## License
 
 MangoPlayer is licensed under the **MIT License**. See [License](LICENSE.txt) for more information
-
