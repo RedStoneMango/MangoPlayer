@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="693.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="693.0" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.redstonemango.mangoplayer.front.controller.songOrderSpecification.SongOrderSpecificationController">
    <children>
       <Label text="Song Order Specification" underline="true">
          <font>
@@ -25,11 +25,11 @@
          <children>
             <VBox prefHeight="74.0" prefWidth="201.0" spacing="10.0">
                <children>
-                  <CheckBox mnemonicParsing="false" text="Add .m3u8 manifest file" />
+                  <CheckBox fx:id="m3u8" mnemonicParsing="false" text="Add .m3u8 manifest file" />
                   <Separator prefWidth="200.0" />
-                  <CheckBox mnemonicParsing="false" text="Add .wpl manifest file" />
+                  <CheckBox fx:id="wpl" mnemonicParsing="false" text="Add .wpl manifest file" />
                   <Separator prefWidth="200.0" />
-                  <CheckBox layoutX="20.0" layoutY="38.0" mnemonicParsing="false" text="Prefix names numerically" />
+                  <CheckBox fx:id="numeric" layoutX="20.0" layoutY="38.0" mnemonicParsing="false" text="Prefix names numerically" />
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -51,8 +51,8 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button mnemonicParsing="false" text="Cancel" />
-            <Button defaultButton="true" mnemonicParsing="false" text="Export Playlist" />
+            <Button mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onDone" text="Export Playlist" />
          </children>
          <VBox.margin>
             <Insets bottom="10.0" />
