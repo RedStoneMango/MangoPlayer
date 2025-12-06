@@ -209,8 +209,8 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         ButtonType result;
         if (graphicFile.exists()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "", replaceButton, removeButton, browseButton, ButtonType.CANCEL);
-            alert.setTitle("MangoPlayer | Playlist front");
-            alert.setHeaderText("'" + playlist.getName() + "' has a pre-set front associated with it:\nYou can either replace with a new one, remove it entirely (falls back to first\nsong's thumbnail as front) or just browse it in your file manager");
+            alert.setTitle("MangoPlayer | Playlist graphic");
+            alert.setHeaderText("'" + playlist.getName() + "' has a pre-set graphic associated with it:\nYou can either replace with a new one, remove it entirely (falls back to first\nsong's thumbnail as graphic) or just browse it in your file manager");
             alert.setContentText("How do you want to continue?");
             alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
             alert.showAndWait();
@@ -218,9 +218,9 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         }
         else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.YES, ButtonType.NO);
-            alert.setTitle("MangoPlayer | Playlist front");
-            alert.setHeaderText("'" + playlist.getName() + "' does not have a pre-set front associated with it.\n This means it falls back to the first song's thumbnail as front.");
-            alert.setContentText("Do you want to set a front for this playlist?");
+            alert.setTitle("MangoPlayer | Playlist graphic");
+            alert.setHeaderText("'" + playlist.getName() + "' does not have a pre-set graphic associated with it.\n This means it falls back to the first song's thumbnail as graphic.");
+            alert.setContentText("Do you want to set a graphic for this playlist?");
             alert.getDialogPane().getStylesheets().add(Finals.STYLESHEET_FORM_APPLICATION_MAIN);
             alert.showAndWait();
             result = alert.getResult();
@@ -240,7 +240,7 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
 
     private void setPlaylistGraphic(Playlist playlist) {
         FileChooser chooser = new FileChooser();
-        chooser.setTitle("MangoPlayer | Playlist front");
+        chooser.setTitle("MangoPlayer | Playlist graphic");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image file", "*.jpg", "*.jpeg", "*.png", "*.bmp", "*.tif", "*.tiff", "*.gif", "*.webp", "*.heic", "*.heif", "*.avif", "*.ppm", "*.pgm", "*.pbm", "*.pnm", "*.jp2", "*.j2k", "*.jpf", "*.tga", "*.psd", "*.exr", "*.svg"));
         File chosenFile = chooser.showOpenDialog(songFilterField.getScene().getWindow());
         if (chosenFile != null) {
@@ -252,11 +252,11 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
                     }
                     try {
                         Files.copy(pngFiles.getFirst().toPath(), graphicFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                        System.out.println("Updated front of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "')");
+                        System.out.println("Updated graphic of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "')");
                         repaintPlaylists();
                     }
                     catch (IOException e) {
-                        Utilities.showErrorScreen("Import song front", String.valueOf(e));
+                        Utilities.showErrorScreen("Import song graphic", String.valueOf(e));
                     }
                 }
                 FfmpegFileConverter.getInstance().cleanupFilesToPngConversion();
@@ -267,10 +267,10 @@ public class PlaylistOverviewController implements IInitializable, IPlaylistList
         File file = new File(Utilities.graphicPathFromPlaylist(playlist));
         try {
             Files.delete(file.toPath());
-            System.out.println("Deleted front of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "')");
+            System.out.println("Deleted graphic of playlist '" + playlist.getName() + "' (ID is '" + playlist.getId() + "')");
         }
         catch (IOException e) {
-            Utilities.showErrorScreen("Delete song front", String.valueOf(e));
+            Utilities.showErrorScreen("Delete song graphic", String.valueOf(e));
         }
     }
 
