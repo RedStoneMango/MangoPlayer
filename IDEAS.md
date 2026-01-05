@@ -54,3 +54,12 @@
 - [X] **Identify yt-dlp search results more reliably**
 
   Use the `--print` option to prefix yt-dlp's YouTube search results more reliably. This helps to distinguish between warning messages and actual search output while searching YouTube.
+
+- [ ] **Add user-definable song tags**
+
+  Users can add string tags to their songs for easier filtering _(eg. users could filter for all songs with custom 'RnB' tag)_
+
+- [ ] **Implement automatic playlists based on tags**
+
+  Instead of manually adding songs to a playlist, add custom playlist type that automatically adds all songs whose tags match the playlist conditions _(eg. "all songs without tag a" or all songs that have tag "a" and "b")_
+  > **Consider updating to a SQL database before implementing this for simpler querying of matching songs**
