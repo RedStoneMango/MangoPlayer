@@ -63,3 +63,8 @@
 
   Instead of manually adding songs to a playlist, add custom playlist type that automatically adds all songs whose tags match the playlist conditions _(eg. "all songs without tag a" or all songs that have tag "a" and "b")_
   > **Consider updating to a SQL database before implementing this for simpler querying of matching songs**
+  > 
+
+- [ ] **Replace native-pause-combination with true media-playback support**
+
+  Native-pause-combination can lead to problems on Wayland because of wayland restrictions. Replacing the logic with something like JMTC might be helpful.
