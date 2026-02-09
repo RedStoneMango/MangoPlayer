@@ -37,7 +37,7 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
-      - name: Download JavaFX JMods 24.0.1
+      - name: Download JavaFX JMods 25.0.2
         run: |
           OS="${{ matrix.os }}"
           ARCH="${{ matrix.arch }}"
@@ -45,20 +45,20 @@ jobs:
           case "$OS" in
             ubuntu-latest)
               if [ "$ARCH" = "arm64" ]; then
-                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_linux-aarch64_bin-jmods.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/25.0.2/openjfx-25.0.2_linux-aarch64_bin-jmods.zip"
               else
-                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_linux-x64_bin-jmods.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/25.0.2/openjfx-25.0.2_linux-x64_bin-jmods.zip"
               fi
               ;;
             macos-latest)
               if [ "$ARCH" = "arm64" ]; then
-                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_osx-aarch64_bin-jmods.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/25.0.2/openjfx-25.0.2_osx-aarch64_bin-jmods.zip"
               else
-                JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_osx-x64_bin-jmods.zip"
+                JFX_URL="https://download2.gluonhq.com/openjfx/25.0.2/openjfx-25.0.2_osx-x64_bin-jmods.zip"
               fi
               ;;
             windows-latest)
-              JFX_URL="https://download2.gluonhq.com/openjfx/24.0.1/openjfx-24.0.1_windows-x64_bin-jmods.zip"
+              JFX_URL="https://download2.gluonhq.com/openjfx/25.0.2/openjfx-25.0.2_windows-x64_bin-jmods.zip"
               ;;
             *)
               echo "Unsupported OS: $OS"
@@ -73,7 +73,7 @@ jobs:
         shell: bash
 
       - name: Set JAVAFX_JMODS_DIR env var
-        run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-24.0.1" >> $GITHUB_ENV
+        run: echo "JAVAFX_JMODS_DIR=$(pwd)/javafx-jmods/javafx-jmods-25.0.2" >> $GITHUB_ENV
         shell: bash
 
       - name: Install Inno Setup (ISCC)
