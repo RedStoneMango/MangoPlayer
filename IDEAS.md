@@ -63,7 +63,10 @@
 
   Instead of manually adding songs to a playlist, add custom playlist type that automatically adds all songs whose tags match the playlist conditions _(eg. "all songs without tag a" or all songs that have tag "a" and "b")_
   > **Consider updating to a SQL database before implementing this for simpler querying of matching songs**
-  > 
+
+- [ ] **Volume adjustment export**
+
+  When exporting a song / playlist, the indiviual mp3 file's sounds volumes are raised / lowered depending on the specified volument adjustment in the player settings
 
 - [ ] **Replace native-pause-combination with true media-playback support**
 
