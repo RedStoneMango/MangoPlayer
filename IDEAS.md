@@ -71,3 +71,7 @@
 - [ ] **Replace native-pause-combination with true media-playback support**
 
   Native-pause-combination can lead to problems on Wayland because of wayland restrictions. Replacing the logic with something like JMTC might be helpful.
+
+- [ ] **Tracklist export**
+
+  Add option to export a playlist's tracklist like "_1. XXX (XX:XX), ...)_" as a copyable text / to be saved in txt file etc
